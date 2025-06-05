@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(CategorySeeder::class);
-
+        $this->call(AgencySeeder::class);
+        $this->call(CarSeeder::class);
     }
 }

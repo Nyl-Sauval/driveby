@@ -50,6 +50,10 @@ class CategorySeeder extends Seeder
                 'category_name' => 'SUV',
                 'category_description' => 'Véhicule polyvalent à haute garde au sol, adapté à tous types de routes.',
             ],
+            [
+                'category_name' => 'Utilitaire',
+                'category_description' => 'Véhicule robuste conçu pour le transport de marchandises ou d’équipements.',
+            ]
         ];
 
         DB::table('category')->insert($categories);
