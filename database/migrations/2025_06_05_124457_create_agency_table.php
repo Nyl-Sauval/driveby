@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('agency', function (Blueprint $table) {
             $table->id();
+            $table->string('agency_name');
+            $table->string('agency_description');
             $table->string('agency_address');
             $table->integer('agency_postal_code');
             $table->string('agency_city');
