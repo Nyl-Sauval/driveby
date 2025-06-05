@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cars', function (Blueprint $table) {
+        Schema::create('car', function (Blueprint $table) {
             $table->id();
             $table->string('car_brand');
             $table->string('car_registration')->unique();
             $table->string('car_model');
-            $table->enum('fuel', ['ELECTRIQUE', 'ESSENCE', 'GAZOLE']);
+            $table->enum('car_fuel', ['ELECTRIQUE', 'ESSENCE', 'GAZOLE']);
             $table->decimal('car_mileage', 10, 3);
-            $table->string('picture')->nullable();
+            $table->string('car_picture')->nullable();
             $table->boolean('car_default')->nullable();
             $table->decimal('car_price', 8, 2);
             $table->unsignedBigInteger('agency_id');
