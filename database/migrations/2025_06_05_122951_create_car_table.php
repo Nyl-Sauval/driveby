@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('car_model');
             $table->enum('fuel', ['ELECTRIQUE', 'ESSENCE', 'GAZOLE']);
             $table->decimal('car_mileage', 5, 2);
-            $table->string('picture');
-            $table->string('car_default');
+            $table->string('picture')->nullable();
+            $table->string('car_default')->nullable();
             $table->timestamps();
         });
 

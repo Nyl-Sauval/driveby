@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('agency_address');
             $table->integer('agency_postal_code');
             $table->string('agency_city');
-            $table->string('agency_schedules');
+            $table->string('agency_schedules')->nullable();
             $table->string('agency_email');
             $table->string('agency_phone');
-            $table->string('agency_website');
+            $table->string('agency_website')->nullable();
             $table->timestamps();
 
         });
