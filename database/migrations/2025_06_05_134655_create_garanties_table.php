@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('guarantee_id');
             $table->string('guarantee_name', 500);
             $table->decimal('guarantee_price', 10, 2);
-            $table->string('guarantiee_description', 500)->nullable();
+            $table->string('guarantee_description', 500)->nullable();
             $table->timestamps();
         });
     }
