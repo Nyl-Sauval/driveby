@@ -12,6 +12,6 @@ class Garantie extends Model
     protected $fillable = [
         'guarantee_name',
         'guarantee_price',
-        'guarantiee_description'
+        'guarantee_description'
     ];
 }
