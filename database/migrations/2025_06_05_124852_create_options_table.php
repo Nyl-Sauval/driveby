@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('client', function (Blueprint $table) {
-            $table->id();
-            $table->string('client_name');
-            $table->string('client_firstname');
-            $table->string('client_email');
-            $table->string('client_phone');
-            $table->dateTime('client_birth');
+        Schema::create('options', function (Blueprint $table) {
+            $table->id('option_id');
+            $table->string('option_name');
+            $table->decimal('option_price', 8, 2);
+            $table->text('option_description')->nullable();
             $table->timestamps();
         });
-
     }
 
     /**
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('client');
+        Schema::dropIfExists('options');
     }
 };

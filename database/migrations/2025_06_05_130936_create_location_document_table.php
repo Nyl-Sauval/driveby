@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('location_document', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('location_id');
+            $table->unsignedBigInteger('document_id');
             $table->foreign('location_id')->references('id')->on('location')->onDelete('cascade');
             $table->foreign('document_id')->references('id')->on('document')->onDelete('cascade');
             $table->timestamps();

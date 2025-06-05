@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('client', function (Blueprint $table) {
-            $table->id();
-            $table->string('client_name');
-            $table->string('client_firstname');
-            $table->string('client_email');
-            $table->string('client_phone');
-            $table->dateTime('client_birth');
+        Schema::create('garanties', function (Blueprint $table) {
+            $table->id('guarantee_id');
+            $table->string('guarantee_name', 500);
+            $table->decimal('guarantee_price', 10, 2);
+            $table->string('guarantiee_description', 500)->nullable();
             $table->timestamps();
         });
-
     }
 
     /**
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('client');
+        Schema::dropIfExists('garanties');
     }
 };
