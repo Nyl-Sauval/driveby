@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('user', function (Blueprint $table) {
             $table->id();
             $table->string('email')->unique();
-            $table->rememberToken();
-            $table->enum('role', ['USER', 'ADMIN']);
+            $table->string('password');
+            $table->enum('role', ['user', 'admin', 'agent']);
             $table->unsignedBigInteger('client_id')->nullable();
             $table->foreign('client_id')->references('id')->on('client')->onDelete('cascade');
             $table->timestamps();
