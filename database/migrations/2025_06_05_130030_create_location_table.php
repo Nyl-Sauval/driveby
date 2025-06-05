@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('guarantee_id')->nullable();
             $table->foreign('guarantee_id')->references('id')->on('guarantee')->onDelete('cascade');
+            $table->unsignedBigInteger('car_id');
             $table->foreign('car_id')->references('id')->on('car')->onDelete('cascade');
+            $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('client')->onDelete('cascade');
             $table->timestamps();
         });

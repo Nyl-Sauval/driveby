@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('location_option', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('location_id');
+            $table->unsignedBigInteger('option_id');
             $table->foreign('location_id')->references('id')->on('location')->onDelete('cascade');
             $table->foreign('option_id')->references('id')->on('option')->onDelete('cascade');
             $table->timestamps();
