@@ -21,7 +21,7 @@ class ClientFactory extends Factory
             'client_firstname' => $this->faker->word(),
             'client_email' => $this->faker->email(),
             'client_phone' => $this->faker->word(),
-            'dateSortie' => $this->faker->dateTimeBetween('-10 years', 'now'),
+            'client_birth' => $this->faker->dateTimeBetween('-70 years', '-18 years'),
         ];
 
     }
