@@ -20,5 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(OptionSeeder::class);
         $this->call(GuaranteeSeeder::class);
+        $this->call(DocumentSeeder::class);
+        $this->call(LocationSeeder::class);
+        $this->call(AvenantSeeder::class);
     }
 }

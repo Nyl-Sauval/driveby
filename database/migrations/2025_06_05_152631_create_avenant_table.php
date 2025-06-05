@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('garanties', function (Blueprint $table) {
+        Schema::create('avenant', function (Blueprint $table) {
             $table->id();
-            $table->string('guarantee_name', 500);
-            $table->decimal('guarantee_price', 10, 2);
-            $table->string('guarantee_description', 500)->nullable();
+            $table->Date('avenant_date');
+            $table->text('avenant_details');
+            $table->decimal('avenant_price', 10, 2);
+            $table->unsignedBigInteger('location_id');
+            $table->foreign('location_id')->references('id')->on('location')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('garanties');
+        Schema::dropIfExists('avenant');
     }
 };

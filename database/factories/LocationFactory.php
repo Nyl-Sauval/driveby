@@ -17,8 +17,8 @@ class LocationFactory extends Factory
     public function definition(): array
     {
         return [
-            'guarantee_id' => Guarantee::factory(),
-            'car_id' => Car::factory(),
+            'guarantee_id' => $this->faker->numberBetween(1, 3),
+            'car_id' =>  $this->faker->numberBetween(1, 10),
             'client_id' => Client::factory(),
         ];
     }

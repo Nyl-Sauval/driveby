@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('location', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('guarantee_id')->nullable();
-            $table->foreign('guarantee_id')->references('id')->on('guarantee')->onDelete('cascade');
+            $table->foreign('guarantee_id')->references('id')->on('garanties')->onDelete('cascade');
             $table->unsignedBigInteger('car_id');
             $table->foreign('car_id')->references('id')->on('car')->onDelete('cascade');
             $table->unsignedBigInteger('client_id');
