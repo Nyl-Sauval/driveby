@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('car_mileage', 5, 2);
             $table->string('picture')->nullable();
             $table->string('car_default')->nullable();
-
+            $table->decimal('car_price', 8, 2);
             $table->foreign('category_id')->references('id')->on('category')->onDelete('cascade');
             $table->foreign('agency_id')->references('id')->on('agency')->onDelete('cascade');
             $table->timestamps();

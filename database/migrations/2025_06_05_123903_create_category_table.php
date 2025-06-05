@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('category_name');
             $table->string('category_description')->nullable();
-            $table->decimal('category_price', 8, 2);
             $table->timestamps();
         });
     }
