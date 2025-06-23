@@ -17,9 +17,9 @@ class CarFactory extends Factory
             'car_brand' => fake()->company(),
             'car_registration' => strtoupper(fake()->bothify('??-####-??')),
             'car_model' => fake()->word(),
-            'fuel' => fake()->randomElement([Carburant::ELECTRIQUE->value, Carburant::ESSENCE->value, Carburant::GAZOLE]),
+            'car_fuel' => fake()->randomElement([Carburant::ELECTRIQUE->value, Carburant::ESSENCE->value, Carburant::GAZOLE]),
             'car_mileage' => fake()->numberBetween(0, 200000),
-            'picture' => fake()->imageUrl(640, 480, 'transport'),
+            'car_picture' => fake()->imageUrl(640, 480, 'transport'),
             'car_default' => fake()->boolean(),
             'car_price' => fake()->randomFloat(2, 5000, 50000),
             'agency_id' => fake()->numberBetween(1, 10)

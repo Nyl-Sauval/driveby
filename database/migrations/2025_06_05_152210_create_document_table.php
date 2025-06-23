@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('garanties', function (Blueprint $table) {
+        Schema::create('document', function (Blueprint $table) {
             $table->id();
-            $table->string('guarantee_name', 500);
-            $table->decimal('guarantee_price', 10, 2);
-            $table->string('guarantee_description', 500)->nullable();
+            $table->string('document_type', 500);
+            $table->string('document_name', 500);
+            $table->string('document_link', 500);
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('garanties');
+        Schema::dropIfExists('document');
     }
 };

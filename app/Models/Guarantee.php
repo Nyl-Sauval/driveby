@@ -2,11 +2,15 @@
 
 
 namespace App\Models;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Testing\Fluent\Concerns\Has;
 
 
-class Garantie extends Model
+class Guarantee extends Model
 {
+
+    use HasFactory;
     protected $primaryKey = 'guarantee_id';
 
     protected $fillable = [
