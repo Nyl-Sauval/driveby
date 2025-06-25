@@ -8,8 +8,8 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <main class="main">
-  <div *ngIf="auth.isLoggedIn()" class="profil">
-    <button routerLink="/profil" class="button-profil">
+  <div class="profil">
+    <button *ngIf="auth.isLoggedIn()" routerLink="/profil" class="button-profil">
       <mat-icon>account_circle</mat-icon>
       Profil
     </button>
