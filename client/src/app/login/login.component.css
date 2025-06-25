@@ -5,10 +5,14 @@
   align-items: center;
   height: 100%;
   background-color: #f0f0f0;
+  overflow: hidden;
+  padding: 20px;
 }
 
 form{
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  overflow: hidden;
+  background-color: #f0f0f0;
 }

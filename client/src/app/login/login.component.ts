@@ -7,6 +7,8 @@ import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatError, MatLabel} from '@angular/material/form-field';
 import {NgIf} from '@angular/common';
+import { MatDialogRef } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-login',
@@ -26,7 +28,8 @@ import {NgIf} from '@angular/common';
 })
 export class LoginComponent {
   loginForm;
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private snackBar: MatSnackBar, private dialogRef: MatDialogRef<LoginComponent>,
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -48,14 +51,18 @@ export class LoginComponent {
           console.log('Connexion réussie', response);
           console.log('token', response.data.token);
           localStorage.setItem('token', response.data.token);
-          this.router.navigate(['/']);
           this.snackBar.open('Connecté !', 'Fermer', {
             duration: 5000,
             panelClass: ['snackbar-success']
           });
+          this.dialogRef.close(true);
         },
         error: (error: any) => {
           console.error('Erreur de connexion', error);
+          this.snackBar.open('Erreur de connection ! Veuillez réessayez.', 'Fermer', {
+            duration: 5000,
+            panelClass: ['snackbar-error']
+          });
         },
       });
     }

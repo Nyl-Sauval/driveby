@@ -5,6 +5,7 @@ import {bootstrapApplication} from '@angular/platform-browser';
 import {AppComponent} from './app/app.component';
 import {HomepageComponent} from './app/homepage/homepage.component';
 import {LoginComponent} from './app/login/login.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 const routes: Routes = [
   { path: 'enregistrement', component: EnregistrementComponent },
