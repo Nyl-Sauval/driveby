@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDialog} from '@angular/material/dialog';
+import {LoginComponent} from '../login/login.component';
 
 
 @Component({
@@ -14,4 +16,11 @@ import {MatIconModule} from '@angular/material/icon';
 })
 export class HomepageComponent {
 
+  constructor(private dialog: MatDialog) {}
+
+  openLogin() {
+    this.dialog.open(LoginComponent, {
+      width: '400px',
+    });
+  }
 }
