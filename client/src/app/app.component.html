@@ -8,9 +8,19 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <main class="main">
+  <header>
+    <div class="left">
+      Cars Location
+    </div>
+    <div class="right">
+      <button mat-button routerLink="/enregistrement">Enregistrement</button></div>
+  </header>
   <div class="content">
-    <app-homepage></app-homepage>
+    <router-outlet></router-outlet>
   </div>
+  <footer>
+    <div>2024-2025</div>
+  </footer>
 </main>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
@@ -22,4 +32,3 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 
-<router-outlet />
