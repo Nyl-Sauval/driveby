@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ClientResource;
+use App\Http\Resources\UserResource;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends BaseController
 {
@@ -59,5 +62,18 @@ class AuthController extends BaseController
         $success['name'] = $user->name;
 
         return $this->sendResponse($success, 'User logged in successfully.');
+    }
+
+    public function me(): JsonResponse
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            return $this->sendError('Utilisateur non authentifié', [], 401);
+        }
+
+        $client = Client::find($user->client_id);
+
+        return $this->sendResponse($client, 'Informations de l\'utilisateur.');
     }
 }

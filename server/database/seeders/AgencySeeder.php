@@ -13,7 +13,7 @@ class AgencySeeder extends Seeder
     {
         $agencies = [
             [
-                'agency_name' => 'agency_cityDrive Lille',
+                'agency_name' => 'Drive Lille',
                 'agency_description' => 'Agence de location pratique en centre-ville, avec un large choix de véhicules.',
                 'agency_address' => '12 Rue Nationale',
                 'agency_postal_code' => '59800',

@@ -1,59 +1,66 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Nom</mat-label>
-    <input matInput formControlName="name" required />
-    <mat-error *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
-      Nom requis
-    </mat-error>
-  </mat-form-field>
+<div class="enregistrement-container">
+  <h1>Enregistrement</h1>
+    <p>Veuillez remplir le formulaire pour vous inscrire.</p>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="name-container horizontal">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nom</mat-label>
+        <input matInput formControlName="name" required />
+        <mat-error *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+          Nom requis
+        </mat-error>
+      </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Prénom</mat-label>
-    <input matInput formControlName="firstname" required />
-    <mat-error *ngIf="registerForm.get('firstname')?.invalid && registerForm.get('firstname')?.touched">
-      Prénom requis
-    </mat-error>
-  </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Prénom</mat-label>
+        <input matInput formControlName="firstname" required />
+        <mat-error *ngIf="registerForm.get('firstname')?.invalid && registerForm.get('firstname')?.touched">
+          Prénom requis
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Email</mat-label>
-    <input matInput formControlName="email" type="email" required />
-    <mat-error *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-      Email valide requis
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" required />
+      <mat-error *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+        Email valide requis
+      </mat-error>
+    </mat-form-field>
+    <div class="phone-dob-container horizontal">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Téléphone</mat-label>
+        <input matInput formControlName="phone" required />
+        <mat-error *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
+          Téléphone requis
+        </mat-error>
+      </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Téléphone</mat-label>
-    <input matInput formControlName="phone" required />
-    <mat-error *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
-      Téléphone requis
-    </mat-error>
-  </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Date de naissance</mat-label>
+        <input matInput formControlName="dob" type="date" required />
+        <mat-error *ngIf="registerForm.get('dob')?.invalid && registerForm.get('dob')?.touched">
+          Date valide requise
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="password-container horizontal">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput formControlName="password" type="password" required minlength="8" />
+        <mat-error *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          Mot de passe minimum 8 caractères
+        </mat-error>
+      </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Date de naissance</mat-label>
-    <input matInput formControlName="dob" type="date" required />
-    <mat-error *ngIf="registerForm.get('dob')?.invalid && registerForm.get('dob')?.touched">
-      Date valide requise
-    </mat-error>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Mot de passe</mat-label>
-    <input matInput formControlName="password" type="password" required minlength="8" />
-    <mat-error *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-      Mot de passe minimum 8 caractères
-    </mat-error>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Confirmer mot de passe</mat-label>
-    <input matInput formControlName="passwordConfirm" type="password" required />
-    <mat-error *ngIf="registerForm.get('passwordConfirm')?.invalid && registerForm.get('passwordConfirm')?.touched">
-      Confirmation requise
-    </mat-error>
-  </mat-form-field>
-
-  <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
-</form>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Confirmer mot de passe</mat-label>
+        <input matInput formControlName="passwordConfirm" type="password" required />
+        <mat-error *ngIf="registerForm.get('passwordConfirm')?.invalid && registerForm.get('passwordConfirm')?.touched">
+          Confirmation requise
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
+  </form>
+</div>
