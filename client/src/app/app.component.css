@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  font-size: 16px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main {
+  height: 100vh;
+}
+
+.content {
+  height: 100vh;
+}
+
+
+header {
+  height: 80px;
+  background-color: midnightblue;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+
+  .left {
+    padding-left: 20px;
+  }
+}
+
+footer {
+  height: 80px;
+  padding: 20px;
+  background-color: #efeeef;
+  text-align: center;
+  align-content: center;
+}
+
