@@ -1,32 +1,24 @@
 <mat-card class="car-card" *ngIf="car">
   <mat-card-header>
-    <mat-card-title>{{ car.brand }} {{ car.model }}</mat-card-title>
+    <mat-card-title>{{ car.brand }} {{ car.model }} <span class="similaire">ou similaire</span></mat-card-title>
   </mat-card-header>
+  <div class="category-container">
+    <mat-chip class="category" *ngFor="let category of car.categories">{{ category.name }}</mat-chip>
+    <mat-chip class="category">{{ car.fuel }}</mat-chip>
+  </div>
 
-  <img mat-card-image *ngIf="car.picture" [src]="car.picture" alt="Image de la voiture" />
+    <img mat-card-image *ngIf="car.picture" [src]="car.picture" alt="" />
 
   <mat-card-content>
-    <p><mat-icon>local_gas_station</mat-icon> Carburant : {{ car.fuel }}</p>
-    <p><mat-icon>euro_symbol</mat-icon> Prix : {{ car.price }} €/jour</p>
-
-    <mat-divider class="my-2"></mat-divider>
 
     <h4>Agence {{car.agency?.name}}</h4>
-    <p><mat-icon>location_on</mat-icon> {{ car.agency?.address }}, {{ car.agency?.postal_code }} {{ car.agency?.city }}</p>
-    <p><mat-icon>email</mat-icon> {{ car.agency?.email }}</p>
-    <p><mat-icon>phone</mat-icon> {{ car.agency?.phone }}</p>
-    <p *ngIf="car.agency?.website">
-      <mat-icon>language</mat-icon>
-      <a [href]="car.agency.website" target="_blank">{{ car.agency.website }}</a>
-    </p>
 
-    <mat-divider class="my-2"></mat-divider>
-
-    <h4>Catégories</h4>
-      <mat-chip *ngFor="let category of car.categories">{{ category.name }}</mat-chip>
   </mat-card-content>
 
-  <mat-card-actions>
-    <button mat-raised-button color="primary">Réserver</button>
-  </mat-card-actions>
+  <div class="bottom-card">
+    <p><span class="price">{{car.price}}</span>€ /jour</p>
+    <mat-card-actions>
+     <button mat-raised-button color="primary">Réserver</button>
+    </mat-card-actions>
+  </div>
 </mat-card>
