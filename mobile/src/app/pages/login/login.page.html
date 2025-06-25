@@ -1,0 +1,28 @@
+<ion-content class="login-page">
+  <div class="login-container">
+
+    <!-- LOGO -->
+    <div class="logo">DriveBy</div>
+
+    <h2>Connexion</h2>
+
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" [(ngModel)]="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Mot de passe</ion-label>
+      <ion-input type="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" (click)="login()">Se connecter</ion-button>
+
+    <div class="signup-link">
+      <ion-text>
+        Pas encore inscrit ? <a routerLink="/register">Créer un compte</a>
+      </ion-text>
+    </div>
+
+  </div>
+</ion-content>

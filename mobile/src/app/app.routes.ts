@@ -1,6 +1,26 @@
 import { Routes } from '@angular/router';
-import { HomePage } from './home/home.page';
+import { LayoutComponent } from './layout.component';
 
 export const routes: Routes = [
-  { path: '', component: HomePage }
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./home/home.page').then((m) => m.HomePage),
+      },
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('./pages/login/login.page').then((m) => m.LoginPage),
+      },
+    ],
+  },
 ];

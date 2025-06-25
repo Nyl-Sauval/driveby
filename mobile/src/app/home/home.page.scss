@@ -74,3 +74,14 @@ ion-icon {
   color: white !important;
   font-size: 22px;
 }
+
+ion-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* s’assure qu’elle est au-dessus du contenu */
+}
+ion-content.background-image {
+  padding-bottom: 60px; /* ou la hauteur approximative de ton footer */
+}
