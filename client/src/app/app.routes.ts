@@ -8,5 +8,5 @@ export const routes: Routes = [
   {path: '', component: HomepageComponent, pathMatch: 'full'},
   {path: 'enregistrement', component: EnregistrementComponent },
   {path: 'login', component: LoginComponent },
-  {path: 'profil', component: ProfilComponent }
+  {path: 'profil', component: ProfilComponent },
 ];
