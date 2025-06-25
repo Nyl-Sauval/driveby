@@ -8,12 +8,14 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <main class="main">
-  <div class="profil">
+  <header>
+    <img src="assets/logo.svg" alt="Logo DriveBy">
+
     <button *ngIf="auth.isLoggedIn()" routerLink="/profil" class="button-profil">
       <mat-icon>account_circle</mat-icon>
       Profil
     </button>
-  </div>
+  </header>
   <div class="content">
     <router-outlet></router-outlet>
   </div>
