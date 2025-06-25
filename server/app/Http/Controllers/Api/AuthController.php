@@ -41,4 +41,23 @@ class AuthController extends BaseController
 
         return $this->sendResponse($success, 'User registered successfully.');
     }
+
+    public function login(Request $request): JsonResponse {
+        $validateData = $request->validate([
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:8',
+        ]);
+
+        $user = User::where('email', $validateData['email'])->first();
+
+        if (!$user || !password_verify($validateData['password'], $user->password)) {
+            return $this->sendError('Unauthorized', [], 401);
+        }
+
+        $success['token'] = $user->createToken('auth_token')->plainTextToken;
+        $success['token_type'] = 'Bearer';
+        $success['name'] = $user->name;
+
+        return $this->sendResponse($success, 'User logged in successfully.');
+    }
 }

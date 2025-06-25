@@ -8,3 +8,4 @@ Route::get('test', function () {
     return response()->json(['message' => 'API routes are working']);
 });
 Route::post('register', [AuthController::class, 'register'])->name('register');
+Route::post('login', [AuthController::class, 'login'])->name('login');
