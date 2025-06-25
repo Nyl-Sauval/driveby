@@ -1,4 +1,4 @@
-<div class="login-container">
+<div *ngIf="authService.isLoggedIn()" class="login-container">
   <h1>Connexion</h1>
   <p>Veuillez entrer vos identifiants pour vous connecter.</p>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
