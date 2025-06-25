@@ -1,0 +1,29 @@
+ion-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+
+  /* Forcer couleur noire */
+  --background: black !important;
+  background-color: black !important;
+
+  /* Supprimer tout effet de transparence éventuel */
+  --ion-background-color: black !important;
+  --ion-color-base: black !important;
+}
+
+ion-toolbar {
+  --background: black !important;
+  background-color: black !important;
+}
+
+ion-button,
+ion-icon {
+  color: white !important;
+}
+
+ion-toolbar ion-title {
+  color: white !important;
+}

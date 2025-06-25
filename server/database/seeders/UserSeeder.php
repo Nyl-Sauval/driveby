@@ -12,8 +12,10 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // Créer 10 utilisateurs aléatoires
         User::factory()->count(10)->create();
 
+        // Créer un utilisateur spécifique
         User::factory()->create([
             'email' => 'test@example.com',
             'role' => 'admin',

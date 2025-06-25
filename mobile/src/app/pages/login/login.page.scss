@@ -1,0 +1,78 @@
+.login-page {
+  position: relative;
+  height: 100%;
+}
+
+.login-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); // Centre parfait
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.signup-link {
+  margin-top: 15px;
+}
+.login-page {
+  position: relative;
+  height: 100%;
+}
+
+.login-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ Logo noir */
+.logo {
+  display: inline-block;
+  border: 2px solid black;     // bordure noire
+  padding: 10px 30px;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 5px;
+  position: relative;
+  color: black;                // texte noir
+  margin-bottom: 20px;
+}
+
+/* ✅ Flèche noire */
+.logo::after {
+  content: '';
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 20px;
+  height: 20px;
+  background: black;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.signup-link {
+  margin-top: 15px;
+}
