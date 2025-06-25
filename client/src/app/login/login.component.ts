@@ -29,7 +29,7 @@ import {EnregistrementComponent} from '../enregistrement/enregistrement.componen
 })
 export class LoginComponent {
   loginForm;
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private snackBar: MatSnackBar, private dialogRef: MatDialogRef<LoginComponent>,
+  constructor(private fb: FormBuilder, protected authService: AuthService, private router: Router, private snackBar: MatSnackBar, private loginDialogRef: MatDialogRef<LoginComponent>,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
