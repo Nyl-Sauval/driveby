@@ -1,7 +1,64 @@
 .homepage-content {
-  text-align: center;
-  img {
-    width: 300px;
+  background: url('/assets/fond.png') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  color: white;
+  height: 1000px;
+  gap: 20px;
+
+  .button-connexion {
+    border: 1px solid white;
+    border-radius: 20px;
+    font-size: 30px;
+    width: 350px;
+    padding: 25px 0;
+    color: white;
+  }
+
+  .title {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .logo-container {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .logo {
+    display: inline-block;
+    border: 2px solid white;
+    padding: 10px 30px;
+    font-size: 60px;
+    font-weight: bold;
+    border-radius: 5px;
+    position: relative;
+    color: white;
+  }
+
+  .logo::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    width: 20px;
+    height: 20px;
+    background: white;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+  }
+
+  .slogan {
+    text-align: center;
+    font-size: 48px;
+    margin-top: 0;
+    padding: 0 20px;
+    color: white;
   }
 }
 
