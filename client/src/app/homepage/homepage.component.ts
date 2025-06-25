@@ -11,7 +11,7 @@ import {EnregistrementComponent} from '../enregistrement/enregistrement.componen
 @Component({
   selector: 'app-homepage',
   imports: [
-    MatButtonModule, RouterLink, MatIconModule, NgIf
+    MatButtonModule, MatIconModule, NgIf, RouterLink
   ],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'

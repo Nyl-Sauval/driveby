@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Car extends Model
 {
 
+    protected $table = 'car';
+
     protected $fillable = [
         'car_brand',
         'car_registration',
@@ -21,7 +23,12 @@ class Car extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'car_category');
+    }
+
+    public function agency()
+    {
+        return $this->belongsTo(Agency::class);
     }
 
 }
