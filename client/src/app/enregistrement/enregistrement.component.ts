@@ -6,12 +6,14 @@ import {MatError, MatLabel} from '@angular/material/form-field';
 import { AuthService } from '../service/auth.service';
 import {Router} from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {NgIf} from '@angular/common';
 
 
 
 @Component({
   selector: 'app-enregistrement',
   imports: [
+    NgIf,
     ReactiveFormsModule,
     MatFormField,
     MatFormField,

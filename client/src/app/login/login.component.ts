@@ -6,10 +6,12 @@ import {AuthService} from '../service/auth.service';
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatError, MatLabel} from '@angular/material/form-field';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-login',
   imports: [
+    NgIf,
     ReactiveFormsModule,
     MatFormField,
     MatFormField,
