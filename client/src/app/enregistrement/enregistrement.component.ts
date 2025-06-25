@@ -5,6 +5,8 @@ import {MatButton} from '@angular/material/button';
 import {MatError, MatLabel} from '@angular/material/form-field';
 import { AuthService } from '../service/auth.service';
 import {Router} from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 
 @Component({
@@ -26,7 +28,7 @@ import {Router} from '@angular/router';
 })
 export class EnregistrementComponent {
   registerForm;
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       firstname: ['', Validators.required],
@@ -61,6 +63,10 @@ export class EnregistrementComponent {
           console.log('token', response.token);
           localStorage.setItem('token', response.token);
           this.router.navigate(['/']);
+          this.snackBar.open('Inscription effectué, vous pouvez maintenant vous connecter', 'Fermer', {
+            duration: 5000,
+            panelClass: ['snackbar-success']
+          });
         },
         error: (error: any) => {
           console.error('Erreur d’inscription', error);
