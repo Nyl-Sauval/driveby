@@ -33,5 +33,10 @@ footer {
   background-color: #efeeef;
   text-align: center;
   align-content: center;
+
+  .copyrights {
+    color: #3e3e3a;
+    font-size: 12px;
+  }
 }
 
