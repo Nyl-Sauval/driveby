@@ -7,6 +7,7 @@ import { AuthService } from '../service/auth.service';
 import {Router} from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {NgIf} from '@angular/common';
+import {MatDialogRef} from '@angular/material/dialog';
 
 
 
@@ -30,7 +31,12 @@ import {NgIf} from '@angular/common';
 })
 export class EnregistrementComponent {
   registerForm;
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
+  constructor(private fb: FormBuilder,
+              private authService: AuthService,
+              private router: Router,
+              private snackBar: MatSnackBar,
+              private signinDialogRef: MatDialogRef<EnregistrementComponent>
+  ) {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       firstname: ['', Validators.required],
@@ -62,13 +68,13 @@ export class EnregistrementComponent {
       this.authService.register(payload).subscribe({
         next: (response: any) => {
           console.log('Inscription réussie', response);
-          console.log('token', response.token);
-          localStorage.setItem('token', response.token);
+          localStorage.setItem('token', response.data.token);
           this.router.navigate(['/']);
           this.snackBar.open('Inscription effectué, vous pouvez maintenant vous connecter', 'Fermer', {
             duration: 5000,
             panelClass: ['snackbar-success']
           });
+          this.signinDialogRef.close(true);
         },
         error: (error: any) => {
           console.error('Erreur d’inscription', error);

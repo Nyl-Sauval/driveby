@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {LoginComponent} from '../login/login.component';
 import {AuthService} from '../service/auth.service';
 import {NgIf} from '@angular/common';
+import {EnregistrementComponent} from '../enregistrement/enregistrement.component';
 
 
 @Component({
@@ -18,11 +19,16 @@ import {NgIf} from '@angular/common';
 })
 export class HomepageComponent {
 
-  constructor(private dialog: MatDialog, protected auth: AuthService) {}
+  constructor(private loginDialog: MatDialog, private signinDialog: MatDialog, protected auth: AuthService) {}
 
   openLogin() {
-    this.dialog.open(LoginComponent, {
+    this.loginDialog.open(LoginComponent, {
       width: '400px',
     });
+  }
+
+  openSignin() {
+    this.signinDialog.open(EnregistrementComponent, {
+    })
   }
 }
