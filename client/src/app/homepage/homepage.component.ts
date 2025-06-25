@@ -8,7 +8,6 @@ import {AuthService} from '../service/auth.service';
 import {NgIf} from '@angular/common';
 import {EnregistrementComponent} from '../enregistrement/enregistrement.component';
 
-
 @Component({
   selector: 'app-homepage',
   imports: [
