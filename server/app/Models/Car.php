@@ -23,7 +23,12 @@ class Car extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'car_category');
+    }
+
+    public function agency()
+    {
+        return $this->belongsTo(Agency::class);
     }
 
 }

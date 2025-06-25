@@ -12,25 +12,31 @@ body {
 }
 
 
-header {
-  height: 80px;
+.profil {
   background-color: black;
-  color: white;
-  padding: 20px;
+  height: 30px;
+  padding: 20px 50px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 700;
+  justify-content: end;
 
-  .left {
-    padding-left: 20px;
+  .button-profil {
+    border: none;
+    background: black;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+
+    .mat-icon {
+      margin-right: 10px;
+    }
   }
 }
 
 footer {
   height: 80px;
   padding: 20px;
-  background-color: #efeeef;
+  background-color: white;
   text-align: center;
   align-content: center;
 

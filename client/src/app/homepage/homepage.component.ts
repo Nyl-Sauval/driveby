@@ -8,11 +8,10 @@ import {AuthService} from '../service/auth.service';
 import {NgIf} from '@angular/common';
 import {EnregistrementComponent} from '../enregistrement/enregistrement.component';
 
-
 @Component({
   selector: 'app-homepage',
   imports: [
-    MatButtonModule, RouterLink, MatIconModule, NgIf
+    MatButtonModule, MatIconModule, NgIf, RouterLink
   ],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'

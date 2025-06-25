@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Agency extends Model
 {
+
+    protected $table = 'agency';
+
     protected $fillable = [
         'agency_name',
         'agency_description',

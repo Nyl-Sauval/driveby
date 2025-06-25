@@ -10,6 +10,7 @@ class CarController extends Controller
 {
     public function index()
     {
-        return new CarCollection(Car::all());
+        $cars = Car::with(['agency', 'categories'])->get();
+        return new CarCollection($cars);
     }
 }
