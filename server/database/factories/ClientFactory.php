@@ -22,6 +22,14 @@ class ClientFactory extends Factory
             'client_email' => $this->faker->email(),
             'client_phone' => $this->faker->word(),
             'client_birth' => $this->faker->dateTimeBetween('-70 years', '-18 years'),
+            'client_address' => $this->faker->word(),
+            'client_postal_code' => $this->faker->postcode(),
+            'client_country' => $this->faker->country(),
+            'client_city' => $this->faker->city(),
+            'client_license_number' => $this->faker->word(),
+            'client_license_issue_date' => $this->faker->dateTimeBetween('-70 years', '-18 years'),
+            'client_license_expiry_date' => $this->faker->dateTimeBetween('now', '+10 years'),
+            'client_license_country' => $this->faker->country(),
         ];
 
     }
