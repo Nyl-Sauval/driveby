@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CarController;
+use App\Http\Controllers\Api\ClientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,5 +20,8 @@ Route::get('test', function () {
 Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::middleware('auth:sanctum')->get('profil', [AuthController::class, 'me'])->name('profil');
+Route::middleware('auth:sanctum')->get('client/{id}', [ClientController::class, 'show'])->name('client.show');
 
 Route::get('cars', [CarController::class, 'index'])->name('car.index');
+
+Route::put('client/{id}', [ClientController::class, 'update'])->name('client.update')->middleware('auth:sanctum');;
