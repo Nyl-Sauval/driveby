@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CarController;
 use Illuminate\Http\Request;
@@ -21,3 +23,4 @@ Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::middleware('auth:sanctum')->get('profil', [AuthController::class, 'me'])->name('profil');
 
 Route::get('cars', [CarController::class, 'index'])->name('car.index');
+Route::get('agencies', [AgencyController::class, 'index']);

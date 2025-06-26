@@ -1,2 +1,28 @@
 <h2>Liste des voitures</h2>
+
+<div class="filtres">
+
+  <input type="checkbox" id="toggleSidebar" hidden>
+  <label for="toggleSidebar" class="toggle-button-filters">
+    <span class="filter-text">Affiner</span>
+  </label>
+
+  <div id="sidebarFilters" class="sidebarFilters">
+    <app-filters
+      [agencies]="agencies"
+      [selectedAgencyId]="selectedAgencyId"
+      (agencySelected)="onAgencySelected($event)">
+    </app-filters>
+  </div>
+  <label for="toggleSidebar" class="overlayFilters"></label>
+
+  <div class="filter-option-custom">
+
+    <label for="toggleSidebar" class="custom-filter-trigger" data-filter-label="Agence">
+      <span><mat-icon>keyboard_arrow_down</mat-icon>Agences</span>
+    </label>
+
+  </div>
+</div>
+
 <app-detail-voiture *ngFor="let car of cars" [car]="car"></app-detail-voiture>

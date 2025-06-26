@@ -20,4 +20,9 @@ class Agency extends Model
         'agency_phone',
         'agency_website',
     ];
+
+    public function cars()
+    {
+        return $this->hasMany(Car::class);
+    }
 }
