@@ -14,6 +14,7 @@ class ClientController extends BaseController
         //Récupération du client à modifier l'id de l'url
         $id_client= $request->route('id');
         $client = Client::findOrFail($id_client);
+
         //Vérification des droits
         //Si le user demandeur est admin ou si un user veut modifier sont profil c'est OK sinon Unauthaurized
         if(Auth::user()->client_id == null && Auth::user()->role != 'admin') {
@@ -52,5 +53,19 @@ class ClientController extends BaseController
         }
         //Retourne le client mis à jour
         return $this->sendResponse($client, 'Client updated successfully.');
+    }
+
+    public function show(string $id)
+    {
+        //Récupération du client à afficher
+        $client = Client::findOrFail($id);
+        //Vérification des droits
+        if(Auth::user()->client_id == null && Auth::user()->role != 'admin') {
+            if (Auth::user()->client_id != $client->id) {
+                return $this->sendError('Unauthorized.', ['error' => 'You are not authorized to perform this operation.'], 403);
+            }
+        }
+        //Retourne le client
+        return $this->sendResponse($client, 'Client retrieved successfully.');
     }
 }

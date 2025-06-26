@@ -1,16 +1,21 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../service/auth.service';
 import {MatIcon} from '@angular/material/icon';
+import {MatButton} from '@angular/material/button';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-profil',
   imports: [
-    MatIcon
+    MatIcon,
+    MatButton,
+    RouterLink
   ],
   templateUrl: './profil.component.html',
   styleUrl: './profil.component.css'
 })
 export class ProfilComponent  implements OnInit {
+  id = 0;
   name = '';
   fistname = '';
   email = '';
@@ -31,6 +36,7 @@ export class ProfilComponent  implements OnInit {
 
         const client = response.data;
         console.log(client);
+        this.id = client.id;
         this.name = client.client_name;
         this.fistname = client.client_firstname;
         this.email = client.client_email;

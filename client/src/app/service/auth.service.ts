@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Router} from '@angular/router';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient, private router:Router) {}
 
@@ -31,6 +32,24 @@ export class AuthService {
       Accept: 'application/json'
     });
     return this.http.get(`${this.apiUrl}/profil`, { headers });
+  }
+
+  getClientById(id: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json'
+    });
+    return this.http.get(`${this.apiUrl}/client/${id}`, { headers });
+  }
+
+  updateClient(id: string, data: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json'
+    });
+    return this.http.put(`${this.apiUrl}/client/${id}`, data, { headers });
   }
 
   logout(): void {
