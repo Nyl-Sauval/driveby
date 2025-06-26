@@ -13,11 +13,4 @@
     <mat-icon>search</mat-icon>
     Recherche
   </button>
-
-  @if (!auth.isLoggedIn()) {
-    <button mat-button (click)="openLogin()" class="button-connexion">Connexion</button>
-    <button mat-button (click)="openSignin()" class="button-connexion">Enregistrement</button>
-  }
-  <button mat-button (click)="auth.logout()" class="button-connexion" *ngIf="auth.isLoggedIn()">
-    Déconnexion</button>
 </div>

@@ -11,23 +11,14 @@ import {EnregistrementComponent} from '../enregistrement/enregistrement.componen
 @Component({
   selector: 'app-homepage',
   imports: [
-    MatButtonModule, MatIconModule, NgIf, RouterLink
+    MatButtonModule, MatIconModule, RouterLink
   ],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent {
 
-  constructor(private loginDialog: MatDialog, private signinDialog: MatDialog, protected auth: AuthService) {}
+  constructor() {}
 
-  openLogin() {
-    this.loginDialog.open(LoginComponent, {
-      width: '400px',
-    });
-  }
 
-  openSignin() {
-    this.signinDialog.open(EnregistrementComponent, {
-    })
-  }
 }
