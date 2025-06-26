@@ -41,5 +41,20 @@
       align-items: center;
       gap: 10px;
     }
+
+    .client_informations{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+    }
+
+    .info{
+      text-align: start;
+
+      h2{
+        text-align: center;
+      }
+    }
   }
 }

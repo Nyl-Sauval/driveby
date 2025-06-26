@@ -3,13 +3,15 @@ import {AuthService} from '../service/auth.service';
 import {MatIcon} from '@angular/material/icon';
 import {MatButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-profil',
   imports: [
     MatIcon,
     MatButton,
-    RouterLink
+    RouterLink,
+    NgIf
   ],
   templateUrl: './profil.component.html',
   styleUrl: './profil.component.css'
@@ -21,6 +23,14 @@ export class ProfilComponent  implements OnInit {
   email = '';
   phone = '';
   birth = '';
+  address = '';
+  postal_code = '';
+  city = '';
+  country = '';
+  license_number = '';
+  license_issue_date = '';
+  license_expiry_date = '';
+  license_country = '';
 
   constructor(private auth: AuthService) {
   }
@@ -42,6 +52,14 @@ export class ProfilComponent  implements OnInit {
         this.email = client.client_email;
         this.phone = client.client_phone;
         this.birth = client.client_birth;
+        this.address = client.client_address;
+        this.postal_code = client.client_postal_code;
+        this.city = client.client_city;
+        this.country = client.client_country;
+        this.license_number = client.client_license_number;
+        this.license_issue_date = client.client_license_issue_date;
+        this.license_expiry_date = client.client_license_expiry_date;
+        this.license_country = client.client_license_country;
 
       },
       error: (err) => {
