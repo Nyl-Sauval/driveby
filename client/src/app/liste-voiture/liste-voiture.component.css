@@ -2,6 +2,85 @@ h2{
   text-align: center;
 }
 
+/*BARRE DES FILTRES*/
+.filtres {
+  display: flex;
+  width: 100%;
+  border: 1px solid black;
+  padding: 30px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  gap: 20px;
+
+  .toggle-button-filters {
+    border-right: 1px solid #c3c2bf;
+    padding-right: 20px;
+    margin: 10px;
+
+    .filter-text {
+      border: 1px solid #878683;
+      border-radius: 10px;
+      padding: 10px 20px;
+      background-color: #bdbcb8;
+      box-shadow: 10px 5px 5px #62605b;
+    }
+  }
+}
+
+/*SIDEBAR*/
+.sidebarFilters {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 400px;
+  position: fixed;
+  top: 0;
+  background-color: #e4e3e1;
+  padding: 60px 20px;
+  transition: right 0.3s ease;
+  z-index: 10;
+  box-sizing: border-box;
+  left: -400px;
+}
+
+
+.overlayFilters {
+  position: fixed;
+  top: 0;
+  left: 400px;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,.3);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 1040;
+}
+
+/* Sidebar visible */
+.sidebarFilters.active {
+  left: 0;
+}
+
+/* Overlay visible */
+.overlayFilters.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Quand le checkbox est coché, afficher sidebar + overlay */
+#toggleSidebar:checked ~ #sidebarFilters {
+  left: 0;
+}
+
+#toggleSidebar:checked ~ .overlayFilters {
+  opacity: 1;
+  visibility: visible;
+}
+
 .voiture-container{
   display: flex;
   flex-direction: row;

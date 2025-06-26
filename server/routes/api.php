@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CarController;
 use App\Http\Controllers\Api\ClientController;
@@ -23,5 +25,7 @@ Route::middleware('auth:sanctum')->get('profil', [AuthController::class, 'me'])-
 Route::middleware('auth:sanctum')->get('client/{id}', [ClientController::class, 'show'])->name('client.show');
 
 Route::get('cars', [CarController::class, 'index'])->name('car.index');
+Route::get('agencies', [AgencyController::class, 'index']);
 
 Route::put('client/{id}', [ClientController::class, 'update'])->name('client.update')->middleware('auth:sanctum');;
+

@@ -1,0 +1,36 @@
+<div class="close-nav">
+  <button id="closeSidebarFilters" class="closeSidebar">
+    <mat-icon>close</mat-icon>
+    Fermer
+  </button>
+</div>
+
+<div class="filters-content">
+  <h3>Affiner</h3>
+
+  <div class="filter-deploy">
+
+    <div class="filtres-agences">
+      <label for="agency">Agences :</label><br>
+      <select id="agency" [(ngModel)]="selectedAgencyId">
+        <option value="">-- Toutes les agences --</option>
+        <option *ngFor="let agency of agencies" [value]="agency.id">
+          {{ agency.agency_name }}
+        </option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="filter-result">
+    <button id="applyFiltersButton" class="apply-filter" (click)="onAgencyChange()">
+      Afficher les résultats
+    </button>
+  </div>
+
+  <div class="reset-filters">
+    <button id="resetFiltersButton" type="button" (click)="resetFilters()">
+      Réinitialiser les filtres
+    </button>
+  </div>
+</div>
