@@ -10,19 +10,19 @@
   <div id="sidebarFilters" class="sidebarFilters">
     <app-filters
       [agencies]="agencies"
+      [categories]="categories"
+      [minPrice]="minPrice"
+      [maxPrice]="maxPrice"
       [selectedAgencyId]="selectedAgencyId"
-      (agencySelected)="onAgencySelected($event)">
+      [selectedCategoryId]="selectedCategoryId"
+      [minSelected]="minPrice"
+      [maxSelected]="maxPrice"
+      (selected)="onSelectionChange($event)">
     </app-filters>
+
   </div>
   <label for="toggleSidebar" class="overlayFilters"></label>
 
-  <div class="filter-option-custom">
-
-    <label for="toggleSidebar" class="custom-filter-trigger" data-filter-label="Agence">
-      <span><mat-icon>keyboard_arrow_down</mat-icon>Agences</span>
-    </label>
-
-  </div>
 </div>
 
 <div class="voiture-container">

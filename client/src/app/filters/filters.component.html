@@ -1,8 +1,10 @@
 <div class="close-nav">
-  <button id="closeSidebarFilters" class="closeSidebar">
-    <mat-icon>close</mat-icon>
-    Fermer
-  </button>
+  <div class="close-nav">
+    <label for="toggleSidebar" id="closeSidebarFilters" class="closeSidebar">
+      <mat-icon>close</mat-icon>
+      Fermer
+    </label>
+  </div>
 </div>
 
 <div class="filters-content">
@@ -20,10 +22,68 @@
       </select>
     </div>
 
+    <div class="filtres-category">
+      <label for="category">Categories :</label><br>
+      <select id="category" [(ngModel)]="selectedCategoryId">
+        <option value="">-- Toutes les categories --</option>
+        <option *ngFor="let category of categories" [value]="category.id">
+          {{ category.category_name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="price">
+      <label for="category">Prix :</label><br>
+
+      <div class="price-input">
+        <div class="price-field">
+          <input
+            type="number"
+            id="price-from"
+            class="min-input"
+            [(ngModel)]="minSelected"
+            [min]="minPrice"
+            [max]="maxPrice"
+          />
+        </div>
+
+        <div class="price-field">
+          <input
+            type="number"
+            id="price-to"
+            class="max-input"
+            [(ngModel)]="maxSelected"
+            [min]="minPrice"
+            [max]="maxPrice"
+          />
+        </div>
+        <input type="hidden" name="Price" id="price" value="">
+      </div>
+    </div>
+
+    <div class="filter-date">
+      <p>Dates</p>
+      <div class="date-input">
+        <mat-form-field appearance="fill">
+          <mat-label>Date de départ</mat-label>
+          <input matInput [matDatepicker]="picker1" [(ngModel)]="departureDate">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Date de retour</mat-label>
+          <input matInput [matDatepicker]="picker2" [(ngModel)]="returnDate" [min]="departureDate">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
   </div>
 
   <div class="filter-result">
-    <button id="applyFiltersButton" class="apply-filter" (click)="onAgencyChange()">
+    <button id="applyFiltersButton" class="apply-filter" (click)="onSelectionChange()">
       Afficher les résultats
     </button>
   </div>
