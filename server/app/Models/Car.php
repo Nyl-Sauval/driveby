@@ -31,4 +31,9 @@ class Car extends Model
         return $this->belongsTo(Agency::class, 'agency_id');
     }
 
+    public function locations()
+    {
+        return $this->hasMany(Location::class, 'car_id');
+    }
+
 }

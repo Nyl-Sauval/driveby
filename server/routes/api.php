@@ -32,8 +32,8 @@ Route::get('cars', [CarController::class, 'index'])->name('car.index');
 Route::get('cars/{carId}', [CarController::class, 'show'])->name('car.show');
 Route::get('agencies', [AgencyController::class, 'index']);
 Route::get('categories', [CategoryController::class, 'index']);
-Route::get('locations', [LocationController::class, 'index']);
-Route::get('retraits', [RetraitController::class, 'index']);
-Route::get('retours', [RetourController::class, 'index']);
 
 Route::put('client/{id}', [ClientController::class, 'update'])->name('client.update')->middleware('auth:sanctum');;
+
+Route::get('locations', [LocationController::class, 'index'])->name('location.index');
+Route::post('locations', [LocationController::class, 'create'])->name('location.create')->middleware('auth:sanctum');

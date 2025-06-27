@@ -27,4 +27,14 @@ class Location extends Model
     {
         return $this->belongsToMany(Option::class);
     }
+
+    public function car()
+    {
+        return $this->belongsTo(Car::class, 'car_id');
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_id');
+    }
 }

@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('retour', function (Blueprint $table) {
             $table->id('return_id');
             $table->date('return_date');
-            $table->String('return_status_car',50);
-            $table->decimal('return_mileage',15,3);
+            $table->decimal('return_mileage',15,3)->nullable();
             $table->string('return_default',500)->nullable();
 
             $table->foreignId('user_id')->constrained('user')->onDelete('cascade');

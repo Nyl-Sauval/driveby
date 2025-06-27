@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {CarResponse} from '../models/car.model';
@@ -40,4 +40,15 @@ export class CarService {
     return this.http.get<any[]>(`${this.baseUrl}/locations`);
   }
 
+
+  checkAvailability(carId: string, startDate: string, endDate: string): void{
+    //On récupère les locations passés avec cette voiture
+
+    //On récupère les retraits et retours de chaque location
+
+    //On vérifie si les dates de retrait et de retour se chevauchent avec les dates de réservation
+
+    //On renvoie true si aucune date ne se chevauche, sinon false
+
+  }
 }
