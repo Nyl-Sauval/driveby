@@ -5,6 +5,7 @@ import {bootstrapApplication} from '@angular/platform-browser';
 import {AppComponent} from './app/app.component';
 import {HomepageComponent} from './app/homepage/homepage.component';
 import {LoginComponent} from './app/login/login.component';
+import {MatDialogModule} from '@angular/material/dialog';
 import {ProfilComponent} from './app/profil/profil.component';
 import {ListeVoitureComponent} from './app/liste-voiture/liste-voiture.component';
 import {ClientEditComponent} from './app/client-edit/client-edit.component';
