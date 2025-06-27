@@ -59,5 +59,17 @@
     }
   }
 
+  .filtres-category {
+    margin-left: 20px;
+    margin-top: 20px;
+
+    #category {
+      font-size: 16px;
+      padding: 10px 20px;
+      margin-top: 10px;
+      margin-left: 20px;
+    }
+  }
+
 
 }

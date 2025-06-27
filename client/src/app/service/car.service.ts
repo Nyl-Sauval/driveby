@@ -23,4 +23,8 @@ export class CarService {
   getAllAgencies() {
     return this.http.get<any[]>(`${this.baseUrl}/agencies`);
   }
+
+  getAllCategories() {
+    return this.http.get<any[]>(`${this.baseUrl}/categories`);
+  }
 }

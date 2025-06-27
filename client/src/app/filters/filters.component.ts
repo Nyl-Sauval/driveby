@@ -15,18 +15,24 @@ import {NgForOf} from '@angular/common';
 })
 export class FiltersComponent {
   @Input() agencies: any[] = [];
+  @Input() categories: any[] = [];
   @Input() selectedAgencyId: string = '';
+  @Input() selectedCategoryId: string = '';
 
-  @Output() agencySelected = new EventEmitter<string>();
+  @Output() agencySelected = new EventEmitter<{ agencyId: string, categoryId: string }>();
 
-  onAgencyChange() {
-    console.log('Apply clicked, selectedAgencyId:', this.selectedAgencyId);
-    this.agencySelected.emit(this.selectedAgencyId);
+  onSelectionChange() {
+    console.log(this.selectedCategoryId);
+    this.agencySelected.emit({
+      agencyId: this.selectedAgencyId,
+      categoryId: this.selectedCategoryId
+    });
   }
+
 
   resetFilters() {
     this.selectedAgencyId = '';
-    this.agencySelected.emit('');
+    this.agencySelected.emit();
   }
 
 }

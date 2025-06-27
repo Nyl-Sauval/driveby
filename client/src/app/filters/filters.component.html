@@ -20,10 +20,20 @@
       </select>
     </div>
 
+    <div class="filtres-category">
+      <label for="category">Categories :</label><br>
+      <select id="category" [(ngModel)]="selectedCategoryId">
+        <option value="">-- Toutes les categories --</option>
+        <option *ngFor="let category of categories" [value]="category.id">
+          {{ category.category_name }}
+        </option>
+      </select>
+    </div>
+
   </div>
 
   <div class="filter-result">
-    <button id="applyFiltersButton" class="apply-filter" (click)="onAgencyChange()">
+    <button id="applyFiltersButton" class="apply-filter" (click)="onSelectionChange()">
       Afficher les résultats
     </button>
   </div>

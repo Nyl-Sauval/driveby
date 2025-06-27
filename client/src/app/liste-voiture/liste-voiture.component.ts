@@ -17,12 +17,15 @@ export class ListeVoitureComponent implements OnInit {
   allCars: any[] = [];
   cars: any[] = [];
   agencies: any[] = [];
+  categories: any[] = [];
   selectedAgencyId: string = '';
+  selectedCategoryId: string = '';
 
   constructor(private carService: CarService) {}
 
   ngOnInit() {
     this.loadAgencies();
+    this.loadCategories();
     this.getCars();
   }
 
@@ -37,9 +40,21 @@ export class ListeVoitureComponent implements OnInit {
     });
   }
 
-  onAgencySelected(agencyId: string) {
-    console.log('Agence sélectionnée dans le parent:', agencyId);
-    this.selectedAgencyId = agencyId;
+  loadCategories() {
+    this.carService.getAllCategories().subscribe({
+      next: (data) => {
+        this.categories = data;
+      },
+      error: (err) => {
+        console.error('Erreur chargement categories :', err);
+      }
+    });
+  }
+
+  onSelectionChange(selection: { agencyId: string; categoryId: string }) {
+    this.selectedAgencyId = selection.agencyId;
+    console.log('Categorie sélectionnée dans le parent:', selection.categoryId);
+    this.selectedCategoryId = selection.categoryId;
     this.filterCars();
   }
 
@@ -58,11 +73,19 @@ export class ListeVoitureComponent implements OnInit {
   }
 
   filterCars() {
-    if (this.selectedAgencyId) {
-      const agencyIdNumber = Number(this.selectedAgencyId);
-      this.cars = this.allCars.filter(car => car.agency?.id === agencyIdNumber);
-    } else {
-      this.cars = this.allCars;
-    }
+    const agencyIdNumber = Number(this.selectedAgencyId);
+    const categoryIdNumber = Number(this.selectedCategoryId);
+
+    this.cars = this.allCars.filter(car => {
+      const matchesAgency = this.selectedAgencyId
+        ? car.agency?.id === agencyIdNumber
+        : true;
+
+      const matchesCategory = this.selectedCategoryId
+        ? car.categories?.some((cat: any) => cat.id === categoryIdNumber)
+        : true;
+
+      return matchesAgency && matchesCategory;
+    });
   }
 }
