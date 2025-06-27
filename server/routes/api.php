@@ -5,6 +5,9 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CarController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ClientController;
+use App\Http\Controllers\Api\LocationController;
+use App\Http\Controllers\Api\RetourController;
+use App\Http\Controllers\Api\RetraitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,5 +32,8 @@ Route::get('cars', [CarController::class, 'index'])->name('car.index');
 Route::get('cars/{carId}', [CarController::class, 'show'])->name('car.show');
 Route::get('agencies', [AgencyController::class, 'index']);
 Route::get('categories', [CategoryController::class, 'index']);
+Route::get('locations', [LocationController::class, 'index']);
+Route::get('retraits', [RetraitController::class, 'index']);
+Route::get('retours', [RetourController::class, 'index']);
 
 Route::put('client/{id}', [ClientController::class, 'update'])->name('client.update')->middleware('auth:sanctum');;

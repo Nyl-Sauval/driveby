@@ -35,4 +35,16 @@ export class CarService {
   getAllCategories() {
     return this.http.get<any[]>(`${this.baseUrl}/categories`);
   }
+
+  getAllLocations() {
+    return this.http.get<any[]>(`${this.baseUrl}/locations`);
+  }
+
+  getAllRetraits() {
+    return this.http.get<any[]>(`${this.baseUrl}/retraits`);
+  }
+
+  getAllRetours() {
+    return this.http.get<any[]>(`${this.baseUrl}/retours`);
+  }
 }
