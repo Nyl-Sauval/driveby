@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Retour extends Model
 
 {
-
+    use HasFactory;
+    //
     protected $table = 'retour';
     protected $primaryKey = 'return_id';
 

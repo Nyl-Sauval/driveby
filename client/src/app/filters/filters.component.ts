@@ -45,7 +45,9 @@ export class FiltersComponent {
     agencyId: string,
     categoryId: string,
     minSelected: number,
-    maxSelected: number
+    maxSelected: number,
+    departureDate: Date | null,
+    returnDate: Date | null
   }>();
 
   ngOnChanges(changes: SimpleChanges) {
@@ -72,7 +74,9 @@ export class FiltersComponent {
       agencyId: this.selectedAgencyId,
       categoryId: this.selectedCategoryId,
       minSelected: this.minSelected,
-      maxSelected: this.maxSelected
+      maxSelected: this.maxSelected,
+      departureDate: this.departureDate,
+      returnDate: this.returnDate
     });
   }
 
@@ -82,12 +86,16 @@ export class FiltersComponent {
     this.selectedCategoryId = '';
     this.minSelected = this.initialMinPrice;
     this.maxSelected = this.initialMaxPrice;
+    this.departureDate = null;
+    this.returnDate = null;
 
     this.selected.emit({
       agencyId: '',
       categoryId: '',
       minSelected: this.initialMinPrice,
-      maxSelected: this.initialMaxPrice
+      maxSelected: this.initialMaxPrice,
+      departureDate: this.departureDate,
+      returnDate: this.returnDate
     });
   }
 

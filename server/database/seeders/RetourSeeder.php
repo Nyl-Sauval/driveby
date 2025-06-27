@@ -13,7 +13,7 @@ class RetourSeeder extends Seeder
     public function run(): void
     {
         Retour::factory()->create([
-            'return_date' => '2021-07-27',
+            'return_date' => '2025-06-21',
             'return_status_car' => 'damaged',
             'return_mileage' => '155060.417',
             'return_default' => 'Nesciunt quia dolores sunt est dignissimos porro accusamus officiis.',

@@ -3,7 +3,6 @@ import { CarService } from '../service/car.service';
 import {NgFor} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {FiltersComponent} from '../filters/filters.component';
-import {MatIcon} from '@angular/material/icon';
 import {CardVoitureComponent} from '../card-voiture/card-voiture.component';
 
 @Component({
@@ -23,6 +22,8 @@ export class ListeVoitureComponent implements OnInit {
   selectedCategoryId: string = '';
   minPrice: number = 0;
   maxPrice: number = 0;
+  departureDate: Date | null = null;
+  returnDate: Date | null = null;
 
   constructor(private carService: CarService) {}
 
@@ -67,12 +68,23 @@ export class ListeVoitureComponent implements OnInit {
     });
   }
 
-  onSelectionChange(selection: { agencyId: string; categoryId: string, minSelected: number, maxSelected: number }) {
+  onSelectionChange(selection: {
+    agencyId: string;
+    categoryId: string;
+    minSelected: number;
+    maxSelected: number;
+    departureDate: Date | null;
+    returnDate: Date | null;
+  }) {
     this.selectedAgencyId = selection.agencyId;
     this.selectedCategoryId = selection.categoryId;
     this.minPrice = selection.minSelected;
     this.maxPrice = selection.maxSelected;
-    console.log('Prix sélectionnée dans le parent:', selection.minSelected, selection.maxSelected);
+    this.departureDate = selection.departureDate;
+    this.returnDate = selection.returnDate;
+
+    console.log('Dates sélectionnées :', this.departureDate, this.returnDate);
+
     this.filterCars();
   }
 
@@ -112,6 +124,9 @@ export class ListeVoitureComponent implements OnInit {
 
       return matchesAgency && matchesCategory && matchesMinPrice && matchesMaxPrice;
     });
+
+    const filtered = this.filterAvailableCarsByDate(this.cars, this.departureDate, this.returnDate);
+    this.cars = filtered;
   }
 
   getMinPrice() {
@@ -123,4 +138,42 @@ export class ListeVoitureComponent implements OnInit {
     if (!this.allCars.length) return 0;
     return Math.max(...this.allCars.map(car => car.price));
   }
+
+  filterAvailableCarsByDate(cars: any[], departureDate: Date | null, returnDate: Date | null): any[] {
+    if (!departureDate && !returnDate) {
+      return cars;
+    }
+
+    const returnDateToUse = returnDate || new Date();
+
+    return cars.filter(car => {
+      const carLocations = this.locations.filter(loc => loc.car_id === car.id);
+
+      const isAvailable = !carLocations.some(loc => {
+        if (!loc.retrait || !loc.retour) return false;
+
+        const retraitDate = new Date(loc.retrait.withdrawal_date);
+        const retourDate = new Date(loc.retour.return_date);
+
+        console.log('retrait, retour ',retraitDate, retourDate);
+
+        if (departureDate && returnDate) {
+          return (retraitDate <= returnDate) && (retourDate >= departureDate);
+        }
+
+        if (departureDate && !returnDate) {
+          return retourDate >= departureDate;
+        }
+
+        if (!departureDate && returnDate) {
+          return retraitDate <= returnDateToUse;
+        }
+
+        return false;
+      });
+
+      return isAvailable;
+    });
+  }
+
 }
