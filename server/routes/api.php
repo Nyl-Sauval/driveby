@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->get('profil', [AuthController::class, 'me'])-
 Route::middleware('auth:sanctum')->get('client/{id}', [ClientController::class, 'show'])->name('client.show');
 
 Route::get('cars', [CarController::class, 'index'])->name('car.index');
+Route::get('cars/{carId}', [CarController::class, 'show'])->name('car.show');
 Route::get('agencies', [AgencyController::class, 'index']);
 
 Route::put('client/{id}', [ClientController::class, 'update'])->name('client.update')->middleware('auth:sanctum');;
-
