@@ -44,22 +44,22 @@ export class ProfilComponent  implements OnInit {
       next: (response: any) => {
         console.log(response);
 
-        const client = response.data;
+        const client = response.client;
         console.log(client);
         this.id = client.id;
-        this.name = client.client_name;
-        this.fistname = client.client_firstname;
-        this.email = client.client_email;
-        this.phone = client.client_phone;
-        this.birth = client.client_birth;
-        this.address = client.client_address;
-        this.postal_code = client.client_postal_code;
-        this.city = client.client_city;
-        this.country = client.client_country;
-        this.license_number = client.client_license_number;
-        this.license_issue_date = client.client_license_issue_date;
-        this.license_expiry_date = client.client_license_expiry_date;
-        this.license_country = client.client_license_country;
+        this.name = client.name;
+        this.fistname = client.firstname;
+        this.email = client.email;
+        this.phone = client.phone;
+        this.birth = client.birth;
+        this.address = client.address;
+        this.postal_code = client.postal_code;
+        this.city = client.city;
+        this.country = client.country;
+        this.license_number = client.license_number;
+        this.license_issue_date = client.license_issue_date;
+        this.license_expiry_date = client.license_expiry_date;
+        this.license_country = client.license_country;
 
       },
       error: (err) => {

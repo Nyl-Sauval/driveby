@@ -24,6 +24,14 @@ export class CarService {
     return this.http.get<any[]>(`${this.baseUrl}/agencies`);
   }
 
+  getCarById(id: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/cars/${id}`, {
+      headers: new HttpHeaders({
+        Accept: 'application/json'
+      })
+    });
+  }
+
   getAllCategories() {
     return this.http.get<any[]>(`${this.baseUrl}/categories`);
   }
