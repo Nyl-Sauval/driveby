@@ -18,8 +18,8 @@ return new class extends Migration
             $table->decimal('withdrawal_mileage', 15, 3);
             $table->string('withdrawal_default', 500)->nullable();
 
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('location_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('user')->onDelete('cascade');
+            $table->foreignId('location_id')->constrained('location')->onDelete('cascade');
 
             $table->timestamps();
         });

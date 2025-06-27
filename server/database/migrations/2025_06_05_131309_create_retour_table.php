@@ -18,8 +18,8 @@ return new class extends Migration
             $table->decimal('return_mileage',15,3);
             $table->string('return_default',500)->nullable();
 
-            $table->foreignId('user_id')->constrained('cascade');
-            $table->foreignId('location_id')->constrained('locations')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('user')->onDelete('cascade');
+            $table->foreignId('location_id')->constrained('location')->onDelete('cascade');
             $table->timestamps();
         });
     }
