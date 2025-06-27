@@ -1,22 +1,22 @@
 
-<a [routerLink]="['/voiture', car.id]" class="back-link">
   <mat-card class="car-card" *ngIf="car">
-    <mat-card-header>
-      <mat-card-title>{{ car.brand }} {{ car.model }} <span class="similaire">ou similaire</span></mat-card-title>
-    </mat-card-header>
-    <div class="category-container">
-      <mat-chip class="category" *ngFor="let category of car.categories">{{ category.name }}</mat-chip>
-      <mat-chip class="category">{{ car.fuel }}</mat-chip>
-    </div>
+    <a [routerLink]="['/voiture', car.id]" class="back-link">
+      <mat-card-header>
+        <mat-card-title>{{ car.brand }} {{ car.model }} <span class="similaire">ou similaire</span></mat-card-title>
+      </mat-card-header>
+      <div class="category-container">
+        <mat-chip class="category" *ngFor="let category of car.categories">{{ category.name }}</mat-chip>
+        <mat-chip class="category">{{ car.fuel }}</mat-chip>
+      </div>
 
-      <img mat-card-image *ngIf="car.picture" [src]="car.picture" alt="" />
+        <img mat-card-image *ngIf="car.picture" [src]="car.picture" alt="" />
 
-    <mat-card-content>
+      <mat-card-content>
 
-      <h4>Agence {{car.agency?.name}}</h4>
+        <h4>Agence {{car.agency?.name}}</h4>
 
-    </mat-card-content>
-
+      </mat-card-content>
+    </a>
     <div class="bottom-card">
       <p><span class="price">{{car.price}}</span>€ /jour</p>
       <mat-card-actions>
@@ -24,4 +24,3 @@
       </mat-card-actions>
     </div>
   </mat-card>
-</a>

@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   width: 350px;
-  height: 575px;
+  height: 450px;
   margin: 1rem auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   padding: 15px;
@@ -46,7 +46,16 @@ mat-card-actions {
   justify-content: space-between;
 }
 
+img{
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
 a {
   text-decoration: none;
   color: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
