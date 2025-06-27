@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Api\RetourController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,13 +29,29 @@ class Location extends Model
         return $this->belongsToMany(Option::class);
     }
 
-    public function car()
-    {
-        return $this->belongsTo(Car::class, 'car_id');
-    }
-
     public function client()
     {
-        return $this->belongsTo(Client::class, 'client_id');
+        return $this->belongsTo(Client::class);
     }
+
+    public function car()
+    {
+        return $this->belongsTo(Car::class);
+    }
+
+    public function guarantee()
+    {
+        return $this->belongsTo(Guarantee::class);
+    }
+
+    public function retrait()
+    {
+        return $this->hasOne(Retrait::class, 'location_id');
+    }
+
+    public function retour()
+    {
+        return $this->hasOne(Retour::class, 'location_id');
+    }
+
 }

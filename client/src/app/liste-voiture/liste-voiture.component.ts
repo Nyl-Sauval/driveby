@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CarService } from '../service/car.service';
 import {NgFor} from '@angular/common';
-import {CardVoitureComponent} from '../card-voiture/card-voiture.component';
 import {FormsModule} from '@angular/forms';
 import {FiltersComponent} from '../filters/filters.component';
 import {MatIcon} from '@angular/material/icon';
+import {CardVoitureComponent} from '../card-voiture/card-voiture.component';
 
 @Component({
   selector: 'app-liste-voiture',
   standalone: true,
-  imports: [NgFor, CardVoitureComponent, FormsModule, FiltersComponent, MatIcon],
+  imports: [NgFor, FormsModule, FiltersComponent, CardVoitureComponent],
   templateUrl: './liste-voiture.component.html',
   styleUrl: './liste-voiture.component.css'
 })
@@ -18,6 +18,7 @@ export class ListeVoitureComponent implements OnInit {
   cars: any[] = [];
   agencies: any[] = [];
   categories: any[] = [];
+  locations: any[] = [];
   selectedAgencyId: string = '';
   selectedCategoryId: string = '';
   minPrice: number = 0;
@@ -29,6 +30,7 @@ export class ListeVoitureComponent implements OnInit {
     this.loadAgencies();
     this.loadCategories();
     this.getCars();
+    this.loadLocations();
   }
 
   loadAgencies() {
@@ -49,6 +51,18 @@ export class ListeVoitureComponent implements OnInit {
       },
       error: (err) => {
         console.error('Erreur chargement categories :', err);
+      }
+    });
+  }
+
+  loadLocations() {
+    this.carService.getAllLocations().subscribe({
+      next: (data) => {
+        this.locations = data;
+        console.log(this.locations);
+      },
+      error: (err) => {
+        console.error('Erreur chargement locations :', err);
       }
     });
   }
