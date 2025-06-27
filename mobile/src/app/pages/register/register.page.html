@@ -1,0 +1,20 @@
+<ion-content class="register-background" fullscreen>
+  <div class="register-wrapper">
+    <div class="register-popup">
+
+      <!-- ✅ LOGO avec flèche -->
+      <div class="logo">DriveBy</div>
+
+      <h2>Créer un compte</h2>
+
+      <ion-input placeholder="Nom" [(ngModel)]="name"></ion-input>
+      <ion-input placeholder="Prénom" [(ngModel)]="firstname"></ion-input>
+      <ion-input placeholder="Email" [(ngModel)]="email" type="email"></ion-input>
+      <ion-input placeholder="Téléphone" [(ngModel)]="phone"></ion-input>
+      <ion-input placeholder="Date de naissance" [(ngModel)]="dob" type="date"></ion-input>
+      <ion-input placeholder="Mot de passe" [(ngModel)]="password" type="password"></ion-input>
+
+      <ion-button expand="block" (click)="register()">S'inscrire</ion-button>
+    </div>
+  </div>
+</ion-content>
