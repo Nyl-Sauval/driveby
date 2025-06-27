@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {CarResponse} from '../models/car.model';
@@ -22,6 +22,14 @@ export class CarService {
 
   getAllAgencies() {
     return this.http.get<any[]>(`${this.baseUrl}/agencies`);
+  }
+
+  getCarById(id: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/cars/${id}`, {
+      headers: new HttpHeaders({
+        Accept: 'application/json'
+      })
+    });
   }
 
   getAllCategories() {

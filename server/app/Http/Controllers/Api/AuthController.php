@@ -72,8 +72,5 @@ class AuthController extends BaseController
             return $this->sendError('Utilisateur non authentifié', [], 401);
         }
 
-        $client = Client::find($user->client_id);
-
-        return $this->sendResponse($client, 'Informations de l\'utilisateur.');
-    }
+        return response()->json(new UserResource($user->load('client')));}
 }

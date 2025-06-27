@@ -8,6 +8,7 @@ import {LoginComponent} from './app/login/login.component';
 import {ProfilComponent} from './app/profil/profil.component';
 import {ListeVoitureComponent} from './app/liste-voiture/liste-voiture.component';
 import {ClientEditComponent} from './app/client-edit/client-edit.component';
+import {DetailVoitureComponent} from './app/detail-voiture/detail-voiture.component';
 import {provideNativeDateAdapter} from '@angular/material/core';
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'search', component: ListeVoitureComponent },
   { path: 'profil', component: ProfilComponent },
   { path: 'client/:id/edit', component: ClientEditComponent},
+  { path: 'voiture/:id', component: DetailVoitureComponent},
   { path: '', component: HomepageComponent },
 ];
 
