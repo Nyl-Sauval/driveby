@@ -2,6 +2,7 @@ body {
   margin: 0;
   font-size: 16px;
   height: 100vh;
+  color: white;
 }
 
 .main {
@@ -13,24 +14,41 @@ body {
 
 
 header {
-  height: 80px;
   background-color: black;
-  color: white;
-  padding: 20px;
+  height: 30px;
+  padding: 20px 50px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  font-weight: 700;
 
-  .left {
-    padding-left: 20px;
+  .button-profil {
+    border: none;
+    background: black;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+
+    .mat-icon {
+      margin-right: 10px;
+    }
   }
+}
+
+.logo{
+  height: 30px;
+  padding: 0;
+  margin: 0;
+}
+
+.logo-link{
+  padding: 0;
+  margin: 0;
 }
 
 footer {
   height: 80px;
   padding: 20px;
-  background-color: #efeeef;
+  background-color: white;
   text-align: center;
   align-content: center;
 
@@ -39,4 +57,29 @@ footer {
     font-size: 12px;
   }
 }
+
+.button-connexion {
+  border: 1px solid white;
+  border-radius: 20px;
+  font-size: 15px;
+  padding: 5px;
+  color: white;
+  background-color: rgb(0, 0, 0, 0.7);
+  .mat-icon {
+    height: auto;
+    width: 20px;
+    font-size: 20px;
+    color: white;
+  }
+}
+
+.right-part{
+  display: flex;
+  gap: 15px;
+}
+
+.mat-mdc-button:not(:disabled) {
+  color: white;
+}
+
 

@@ -8,6 +8,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatError, MatLabel} from '@angular/material/form-field';
 import {NgIf} from '@angular/common';
 import { MatDialogRef } from '@angular/material/dialog';
+import {EnregistrementComponent} from '../enregistrement/enregistrement.component';
 
 
 @Component({
@@ -28,7 +29,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class LoginComponent {
   loginForm;
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private snackBar: MatSnackBar, private dialogRef: MatDialogRef<LoginComponent>,
+  constructor(private fb: FormBuilder, protected authService: AuthService, private router: Router, private snackBar: MatSnackBar, private loginDialogRef: MatDialogRef<LoginComponent>,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -55,7 +56,7 @@ export class LoginComponent {
             duration: 5000,
             panelClass: ['snackbar-success']
           });
-          this.dialogRef.close(true);
+          this.loginDialogRef.close(true);
         },
         error: (error: any) => {
           console.error('Erreur de connexion', error);

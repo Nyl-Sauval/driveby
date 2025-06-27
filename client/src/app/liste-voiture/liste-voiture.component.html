@@ -1,0 +1,31 @@
+<h2>Liste des voitures</h2>
+
+<div class="filtres">
+
+  <input type="checkbox" id="toggleSidebar" hidden>
+  <label for="toggleSidebar" class="toggle-button-filters">
+    <span class="filter-text">Affiner</span>
+  </label>
+
+  <div id="sidebarFilters" class="sidebarFilters">
+    <app-filters
+      [agencies]="agencies"
+      [categories]="categories"
+      [minPrice]="minPrice"
+      [maxPrice]="maxPrice"
+      [selectedAgencyId]="selectedAgencyId"
+      [selectedCategoryId]="selectedCategoryId"
+      [minSelected]="minPrice"
+      [maxSelected]="maxPrice"
+      (selected)="onSelectionChange($event)">
+    </app-filters>
+
+  </div>
+  <label for="toggleSidebar" class="overlayFilters"></label>
+
+</div>
+
+<div class="voiture-container">
+  <app-detail-voiture *ngFor="let car of cars" [car]="car"></app-detail-voiture>
+</div>
+

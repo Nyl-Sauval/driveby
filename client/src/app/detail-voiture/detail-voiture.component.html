@@ -1,0 +1,52 @@
+<ng-container *ngIf="car">
+  <mat-card class="car-detail-card">
+    <div class="container">
+      <mat-card-header>
+        <mat-card-title>{{ car.brand }} {{ car.model }}</mat-card-title>
+        <mat-card-subtitle>{{ car.mileage }} km • {{ car.fuel }}</mat-card-subtitle>
+      </mat-card-header>
+      <div class="car-attributes">
+        <mat-chip class="category" *ngFor="let category of car.categories">{{ category.name }}</mat-chip>
+        <mat-chip class="category">{{ car.fuel }}</mat-chip>
+      </div>
+      <div *ngIf="this.auth.isAdmin$ | async" class="admin-container">
+        <mat-chip class="category">{{ car.registration }}</mat-chip>
+      </div>
+
+      <img mat-card-image *ngIf="car.picture" [src]="car.picture" alt="Photo de la voiture" />
+
+      <div *ngIf="this.auth.isAdmin$ | async" class="admin-container">
+        <p class="default">{{ car.default }}</p>
+      </div>
+      <mat-card-content>
+        <div class="car-attributes">
+          <mat-chip><mat-icon>payments</mat-icon> {{ car.price }} €/jour</mat-chip>
+          <div class="agency-container">
+            <p class="agency-name">
+              {{ car.agency.name }}
+            </p>
+            <p class="agency-description">
+              {{ car.agency.description }}
+            </p>
+            <p class="agency-address">
+              {{ car.agency.address }}, {{ car.agency.postal_code }} {{ car.agency.city }}
+            </p>
+            <p class="agency-schedule">
+              <mat-icon>schedule</mat-icon>
+              {{ car.agency.schedule }}
+            <p class="agency-email">
+              <mat-icon>alternate_email</mat-icon> {{ car.agency.email }}
+            </p>
+            <p class="agency-phone">
+              <mat-icon>call</mat-icon> {{ car.agency.phone }}
+            </p>
+            <p *ngIf="car.agency.website" class="agency_website">
+              <mat-icon>language</mat-icon>
+              <a [href]="car.agency.website" target="_blank">{{ car.agency.website }}</a>
+            </p>
+          </div>
+        </div>
+      </mat-card-content>
+    </div>
+  </mat-card>
+</ng-container>

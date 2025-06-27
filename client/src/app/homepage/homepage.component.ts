@@ -4,23 +4,21 @@ import {RouterLink} from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialog} from '@angular/material/dialog';
 import {LoginComponent} from '../login/login.component';
-
+import {AuthService} from '../service/auth.service';
+import {NgIf} from '@angular/common';
+import {EnregistrementComponent} from '../enregistrement/enregistrement.component';
 
 @Component({
   selector: 'app-homepage',
   imports: [
-    MatButtonModule, RouterLink, MatIconModule
+    MatButtonModule, MatIconModule, RouterLink
   ],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent {
 
-  constructor(private dialog: MatDialog) {}
+  constructor() {}
 
-  openLogin() {
-    this.dialog.open(LoginComponent, {
-      width: '400px',
-    });
-  }
+
 }

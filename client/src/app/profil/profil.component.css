@@ -1,0 +1,60 @@
+.profil-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .profil-details {
+    background-color: #cfcdca;
+    border: 2px solid #3e3e3a;
+    border-radius: 20px;
+    box-shadow: 10px 5px 5px #1e1e1e;
+    width: 800px;
+    padding: 50px;
+    align-content: center;
+    text-align: center;
+    margin: 20px;
+
+    .mat-icon-profil {
+      font-size: 60px;
+      width: 100px;
+      height: 60px;
+    }
+
+    .profil-email {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .profil-phone {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .profil-birth {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .client_informations{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+    }
+
+    .info{
+      text-align: start;
+
+      h2{
+        text-align: center;
+      }
+    }
+  }
+}

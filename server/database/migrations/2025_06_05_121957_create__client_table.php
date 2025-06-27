@@ -18,6 +18,14 @@ return new class extends Migration
             $table->string('client_email');
             $table->string('client_phone');
             $table->dateTime('client_birth');
+            $table->string('client_address')->nullable();
+            $table->string('client_postal_code')->nullable();
+            $table->string('client_country')->nullable();
+            $table->string('client_city')->nullable();
+            $table->string('client_license_number')->nullable();
+            $table->dateTime('client_license_issue_date')->nullable();
+            $table->dateTime('client_license_expiry_date')->nullable();
+            $table->string('client_license_country')->nullable();
             $table->timestamps();
         });
 

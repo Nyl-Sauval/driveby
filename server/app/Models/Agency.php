@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Agency extends Model
 {
+
+    protected $table = 'agency';
+
     protected $fillable = [
         'agency_name',
         'agency_description',
@@ -17,4 +20,9 @@ class Agency extends Model
         'agency_phone',
         'agency_website',
     ];
+
+    public function cars()
+    {
+        return $this->hasMany(Car::class);
+    }
 }

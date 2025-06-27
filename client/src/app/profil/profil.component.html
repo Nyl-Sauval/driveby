@@ -1,0 +1,59 @@
+<div class="profil-content">
+
+  <h1>Votre profil</h1>
+
+  <div class="profil-details">
+    <mat-icon class="mat-icon-profil">account_circle</mat-icon>
+    <h1>{{fistname}} {{ name }}</h1>
+    <div class="client_informations">
+      <div class="personal_infos info">
+        <h2>Informations<br>personnelles</h2>
+        <p class="profil-email">
+          <mat-icon>alternate_email</mat-icon>
+          {{email}}
+        </p>
+        <p class="profil-phone">
+          <mat-icon>call</mat-icon>
+          {{phone}}
+        </p>
+        <p class="profil-birth">
+          <mat-icon>cake</mat-icon>
+          {{birth}}
+        </p>
+      </div>
+      <div class="address_content info">
+        <h2>Adresse</h2>
+        <p class="profil-address">
+          <mat-icon>home</mat-icon>
+          {{address}}
+        </p>
+        <p>
+          <mat-icon>home</mat-icon>
+          {{postal_code}} {{city}}, {{country}}
+        </p>
+      </div>
+      <div class="license_form info">
+        <h2>Permis de conduire</h2>
+        <p class="profil-license">
+          <mat-icon>badge</mat-icon>
+          {{license_number}}
+        </p>
+        <p class="issue_date" *ngIf="license_issue_date">
+          <mat-icon>event</mat-icon>
+          {{license_issue_date}}
+        </p>
+        <p class="expiry_date" *ngIf="license_expiry_date">
+          <mat-icon>event</mat-icon>
+          {{license_expiry_date}}
+        </p>
+        <p class="license_country" *ngIf="license_country">
+          <mat-icon>flag</mat-icon>
+          {{license_country}}
+        </p>
+      </div>
+  </div>
+
+  <div class="profil-actions">
+    <button mat-raised-button color="primary" [routerLink]="['/client', id, 'edit']">Modifier</button>
+  </div>
+</div>
