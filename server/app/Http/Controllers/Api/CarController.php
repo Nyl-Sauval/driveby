@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CarCollection;
 use App\Http\Resources\CarResource;
 use App\Models\Car;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CarController extends Controller
 {

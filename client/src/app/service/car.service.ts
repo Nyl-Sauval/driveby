@@ -31,4 +31,8 @@ export class CarService {
       })
     });
   }
+
+  getAllCategories() {
+    return this.http.get<any[]>(`${this.baseUrl}/categories`);
+  }
 }
