@@ -9,6 +9,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {ProfilComponent} from './app/profil/profil.component';
 import {ListeVoitureComponent} from './app/liste-voiture/liste-voiture.component';
 import {ClientEditComponent} from './app/client-edit/client-edit.component';
+import {DetailVoitureComponent} from './app/detail-voiture/detail-voiture.component';
 
 const routes: Routes = [
   { path: 'enregistrement', component: EnregistrementComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'search', component: ListeVoitureComponent },
   { path: 'profil', component: ProfilComponent },
   { path: 'client/:id/edit', component: ClientEditComponent},
+  { path: 'voiture/:id', component: DetailVoitureComponent},
   { path: '', component: HomepageComponent },
 ];
 

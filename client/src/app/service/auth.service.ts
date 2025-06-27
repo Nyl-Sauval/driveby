@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {environment} from '../../environments/environment';
 
@@ -55,5 +55,22 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     this.router.navigate(['/']);
+  }
+
+  private isAdminSubject = new BehaviorSubject<boolean>(false);
+  isAdmin$ = this.isAdminSubject.asObservable();
+
+  checkIfAdmin(): void {
+    this.me().subscribe({
+      next: (response: any) => {
+        const role = response?.role;
+        console.log("role : " + role);
+        this.isAdminSubject.next(role === 'admin');
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération du client', err);
+        this.isAdminSubject.next(false);
+      }
+    });
   }
 }

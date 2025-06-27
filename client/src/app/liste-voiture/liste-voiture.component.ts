@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CarService } from '../service/car.service';
 import {NgFor} from '@angular/common';
-import {DetailVoitureComponent} from '../detail-voiture/detail-voiture.component';
+import {CardVoitureComponent} from '../card-voiture/card-voiture.component';
 import {FormsModule} from '@angular/forms';
 import {FiltersComponent} from '../filters/filters.component';
 import {MatIcon} from '@angular/material/icon';
@@ -9,7 +9,7 @@ import {MatIcon} from '@angular/material/icon';
 @Component({
   selector: 'app-liste-voiture',
   standalone: true,
-  imports: [NgFor, DetailVoitureComponent, FormsModule, FiltersComponent, MatIcon],
+  imports: [NgFor, CardVoitureComponent, FormsModule, FiltersComponent, MatIcon],
   templateUrl: './liste-voiture.component.html',
   styleUrl: './liste-voiture.component.css'
 })
