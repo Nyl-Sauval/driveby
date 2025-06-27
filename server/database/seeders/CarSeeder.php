@@ -150,6 +150,8 @@ class CarSeeder extends Seeder
             ['car_id' => 10, 'category_id' => 6],
         ];
 
+
+
         DB::table('car_category')->insert($carCategories);
     }
 }
