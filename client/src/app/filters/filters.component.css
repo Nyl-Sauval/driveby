@@ -3,12 +3,19 @@
   justify-content: flex-end;
 
   .closeSidebar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #e4e3e1;
     font-size: 12px;
     padding: 10px;
     cursor: pointer;
     border: none;
   }
+}
+
+#closeSidebarFilters {
+
 }
 
 .filter-result {
