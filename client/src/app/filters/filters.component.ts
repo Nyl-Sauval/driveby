@@ -2,13 +2,25 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 import {FormsModule} from '@angular/forms';
 import {NgForOf} from '@angular/common';
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import {MatFormField, MatInput, MatSuffix} from "@angular/material/input";
+import {MatLabel} from "@angular/material/form-field";
 
 @Component({
   selector: 'app-filters',
   imports: [
     MatIcon,
     FormsModule,
-    NgForOf
+    NgForOf,
+    MatFormField,
+    MatLabel,
+    MatFormField,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatSuffix,
+    MatInput,
+    MatFormField,
+    MatDatepickerInput
   ],
   templateUrl: './filters.component.html',
   styleUrl: './filters.component.css'
@@ -22,6 +34,8 @@ export class FiltersComponent {
   @Input() maxPrice: number = 0;
   @Input() minSelected: number = 0;
   @Input() maxSelected: number = 0;
+  @Input() departureDate: Date | null = null;
+  @Input() returnDate: Date | null = null;
 
   @Output() selected = new EventEmitter<{
     agencyId: string,

@@ -14,10 +14,6 @@
   }
 }
 
-#closeSidebarFilters {
-
-}
-
 .filter-result {
   display: flex;
   justify-content: center;
@@ -63,6 +59,8 @@
       padding: 10px 20px;
       margin-top: 10px;
       margin-left: 20px;
+      background-color: #e0e2ec;
+      box-shadow: 10px 5px 5px #62605b;
     }
   }
 
@@ -75,6 +73,8 @@
       padding: 10px 20px;
       margin-top: 10px;
       margin-left: 20px;
+      background-color: #e0e2ec;
+      box-shadow: 10px 5px 5px #62605b;
     }
   }
 
@@ -89,12 +89,26 @@
         margin-top: 10px;
         margin-left: 20px;
 
+        #price-from, #price-to {
+          background-color: #e0e2ec;
+          box-shadow: 10px 5px 5px #62605b;
+        }
+
         .min-input, .max-input {
           font-size: 16px;
           padding: 10px 20px;
           width: 80px;
         }
       }
+    }
+  }
+
+  .filter-date {
+    margin-left: 20px;
+    margin-top: 20px;
+
+    .date-input {
+      margin-left: 20px;
     }
   }
 }

@@ -60,6 +60,26 @@
         <input type="hidden" name="Price" id="price" value="">
       </div>
     </div>
+
+    <div class="filter-date">
+      <p>Dates</p>
+      <div class="date-input">
+        <mat-form-field appearance="fill">
+          <mat-label>Date de départ</mat-label>
+          <input matInput [matDatepicker]="picker1" [(ngModel)]="departureDate">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Date de retour</mat-label>
+          <input matInput [matDatepicker]="picker2" [(ngModel)]="returnDate" [min]="departureDate">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
   </div>
 
   <div class="filter-result">
