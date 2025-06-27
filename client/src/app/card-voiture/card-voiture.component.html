@@ -20,7 +20,6 @@
     <div class="bottom-card">
       <p><span class="price">{{car.price}}</span>€ /jour</p>
       <mat-card-actions>
-       <button mat-raised-button color="primary">Réserver</button>
-      </mat-card-actions>
+        <button mat-raised-button color="primary" [routerLink]="['/voiture', car.id, 'rent']">Réserver</button>      </mat-card-actions>
     </div>
   </mat-card>

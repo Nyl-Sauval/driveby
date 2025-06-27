@@ -1,0 +1,151 @@
+<mat-horizontal-stepper [linear]="true" #stepper>
+  <!-- Étape 1 : Réservation -->
+  <mat-step [stepControl]="reservationGroup">
+    <form [formGroup]="reservationGroup">
+      <ng-template matStepLabel>Infos réservation</ng-template>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Date de début</mat-label>
+        <input matInput type="date" formControlName="startDate">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Date de fin</mat-label>
+        <input matInput type="date" formControlName="endDate">
+      </mat-form-field>
+
+      <div class="step-actions">
+        <button mat-button matStepperNext>Suivant</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Étape 2 : Client -->
+  <mat-step [stepControl]="clientGroup">
+    <form [formGroup]="clientGroup">
+      <ng-template matStepLabel>Infos client</ng-template>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nom</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Prénom</mat-label>
+        <input matInput formControlName="firstname">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Téléphone</mat-label>
+        <input matInput formControlName="phone">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Date de naissance</mat-label>
+        <input matInput type='date' formControlName="birth">
+      </mat-form-field>
+
+      <div class="step-actions">
+        <button mat-button matStepperPrevious>Retour</button>
+        <button mat-button matStepperNext>Suivant</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Étape 2.1 : Adresse -->
+  <mat-step>
+    <form [formGroup]="addressGroup">
+      <ng-template matStepLabel>Adresse</ng-template>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Adresse</mat-label>
+        <input matInput formControlName="address">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Code postal</mat-label>
+        <input matInput formControlName="postal_code">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Ville</mat-label>
+        <input matInput formControlName="city">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Pays</mat-label>
+        <input matInput formControlName="country">
+      </mat-form-field>
+
+      <div class="step-actions">
+        <button mat-button matStepperPrevious>Retour</button>
+        <button mat-button matStepperNext>Suivant</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Étape 2.2 : Permis -->
+  <mat-step>
+    <form [formGroup]="licenseGroup">
+      <ng-template matStepLabel>Permis</ng-template>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Numéro de permis</mat-label>
+        <input matInput formControlName="license_number">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Date de délivrance</mat-label>
+        <input matInput type="date" formControlName="license_issue_date">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Date d'expiration</mat-label>
+        <input matInput type="date" formControlName="license_expiry_date">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Pays de délivrance</mat-label>
+        <input matInput formControlName="license_country">
+      </mat-form-field>
+
+      <div class="step-actions">
+        <button mat-button matStepperPrevious>Retour</button>
+        <button mat-button matStepperNext>Suivant</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Étape 3 : Récap -->
+  <mat-step>
+    <ng-template matStepLabel>Récapitulatif</ng-template>
+
+    <p><strong>Début :</strong> {{ reservationValues.startDate }}</p>
+    <p><strong>Fin :</strong> {{ reservationValues.endDate }}</p>
+    <p><strong>Agence :</strong> {{ reservationValues.agencyLocation }}</p>
+
+    <p><strong>Nom :</strong> {{ clientValues.name }}</p>
+    <p><strong>Prénom :</strong> {{ clientValues.firstname }}</p>
+    <p><strong>Email :</strong> {{ clientValues.email }}</p>
+    <p><strong>Téléphone :</strong> {{ clientValues.phone }}</p>
+    <p><strong>Date de naissance :</strong> {{ clientValues.birth }}</p>
+    <p><strong>Adresse :</strong> {{ addressValues.address }}</p>
+    <p><strong>Code postal :</strong> {{ addressValues.postal_code }}</p>
+    <p><strong>Ville :</strong> {{ addressValues.city }}</p>
+    <p><strong>Pays :</strong> {{ addressValues.country }}</p>
+    <p><strong>Numéro de permis :</strong> {{ licenseValues.license_number }}</p>
+    <p><strong>Date de délivrance :</strong> {{ licenseValues.license_issue_date }}</p>
+    <p><strong>Date d'expiration du permis :</strong> {{ licenseValues.license_expiry_date }}</p>
+
+
+    <div class="step-actions">
+      <button mat-button matStepperPrevious>Retour</button>
+      <button mat-button color="primary" (click)="onSubmit()">Confirmer la réservation</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
