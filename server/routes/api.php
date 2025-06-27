@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CarController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ClientController;
+use App\Http\Controllers\Api\LocationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +32,6 @@ Route::get('agencies', [AgencyController::class, 'index']);
 Route::get('categories', [CategoryController::class, 'index']);
 
 Route::put('client/{id}', [ClientController::class, 'update'])->name('client.update')->middleware('auth:sanctum');;
+
+Route::get('locations', [LocationController::class, 'index'])->name('location.index')->middleware('auth:sanctum');
+Route::post('locations', [LocationController::class, 'create'])->name('location.create')->middleware('auth:sanctum');
