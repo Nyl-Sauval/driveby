@@ -11,10 +11,15 @@
     <app-filters
       [agencies]="agencies"
       [categories]="categories"
+      [minPrice]="minPrice"
+      [maxPrice]="maxPrice"
       [selectedAgencyId]="selectedAgencyId"
       [selectedCategoryId]="selectedCategoryId"
-      (agencySelected)="onSelectionChange($event)">
+      [minSelected]="minPrice"
+      [maxSelected]="maxPrice"
+      (selected)="onSelectionChange($event)">
     </app-filters>
+
   </div>
   <label for="toggleSidebar" class="overlayFilters"></label>
 

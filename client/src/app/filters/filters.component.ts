@@ -18,21 +18,41 @@ export class FiltersComponent {
   @Input() categories: any[] = [];
   @Input() selectedAgencyId: string = '';
   @Input() selectedCategoryId: string = '';
+  @Input() minPrice: number = 0;
+  @Input() maxPrice: number = 0;
+  @Input() minSelected: number = 0;
+  @Input() maxSelected: number = 0;
 
-  @Output() agencySelected = new EventEmitter<{ agencyId: string, categoryId: string }>();
+  @Output() selected = new EventEmitter<{
+    agencyId: string,
+    categoryId: string,
+    minSelected: number,
+    maxSelected: number
+  }>();
 
   onSelectionChange() {
     console.log(this.selectedCategoryId);
-    this.agencySelected.emit({
+    this.selected.emit({
       agencyId: this.selectedAgencyId,
-      categoryId: this.selectedCategoryId
+      categoryId: this.selectedCategoryId,
+      minSelected: this.minSelected,
+      maxSelected: this.maxSelected
     });
   }
 
 
   resetFilters() {
     this.selectedAgencyId = '';
-    this.agencySelected.emit();
+    this.selectedCategoryId = '';
+    this.minSelected = this.minPrice;
+    this.maxSelected = this.maxPrice;
+
+    this.selected.emit({
+      agencyId: '',
+      categoryId: '',
+      minSelected: 0,
+      maxSelected: 0
+    });
   }
 
 }

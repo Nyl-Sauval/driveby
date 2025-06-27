@@ -30,6 +30,34 @@
       </select>
     </div>
 
+    <div class="price">
+      <label for="category">Prix :</label><br>
+
+      <div class="price-input">
+        <div class="price-field">
+          <input
+            type="number"
+            id="price-from"
+            class="min-input"
+            [(ngModel)]="minSelected"
+            [min]="minPrice"
+            [max]="maxPrice"
+          />
+        </div>
+
+        <div class="price-field">
+          <input
+            type="number"
+            id="price-to"
+            class="max-input"
+            [(ngModel)]="maxSelected"
+            [min]="minPrice"
+            [max]="maxPrice"
+          />
+        </div>
+        <input type="hidden" name="Price" id="price" value="">
+      </div>
+    </div>
   </div>
 
   <div class="filter-result">
