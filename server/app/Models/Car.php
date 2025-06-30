@@ -18,6 +18,7 @@ class Car extends Model
         'car_picture',
         'car_default',
         'car_price',
+        'car_disponibility',
         'agency_id'
     ];
 

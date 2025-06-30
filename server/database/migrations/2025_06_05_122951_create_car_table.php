@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Disponibility;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->string('car_picture')->nullable();
             $table->boolean('car_default')->nullable();
             $table->decimal('car_price', 8, 2);
+            $table->enum('car_disponibility', [Disponibility::DISPONIBLE->value, Disponibility::EN_REPARATION->value, Disponibility::EN_MAINTENANCE->value, Disponibility::INDISPONIBLE->value]);
             $table->unsignedBigInteger('agency_id');
             $table->foreign('agency_id')->references('id')->on('agency')->onDelete('cascade');
             $table->timestamps();
