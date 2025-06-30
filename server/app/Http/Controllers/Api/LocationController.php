@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\LocationResource;
 use App\Models\Car;
+use App\Models\Client;
 use App\Models\Location;
 use App\Models\Retour;
 use App\Models\Retrait;
@@ -26,7 +27,38 @@ class LocationController extends BaseController
             'client_id' => 'required|exists:client,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
+            'name' => 'required|string|max:255',
+            'firstname' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'birth' => 'required|date',
+            'address' => 'required|string|max:255',
+            'postal_code' => 'required|string|max:20',
+            'city' => 'required|string|max:100',
+            'country' => 'required|string|max:100',
+            'license_number' => 'required|string|max:50',
+            'license_issue_date' => 'required|date',
+            'license_expiry_date' => 'required|date|after_or_equal:license_issue_date',
+            'license_country' => 'required|string|max:100',
         ]);
+
+        $client = Client::findOrFail($request->client_id);
+        $client->update([
+            'client_name' => $request->name,
+            'client_firstname' => $request->firstname,
+            'client_email' => $request->email,
+            'client_phone' => $request->phone,
+            'client_birth' => $request->birth,
+            'client_address' => $request->address,
+            'client_postal_code' => $request->postal_code,
+            'client_city' => $request->city,
+            'client_country' => $request->country,
+            'client_license_number' => $request->license_number,
+            'client_license_issue_date' => $request->license_issue_date,
+            'client_license_expiry_date' => $request->license_expiry_date,
+            'client_license_country' => $request->license_country
+        ]);
+
         $car = $request->car_id;
         $car = Car::findOrFail($car);
         $location = Location::create($request->only(['car_id', 'client_id']) + ['guarantee_id' => 1]);
@@ -49,7 +81,8 @@ class LocationController extends BaseController
         return response()->json([
             'location' => new LocationResource($location),
             'retrait' => $retrait,
-            'retour' => $retour
+            'retour' => $retour,
+            'client' => $client
         ], 201);
     }
 

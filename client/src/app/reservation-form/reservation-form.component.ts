@@ -149,6 +149,19 @@ export class ReservationFormComponent implements OnInit {
         client_id: this.client?.id,
         start_date: this.reservationValues.startDate,
         end_date: this.reservationValues.endDate,
+        name: this.clientValues.name,
+        firstname: this.clientValues.firstname,
+        email: this.clientValues.email,
+        phone: this.clientValues.phone,
+        birth: this.clientValues.birth,
+        address: this.addressValues.address,
+        postal_code: this.addressValues.postal_code,
+        city: this.addressValues.city,
+        country: this.addressValues.country,
+        license_number: this.licenseValues.license_number,
+        license_issue_date: this.licenseValues.license_issue_date,
+        license_expiry_date: this.licenseValues.license_expiry_date,
+        license_country: this.licenseValues.license_country
       };
       this.locationService.makeReservation(formData).subscribe({
         next: (response) => {

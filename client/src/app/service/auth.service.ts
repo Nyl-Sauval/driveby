@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {environment} from '../../environments/environment';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private userSubject = new BehaviorSubject<any>(null);
+  public user$ = this.userSubject.asObservable();
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient, private router:Router) {}
@@ -17,7 +20,15 @@ export class AuthService {
   }
 
   login(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, data);
+    return this.http.post(`${this.apiUrl}/login`, data).pipe(
+      map((response: any) => {
+        // Stocker le token dans le localStorage
+        localStorage.setItem('token', response.token);
+        // Mettre à jour l'utilisateur dans le BehaviorSubject
+        this.userSubject.next(response.user);
+        return response;
+      })
+    )
   }
 
   isLoggedIn(): boolean {
@@ -52,8 +63,10 @@ export class AuthService {
     return this.http.put(`${this.apiUrl}/client/${id}`, data, { headers });
   }
 
+  // Supprimer le token, réinitialiser l’état et rediriger
   logout(): void {
     localStorage.removeItem('token');
+    this.userSubject.next(null);
     this.router.navigate(['/']);
   }
 
@@ -73,4 +86,27 @@ export class AuthService {
       }
     });
   }
+
+  checkSession(): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return throwError(() => new Error('Pas de token'));
+    }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json'
+    });
+    return this.http.get(`${this.apiUrl}/profil`, { headers });
+  }
+
+  // Stocker l’utilisateur côté front
+  setUser(user: any): void {
+    this.userSubject.next(user);
+  }
+
+  // Pour accéder à l'utilisateur depuis d'autres composants
+  get currentUser(): any {
+    return this.userSubject.value;
+  }
+
 }

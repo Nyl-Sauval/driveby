@@ -15,10 +15,22 @@ import {MatDialog} from '@angular/material/dialog';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent{
   title = 'client';
 
   constructor(protected auth: AuthService, private loginDialog: MatDialog, private signinDialog: MatDialog) {
+  }
+
+  ngOnInit(){
+    this.auth.checkSession().subscribe({
+      next: user => {
+        this.auth.setUser(user);
+      },
+      error: () => {
+        this.auth.logout(); // supprime le token, redirige vers login
+      }
+    });
+
   }
 
   openLogin() {
