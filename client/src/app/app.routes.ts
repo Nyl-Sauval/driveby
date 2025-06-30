@@ -7,6 +7,7 @@ import {ListeVoitureComponent} from './liste-voiture/liste-voiture.component';
 import {ClientEditComponent} from './client-edit/client-edit.component';
 import {DetailVoitureComponent} from './detail-voiture/detail-voiture.component';
 import {ReservationFormComponent} from './reservation-form/reservation-form.component';
+import {DetailsLocationComponent} from './location/details-location/details-location.component';
 
 export const routes: Routes = [
   {path: '', component: HomepageComponent, pathMatch: 'full'},
@@ -16,5 +17,6 @@ export const routes: Routes = [
   {path: 'client/:id/edit', component: ClientEditComponent},
   {path: 'search', component: ListeVoitureComponent},
   {path: 'voiture/:id', component: DetailVoitureComponent},
-  {path: 'voiture/:id/rent', component: ReservationFormComponent}
+  {path: 'voiture/:id/rent', component: ReservationFormComponent},
+  {path: 'location/:id', component: DetailsLocationComponent}
 ];
