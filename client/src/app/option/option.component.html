@@ -1,0 +1,42 @@
+<div class="option-container">
+  <h2>Options disponibles</h2>
+
+  <div *ngFor="let option of options" class="option-card">
+    <div class="option-info">
+      <strong>{{ option.option_name }}</strong>
+      <p>{{ option.option_description }}</p>
+      <span>+{{ option.option_price }} €/jour</span>
+    </div>
+
+    <!-- Toggle -->
+    <div *ngIf="option.option_type === 'toggle'" class="toggle">
+      <input
+        type="checkbox"
+        [checked]="selectedOptions[option.option_id] === 1"
+        (change)="onToggleChange(option)"
+      />
+    </div>
+
+    <!-- Stepper -->
+    <div *ngIf="option.option_type === 'stepper'" class="stepper">
+      <button (click)="changeQty(option.option_id, -1)">−</button>
+      <span>{{ selectedOptions[option.option_id] }}</span>
+      <button (click)="changeQty(option.option_id, 1)">+</button>
+    </div>
+  </div>
+
+  <div class="total-bar">
+    <div>
+      <strong>{{ getTotal() | number:'1.2-2' }} €/jour</strong>
+
+      <ng-container *ngIf="reservationDays">
+        <span>{{ getTotal() * reservationDays | number:'1.2-2' }} € pour {{ reservationDays }} jours</span>
+      </ng-container>
+
+      <ng-container *ngIf="!reservationDays">
+      </ng-container>
+    </div>
+
+    <button>CONTINUER</button>
+  </div>
+</div>

@@ -9,7 +9,7 @@ import {MatIcon} from '@angular/material/icon';
 @Component({
   selector: 'app-liste-voiture',
   standalone: true,
-  imports: [NgFor, CardVoitureComponent, FormsModule, FiltersComponent, MatIcon],
+  imports: [NgFor, CardVoitureComponent, FormsModule, FiltersComponent],
   templateUrl: './liste-voiture.component.html',
   styleUrl: './liste-voiture.component.css'
 })

@@ -1,0 +1,98 @@
+.option-container {
+  padding: 16px;
+  font-family: sans-serif;
+  background-color: #f7f7f7;
+  min-height: 100vh;
+}
+
+h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.option-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.option-info {
+  max-width: 70%;
+}
+
+.option-info strong {
+  font-size: 16px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.option-info p {
+  font-size: 14px;
+  color: #555;
+  margin: 0 0 4px;
+}
+
+.option-info span {
+  font-size: 14px;
+  font-weight: bold;
+  color: #444;
+}
+
+.toggle input[type="checkbox"] {
+  width: 48px;
+  height: 24px;
+  accent-color: black;
+  cursor: pointer;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stepper button {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background-color: #333;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.stepper span {
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+}
+
+.total-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  padding: 16px;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+}
+
+.total-bar button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
