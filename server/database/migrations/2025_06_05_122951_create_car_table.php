@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('car_mileage', 10, 3);
             $table->string('car_picture')->nullable();
             $table->boolean('car_default')->nullable();
-            $table->decimal('car_price', 8, 2);
+            $table->unsignedBigInteger('car_price');
             $table->enum('car_disponibility', [Disponibility::DISPONIBLE->value, Disponibility::EN_REPARATION->value, Disponibility::EN_MAINTENANCE->value, Disponibility::INDISPONIBLE->value]);
             $table->unsignedBigInteger('agency_id');
             $table->foreign('agency_id')->references('id')->on('agency')->onDelete('cascade');
