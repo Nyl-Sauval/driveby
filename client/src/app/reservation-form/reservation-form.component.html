@@ -149,10 +149,10 @@
     <p><strong>Numéro de permis :</strong> {{ licenseValues.license_number }}</p>
     <p><strong>Date de délivrance :</strong> {{ licenseValues.license_issue_date }}</p>
     <p><strong>Date d'expiration du permis :</strong> {{ licenseValues.license_expiry_date }}</p>
-    <h3>Prix voiture : {{carPriceLocation()}} €</h3>
-    <h3>Prix garantie : {{guaranteePriceLocation()}} €</h3>
-    <h3>Prix options : {{optionPriceLocation()}} €</h3>
-    <h2>Prix total : {{totalPriceLocation()}} €</h2>
+    <h3>Prix voiture : {{carPriceLocation()/100}} €</h3>
+    <h3>Prix garantie : {{guaranteePriceLocation()/100}} €</h3>
+    <h3>Prix options : {{optionPriceLocation()/100}} €</h3>
+    <h2>Prix total : {{totalPriceLocation()/100}} €</h2>
 
 
     <div class="step-actions">

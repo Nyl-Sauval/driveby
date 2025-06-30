@@ -22,7 +22,7 @@ class CarFactory extends Factory
             'car_mileage' => fake()->numberBetween(0, 200000),
             'car_picture' => fake()->imageUrl(640, 480, 'transport'),
             'car_default' => fake()->boolean(),
-            'car_price' => fake()->randomFloat(2, 5000, 50000),
+            'car_price' => fake()->randomInteger(2000, 10000),
             'car_disponibility' => fake()->randomElement([Disponibility::DISPONIBLE->value, Disponibility::INDISPONIBLE->value, Disponibility::EN_MAINTENANCE->value, Disponibility::EN_REPARATION->value]),
             'agency_id' => fake()->numberBetween(1, 10)
         ];
