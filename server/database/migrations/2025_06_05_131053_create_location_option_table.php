@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('location_id');
             $table->unsignedBigInteger('option_id');
             $table->foreign('location_id')->references('id')->on('location')->onDelete('cascade');
-            $table->foreign('option_id')->references('id')->on('option')->onDelete('cascade');
+            $table->foreign('option_id')->references('id')->on('options')->onDelete('cascade');
             $table->timestamps();
         });
     }

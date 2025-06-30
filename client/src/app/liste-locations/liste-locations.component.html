@@ -32,6 +32,12 @@
         <button mat-icon-button aria-label="Télécharger la facture" (click)="download(location.id)">
           <mat-icon>download</mat-icon>
         </button>
+        <button mat-icon-button
+                aria-label="Annuler la réservation"
+                *ngIf="!isLocationPast(location)"
+                (click)="cancelLocation(location.id)">
+          <mat-icon>cancel</mat-icon>
+        </button>
       </div>
     </div>
   </div>

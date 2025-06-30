@@ -1,10 +1,13 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {CarService} from '../service/car.service';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
 import {LocationService} from '../service/locationService';
+import {Observable} from 'rxjs';
+import {ConfirmDialogComponent} from '../location/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-liste-locations',
@@ -12,7 +15,8 @@ import {LocationService} from '../service/locationService';
     NgForOf,
     MatIconButton,
     MatIcon,
-    RouterLink
+    RouterLink,
+    NgIf
   ],
   templateUrl: './liste-locations.component.html',
   styleUrl: './liste-locations.component.css'
@@ -23,7 +27,7 @@ export class ListeLocationsComponent implements OnChanges {
   locationsForUser: any[] = [];
   allAgencies: any[] = [];
 
-  constructor(private carService: CarService, private locationService: LocationService) {
+  constructor(private carService: CarService, private locationService: LocationService, private dialog: MatDialog) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -63,7 +67,24 @@ export class ListeLocationsComponent implements OnChanges {
   }
 
   getLocationsForUser(id: number) {
-    return this.allLocations.filter(loc => loc.client?.id === id);
+    return this.allLocations
+      .filter(loc => loc.client?.id === id)
+      .sort((a, b) => {
+        const dateA = new Date(a.retrait.withdrawal_date).getTime();
+        const dateB = new Date(b.retrait.withdrawal_date).getTime();
+
+        // Tri croissant => les dates les plus proches (récentes) en premier
+        return dateB - dateA;
+      });
+  }
+
+  isLocationPast(location: any): boolean {
+    const withdrawalDate = new Date(location.retrait.withdrawal_date);
+    const today = new Date();
+    withdrawalDate.setHours(0,0,0,0);
+    today.setHours(0,0,0,0);
+
+    return withdrawalDate < today;
   }
 
   formatDate(dateStr: string): string {
@@ -83,6 +104,34 @@ export class ListeLocationsComponent implements OnChanges {
       a.download = `facture-location-${locationId}.pdf`;
       a.click();
       URL.revokeObjectURL(url);
+    });
+  }
+
+  confirmCancel(): Observable<boolean> {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: {
+        message: 'Voulez-vous vraiment annuler cette réservation ?'
+      }
+    });
+
+    return dialogRef.afterClosed();
+  }
+
+  cancelLocation(locationId: number) {
+    this.confirmCancel().subscribe(confirmed => {
+      if (confirmed) {
+        this.locationService.deleteLocation(locationId).subscribe({
+          next: () => {
+            console.log('Location annulée');
+            // Recharge les locations ou enlève la supprimée de la liste
+            this.locationsForUser = this.locationsForUser.filter(loc => loc.id !== locationId);
+          },
+          error: err => {
+            console.error('Erreur lors de l’annulation', err);
+          }
+        });
+      }
     });
   }
 

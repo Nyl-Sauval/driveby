@@ -26,6 +26,10 @@ export class LocationService {
     });
   }
 
+  deleteLocation(locationId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/locations/${locationId}`);
+  }
+
   getLocationsByAgency(agencyId: string) {
     const url = `${this.baseUrl}/agency/${agencyId}/locations`;
     return this.http.get(url);
