@@ -23,6 +23,7 @@ class CarSeeder extends Seeder
                 'car_brand' => 'Renault',
                 'car_default' => 'Rayure sur l’aile arrière gauche.',
                 'car_price' => 32.90,
+                'car_disponibility' => 'Disponible',
                 'agency_id' => 1, // CityDrive Lille
             ],
             [
@@ -34,6 +35,7 @@ class CarSeeder extends Seeder
                 'car_brand' => 'Peugeot',
                 'car_default' => '',
                 'car_price' => 34.50,
+                'car_disponibility' => 'Disponible',
                 'agency_id' => 2, // AutoLoc Marseille Prado
             ],
             [
@@ -45,6 +47,7 @@ class CarSeeder extends Seeder
                 'car_brand' => 'Volkswagen',
                 'car_default' => '',
                 'car_price' => 41.00,
+                'car_disponibility' => 'Disponible',
                 'agency_id' => 3, // EasyCar Bordeaux Gare
             ],
             [
@@ -56,6 +59,7 @@ class CarSeeder extends Seeder
                 'car_brand' => 'Tesla',
                 'car_default' => 'Éraflure pare-choc avant.',
                 'car_price' => 65.00,
+                'car_disponibility' => 'Disponible',
                 'agency_id' => 4, // NordLoc Roubaix
             ],
             [
@@ -67,6 +71,7 @@ class CarSeeder extends Seeder
                 'car_brand' => 'Renault',
                 'car_default' => '',
                 'car_price' => 37.80,
+                'car_disponibility' => 'Disponible',
                 'agency_id' => 5, // SudAuto Nice Aéroport
             ],
             [
@@ -78,6 +83,7 @@ class CarSeeder extends Seeder
                 'car_brand' => 'Fiat',
                 'car_default' => '',
                 'car_price' => 39.90,
+                'car_disponibility' => 'Disponible',
                 'agency_id' => 1,
             ],
             [
@@ -89,6 +95,7 @@ class CarSeeder extends Seeder
                 'car_brand' => 'Citroën',
                 'car_default' => 'Siège conducteur légèrement taché.',
                 'car_price' => 44.90,
+                'car_disponibility' => 'Disponible',
                 'agency_id' => 2,
             ],
             [
@@ -100,6 +107,7 @@ class CarSeeder extends Seeder
                 'car_brand' => 'Nissan',
                 'car_default' => '',
                 'car_price' => 48.00,
+                'car_disponibility' => 'Disponible',
                 'agency_id' => 3,
             ],
             [
@@ -111,6 +119,7 @@ class CarSeeder extends Seeder
                 'car_brand' => 'Audi',
                 'car_default' => '',
                 'car_price' => 59.00,
+                'car_disponibility' => 'Disponible',
                 'agency_id' => 4,
             ],
             [
@@ -122,6 +131,7 @@ class CarSeeder extends Seeder
                 'car_brand' => 'Renault',
                 'car_default' => 'Accroc sur le pare-choc arrière.',
                 'car_price' => 42.50,
+                'car_disponibility' => 'Disponible',
                 'agency_id' => 5,
             ],
         ];
