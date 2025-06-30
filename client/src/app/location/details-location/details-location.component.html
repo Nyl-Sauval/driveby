@@ -1,0 +1,50 @@
+<div class="title">
+  <h1>{{location.car.car_brand}} {{location.car.car_model}}</h1>
+  <img src="{{location.car.car_picture}}" class="img-car">
+</div>
+
+<div class="location-details">
+  <section class="location-dates">
+    <span>Date de retrait : {{formatDate(location.retrait.withdrawal_date)}}</span>
+    <span>Date de retour : {{formatDate(location.retour.return_date)}}</span>
+  </section>
+  <mat-divider style="border-top: 1px solid black; margin: 20px 0; width: 80%"></mat-divider>
+  <section>
+    <h2>Informations Client</h2>
+    <table>
+      <tr>
+        <td><strong>Nom : </strong> {{ location.client.client_name }}</td>
+        <td><strong>Prénom : </strong> {{ location.client.client_firstname }}</td>
+      </tr>
+      <tr>
+        <td><strong>Email : </strong> {{ location.client.client_email }}</td>
+        <td><strong>Date de naissance : </strong> {{ location.client.client_birth }}</td>
+      </tr>
+      <tr>
+        <td><strong>N° permis : </strong> {{ location.client.client_license_number }}</td>
+        <td><strong>Délivré le : </strong> {{ location.client.client_license_issue_date }}</td>
+      </tr>
+      <tr>
+        <td><strong>Expire le : </strong> {{ location.client.client_license_expiry_date }}</td>
+      </tr>
+    </table>
+  </section>
+  <mat-divider style="border-top: 1px solid black; margin: 20px 0; width: 80%"></mat-divider>
+<section>
+  <h2>Informations Véhicule</h2>
+  <table>
+    <tr>
+      <td><strong>Modèle : </strong> {{ location.car.car_model }}</td>
+      <td><strong>Marque : </strong> {{  location.car.car_brand }}</td>
+    </tr>
+    <tr>
+      <td><strong>Carburant : </strong> {{  location.car.car_fuel }}</td>
+      <td><strong>Prix / jour : </strong> {{ location.car.car_price }} €</td>
+    </tr>
+  </table>
+</section>
+  <mat-divider style="border-top: 1px solid black; margin: 20px 0; width: 80%"></mat-divider>
+  <div class="total">
+    Total : {{ getTotalPrice(location) }} €
+  </div>
+</div>

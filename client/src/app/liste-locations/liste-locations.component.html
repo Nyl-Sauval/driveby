@@ -26,10 +26,10 @@
       </div>
 
       <div>
-        <button mat-icon-button aria-label="Voir les détails">
+        <button mat-icon-button aria-label="Voir les détails" [routerLink]="['/location', location.id]">
           <mat-icon>visibility</mat-icon>
         </button>
-        <button mat-icon-button aria-label="Voir les détails">
+        <button mat-icon-button aria-label="Télécharger la facture" >
           <mat-icon>download</mat-icon>
         </button>
       </div>
