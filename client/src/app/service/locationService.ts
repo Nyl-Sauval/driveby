@@ -25,4 +25,8 @@ export class LocationService {
       responseType: 'blob'
     });
   }
+
+  deleteLocation(locationId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/locations/${locationId}`);
+  }
 }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('options', function (Blueprint $table) {
-            $table->id('option_id');
+            $table->id();
             $table->string('option_name');
             $table->decimal('option_price', 8, 2);
             $table->text('option_description')->nullable();

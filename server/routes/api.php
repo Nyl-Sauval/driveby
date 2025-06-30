@@ -38,3 +38,5 @@ Route::get('locations', [LocationController::class, 'index']);
 Route::post('locations', [LocationController::class, 'create'])->name('location.create');
 Route::get('cars/{carId}/locations', [LocationController::class, 'getLocationsByCar'])->name('location.getByCar');
 Route::get('/locations/{id}/invoice', [LocationController::class, 'downloadInvoice']);
+
+Route::delete('locations/{id}', [LocationController::class, 'destroy']);
