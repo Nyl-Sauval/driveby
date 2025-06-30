@@ -24,7 +24,6 @@ class LocationController extends BaseController
     {
         $request->validate([
             'car_id' => 'required|exists:car,id',
-            'client_id' => 'required|exists:client,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'name' => 'required|string|max:255',
@@ -42,26 +41,47 @@ class LocationController extends BaseController
             'license_country' => 'required|string|max:100',
         ]);
 
-        $client = Client::findOrFail($request->client_id);
-        $client->update([
-            'client_name' => $request->name,
-            'client_firstname' => $request->firstname,
-            'client_email' => $request->email,
-            'client_phone' => $request->phone,
-            'client_birth' => $request->birth,
-            'client_address' => $request->address,
-            'client_postal_code' => $request->postal_code,
-            'client_city' => $request->city,
-            'client_country' => $request->country,
-            'client_license_number' => $request->license_number,
-            'client_license_issue_date' => $request->license_issue_date,
-            'client_license_expiry_date' => $request->license_expiry_date,
-            'client_license_country' => $request->license_country
-        ]);
-
+        $client = Client::find($request->client_id);
+        if(!$client){
+            //Vérifie si un client existe avec cet email
+            $client = Client::where('client_email', $request->email)->first();
+        }
+        if($client) {
+            $client->update([
+                'client_name' => $request->name,
+                'client_firstname' => $request->firstname,
+                'client_email' => $request->email,
+                'client_phone' => $request->phone,
+                'client_birth' => $request->birth,
+                'client_address' => $request->address,
+                'client_postal_code' => $request->postal_code,
+                'client_city' => $request->city,
+                'client_country' => $request->country,
+                'client_license_number' => $request->license_number,
+                'client_license_issue_date' => $request->license_issue_date,
+                'client_license_expiry_date' => $request->license_expiry_date,
+                'client_license_country' => $request->license_country
+            ]);
+        }else{
+            $client = Client::create([
+                'client_name' => $request->name,
+                'client_firstname' => $request->firstname,
+                'client_email' => $request->email,
+                'client_phone' => $request->phone,
+                'client_birth' => $request->birth,
+                'client_address' => $request->address,
+                'client_postal_code' => $request->postal_code,
+                'client_city' => $request->city,
+                'client_country' => $request->country,
+                'client_license_number' => $request->license_number,
+                'client_license_issue_date' => $request->license_issue_date,
+                'client_license_expiry_date' => $request->license_expiry_date,
+                'client_license_country' => $request->license_country
+            ]);
+        }
         $car = $request->car_id;
         $car = Car::findOrFail($car);
-        $location = Location::create($request->only(['car_id', 'client_id']) + ['guarantee_id' => 1]);
+        $location = Location::create($request->only(['car_id']) + ['guarantee_id' => 1, 'client_id' => $client->id]);
         $retrait = Retrait::create([
             'withdrawal_date' => $request->start_date,
             'location_id' => $location->id,
