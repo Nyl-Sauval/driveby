@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\LocationResource;
+use App\Models\Agency;
 use App\Models\Car;
 use App\Models\Client;
 use App\Models\Location;
 use App\Models\Retour;
 use App\Models\Retrait;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use App\Utils\DateUtil;
 
 class LocationController extends BaseController
 {
@@ -52,14 +55,14 @@ class LocationController extends BaseController
                 'client_firstname' => $request->firstname,
                 'client_email' => $request->email,
                 'client_phone' => $request->phone,
-                'client_birth' => $request->birth,
+                'client_birth' => DateUtil::formatDate($request->birth),
                 'client_address' => $request->address,
                 'client_postal_code' => $request->postal_code,
                 'client_city' => $request->city,
                 'client_country' => $request->country,
                 'client_license_number' => $request->license_number,
-                'client_license_issue_date' => $request->license_issue_date,
-                'client_license_expiry_date' => $request->license_expiry_date,
+                'client_license_issue_date' => DateUtil::formatDate($request->license_issue_date),
+                'client_license_expiry_date' => DateUtil::formatDate($request->license_expiry_date),
                 'client_license_country' => $request->license_country
             ]);
         }else{
@@ -68,14 +71,14 @@ class LocationController extends BaseController
                 'client_firstname' => $request->firstname,
                 'client_email' => $request->email,
                 'client_phone' => $request->phone,
-                'client_birth' => $request->birth,
+                'client_birth' => DateUtil::formatDate($request->birth),
                 'client_address' => $request->address,
                 'client_postal_code' => $request->postal_code,
                 'client_city' => $request->city,
                 'client_country' => $request->country,
                 'client_license_number' => $request->license_number,
-                'client_license_issue_date' => $request->license_issue_date,
-                'client_license_expiry_date' => $request->license_expiry_date,
+                'client_license_issue_date' => DateUtil::formatDate($request->license_issue_date),
+                'client_license_expiry_date' => DateUtil::formatDate($request->license_expiry_date),
                 'client_license_country' => $request->license_country
             ]);
         }
@@ -83,7 +86,7 @@ class LocationController extends BaseController
         $car = Car::findOrFail($car);
         $location = Location::create($request->only(['car_id']) + ['guarantee_id' => 1, 'client_id' => $client->id]);
         $retrait = Retrait::create([
-            'withdrawal_date' => $request->start_date,
+            'withdrawal_date' => DateUtil::formatDate($request->start_date, DateUtil::DEFAULT_DATE_TIME_PATTERN),
             'location_id' => $location->id,
             'withdrawal_mileage' => $car->car_mileage,
             'withdrawal_default' => $car->car_default,
@@ -91,7 +94,7 @@ class LocationController extends BaseController
         ]);
 
         $retour = Retour::create([
-            'return_date' => $request->end_date,
+            'return_date' => DateUtil::formatDate($request->end_date, DateUtil::DEFAULT_DATE_TIME_PATTERN),
             'location_id' => $location->id,
             'return_mileage' => null,
             'return_default' => $car->car_default,
@@ -110,5 +113,27 @@ class LocationController extends BaseController
     {
         $locations = Location::where('car_id', $carId)->with(['client', 'car', 'guarantee', 'retrait', 'retour'])->get();
         return response()->json($locations);
+    }
+
+    public function downloadInvoice($id)
+    {
+        $location = Location::with(['client', 'car', 'retrait', 'retour'])->findOrFail($id);
+        $agency = Agency::findOrFail($location->car->agency_id);
+
+        $pdf = Pdf::loadView('invoices.facture', compact('location', 'agency'));
+
+        return $pdf->download("facture-location-{$id}.pdf");
+    }
+
+    public function getLocationsByAgency($agencyId){
+        $agency = Agency::findOrFail($agencyId);
+        $location = Location::whereHas('car', function ($query) use ($agencyId) {
+            $query->where('agency_id', $agencyId);
+        })->with(['client', 'car', 'guarantee', 'retrait', 'retour'])->get();
+
+        return response()->json([
+            'agency' => $agency,
+            'locations' => $location
+        ]);
     }
 }
