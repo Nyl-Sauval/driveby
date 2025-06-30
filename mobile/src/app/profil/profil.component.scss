@@ -1,0 +1,22 @@
+.profil {
+  color: white;
+  height: 100vh;
+  text-align: center;
+  align-content: center;
+
+  .profil-infos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+
+    .label-name {
+      font-size: 32px;
+    }
+
+    .label-email {
+      font-size: 12px;
+    }
+  }
+}
