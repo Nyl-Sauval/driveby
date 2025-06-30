@@ -35,7 +35,7 @@ class LocationController extends BaseController
             'location_id' => $location->id,
             'withdrawal_mileage' => $car->car_mileage,
             'withdrawal_default' => $car->car_default,
-            'user_id' => 1
+            'withdrawal_done'=>false,
         ]);
 
         $retour = Retour::create([
@@ -43,7 +43,7 @@ class LocationController extends BaseController
             'location_id' => $location->id,
             'return_mileage' => null,
             'return_default' => $car->car_default,
-            'user_id' => 1
+            'return_done' => false,
         ]);
 
         return response()->json([
@@ -51,5 +51,11 @@ class LocationController extends BaseController
             'retrait' => $retrait,
             'retour' => $retour
         ], 201);
+    }
+
+    public function getLocationsByCar($carId)
+    {
+        $locations = Location::where('car_id', $carId)->with(['client', 'car', 'guarantee', 'retrait', 'retour'])->get();
+        return response()->json($locations);
     }
 }

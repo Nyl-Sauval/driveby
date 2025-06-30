@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('withdrawal_interior_status_car')->default(collect(['Très bon', 'Bon', 'Moyen', 'Mauvais'])->random())->nullable();
             $table->string('withdrawal_exterior_status_car')->default(collect(['Très bon', 'Bon', 'Moyen', 'Mauvais'])->random())->nullable();
             $table->boolean('withdrawal_done')->default(false);
-            $table->foreignId('user_id')->constrained('user')->onDelete('cascade')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('user')->onDelete('cascade');
             $table->foreignId('location_id')->constrained('location')->onDelete('cascade');
 
             $table->timestamps();

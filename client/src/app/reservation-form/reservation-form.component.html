@@ -14,6 +14,10 @@
         <input matInput type="date" formControlName="endDate">
       </mat-form-field>
 
+      <div *ngIf="reservationGroup.errors?.['carUnavailable'] && reservationGroup.dirty" class="error">
+        Cette voiture est déjà réservée aux dates sélectionnées.
+      </div>
+
       <div class="step-actions">
         <button mat-button matStepperNext>Suivant</button>
       </div>
@@ -114,6 +118,10 @@
         <input matInput formControlName="license_country">
       </mat-form-field>
 
+      <div *ngIf="reservationGroup.hasError('carUnavailable') && reservationGroup.invalid && reservationGroup.dirty" class="error">
+        Cette voiture est déjà réservée aux dates sélectionnées.
+      </div>
+
       <div class="step-actions">
         <button mat-button matStepperPrevious>Retour</button>
         <button mat-button matStepperNext>Suivant</button>
@@ -127,7 +135,7 @@
 
     <p><strong>Début :</strong> {{ reservationValues.startDate }}</p>
     <p><strong>Fin :</strong> {{ reservationValues.endDate }}</p>
-    <p><strong>Agence :</strong> {{ reservationValues.agencyLocation }}</p>
+    <p><strong>Agence :</strong> {{ reservationValues.agency }}</p>
 
     <p><strong>Nom :</strong> {{ clientValues.name }}</p>
     <p><strong>Prénom :</strong> {{ clientValues.firstname }}</p>
@@ -141,6 +149,10 @@
     <p><strong>Numéro de permis :</strong> {{ licenseValues.license_number }}</p>
     <p><strong>Date de délivrance :</strong> {{ licenseValues.license_issue_date }}</p>
     <p><strong>Date d'expiration du permis :</strong> {{ licenseValues.license_expiry_date }}</p>
+    <h3>Prix voiture : {{carPriceLocation()}} €</h3>
+    <h3>Prix garantie : {{guaranteePriceLocation()}} €</h3>
+    <h3>Prix options : {{optionPriceLocation()}} €</h3>
+    <h2>Prix total : {{totalPriceLocation()}} €</h2>
 
 
     <div class="step-actions">

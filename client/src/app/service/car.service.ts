@@ -1,11 +1,13 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {CarResponse} from '../models/car.model';
+import {AbstractControl, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
+import {map} from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class CarService {
-  private baseUrl = 'http://localhost:8000/api';
+  public baseUrl = 'http://localhost:8000/api';
 
   constructor(private http: HttpClient) {}
 
@@ -41,14 +43,37 @@ export class CarService {
   }
 
 
-  checkAvailability(carId: string, startDate: string, endDate: string): void{
-    //On récupère les locations passés avec cette voiture
+  checkAvailabilityValidator(carId: string): AsyncValidatorFn {
+    console.log('checkAvailabilityValidator called with carId:', carId);
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      const value = control.value;
+      if (!value?.startDate || !value?.endDate) {
+        console.log('Invalid value for startDate or endDate:', value);
+        return of(null);
+      }
 
-    //On récupère les retraits et retours de chaque location
+      const start = new Date(value.startDate);
+      const end = new Date(value.endDate);
 
-    //On vérifie si les dates de retrait et de retour se chevauchent avec les dates de réservation
+      console.log('Checking availability for carId:', carId, 'from', start, 'to', end);
 
-    //On renvoie true si aucune date ne se chevauche, sinon false
+      return this.http.get<any[]>(`${this.baseUrl}/cars/${carId}/locations`).pipe(
+        map(locations => {
+          const overlapping = locations.some(loc => {
+            const retrait = new Date(loc.retrait?.withdrawal_date);
+            const retour = new Date(loc.retour?.return_date);
+            console.log('Checking location:', loc, 'with retrait:', retrait, 'and retour:', retour);
+            return start <= retour && end >= retrait;
+          });
 
+          if (overlapping) {
+            console.log('❌ Voiture indisponible');
+          } else {
+            console.log('✅ Voiture disponible');
+          }
+          return overlapping ? { carUnavailable: true } : null;
+        })
+      );
+    };
   }
 }
