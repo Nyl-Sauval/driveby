@@ -52,4 +52,10 @@ class LocationController extends BaseController
             'retour' => $retour
         ], 201);
     }
+
+    public function getLocationsByCar($carId)
+    {
+        $locations = Location::where('car_id', $carId)->with(['client', 'car', 'guarantee', 'retrait', 'retour'])->get();
+        return response()->json($locations);
+    }
 }

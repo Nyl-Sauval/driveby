@@ -9,7 +9,7 @@ import {
 } from '@angular/material/stepper';
 import {MatFormField, MatFormFieldModule, MatLabel} from '@angular/material/form-field';
 import {MatInput, MatInputModule} from '@angular/material/input';
-import {AbstractControl, ReactiveFormsModule} from '@angular/forms';
+import {AbstractControl, AsyncValidatorFn, ReactiveFormsModule, ValidationErrors} from '@angular/forms';
 import {MatButton, MatButtonModule} from '@angular/material/button';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
@@ -18,6 +18,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LocationService} from '../service/locationService';
 import {Car} from '../models/car.model';
 import {Client} from '../models/client.model';
+import {HttpClient} from '@angular/common/http';
+import {Observable, of} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-reservation-form',
@@ -32,7 +36,8 @@ import {Client} from '../models/client.model';
     MatStepperNext,
     MatStepLabel,
     MatStepperPrevious,
-    MatLabel
+    MatLabel,
+    NgIf
   ],
   styleUrls: ['./reservation-form.component.css']
 })
@@ -56,7 +61,11 @@ export class ReservationFormComponent implements OnInit {
       reservation: this.fb.group({
         startDate: [new Date(), [Validators.required, this.dateAfterTodayValidator]],
         endDate: ['', Validators.required],
+      }, {
+        asyncValidators: this.carService.checkAvailabilityValidator(this.route.snapshot.paramMap.get('id') || ''),
+        updateOn:'change'
       }),
+
       client: this.fb.group({
         name: ['', Validators.required],
         firstname: ['', Validators.required],
@@ -224,5 +233,4 @@ export class ReservationFormComponent implements OnInit {
   totalPriceLocation(){
     return this.carPriceLocation() + this.guaranteePriceLocation() + this.optionPriceLocation();
   }
-
 }

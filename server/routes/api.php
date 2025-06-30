@@ -36,3 +36,4 @@ Route::put('client/{id}', [ClientController::class, 'update'])->name('client.upd
 
 Route::get('locations', [LocationController::class, 'index']);
 Route::post('locations', [LocationController::class, 'create'])->name('location.create')->middleware('auth:sanctum');
+Route::get('cars/{carId}/locations', [LocationController::class, 'getLocationsByCar'])->name('location.getByCar');
