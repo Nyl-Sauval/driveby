@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('retour', function (Blueprint $table) {
             $table->id('return_id');
-            $table->date('return_date');
+            $table->dateTime('return_date');
             $table->decimal('return_mileage',15,3)->nullable();
             $table->string('return_default',500)->nullable();
             $table->unsignedTinyInteger('return_fuel_level')->default(0)->comment('Range: 0-100')->nullable();

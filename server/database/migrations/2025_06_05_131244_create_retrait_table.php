@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('retrait', function (Blueprint $table) {
             $table->id('withdrawal_id');
-            $table->date('withdrawal_date');
+            $table->dateTime('withdrawal_date');
             $table->decimal('withdrawal_mileage', 15, 3);
             $table->string('withdrawal_default', 500)->nullable();
             $table->unsignedTinyInteger('withdrawal_fuel_level')->default(0)->comment('Range: 0-100')->nullable();
