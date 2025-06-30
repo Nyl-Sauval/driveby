@@ -13,11 +13,14 @@ class Retour extends Model
 
     protected $fillable = [
         'return_date',
-        'return_status_',
+        'return_interior_status_car',
+        'return_exterior_status_car',
         'return_mileage',
         'return_default',
+        'return_fuel_level',
         'user_id',
         'location_id',
+        'done',
     ];
 
     public function user()

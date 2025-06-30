@@ -16,7 +16,9 @@ return new class extends Migration
             $table->date('return_date');
             $table->decimal('return_mileage',15,3)->nullable();
             $table->string('return_default',500)->nullable();
-
+            $table->unsignedTinyInteger('return_fuel_level')->default(0)->comment('Range: 0-100');
+            $table->string('return_interior_status_car')->default(collect(['Très bon', 'Bon', 'Moyen', 'Mauvais'])->random());
+            $table->string('return_exterior_status_car')->default(collect(['Très bon', 'Bon', 'Moyen', 'Mauvais'])->random());
             $table->foreignId('user_id')->constrained('user')->onDelete('cascade')->nullable();
             $table->foreignId('location_id')->constrained('location')->onDelete('cascade');
             $table->timestamps();
