@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ClientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\OptionController;
 
 Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
     return response()->json([
@@ -31,3 +32,6 @@ Route::get('agencies', [AgencyController::class, 'index']);
 Route::get('categories', [CategoryController::class, 'index']);
 
 Route::put('client/{id}', [ClientController::class, 'update'])->name('client.update')->middleware('auth:sanctum');;
+
+
+Route::get('/options', [OptionController::class, 'index']);
