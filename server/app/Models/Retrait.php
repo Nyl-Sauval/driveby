@@ -16,11 +16,14 @@ class Retrait extends Model
 
     protected $fillable = [
         'withdrawal_date',
-        'withdrawal_status_car',
+        'withdrawal_interior_status_car',
+        'withdrawal_exterior_status_car',
         'withdrawal_mileage',
         'withdrawal_default',
+        'withdrawal_fuel_level',
         'user_id',
-        'location_id'
+        'location_id',
+        'done',
     ];
 
 
