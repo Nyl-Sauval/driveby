@@ -18,6 +18,12 @@
         <button mat-button (click)="openLogin()" class="button-connexion">Connexion</button>
         <button mat-button (click)="openSignin()" class="button-connexion">Enregistrement</button>
       }
+
+      <button *ngIf="auth.isAgent()" routerLink="/agent" class="button-profil">
+        <mat-icon>account_circle</mat-icon>
+        Agent
+      </button>
+
       <button *ngIf="auth.isLoggedIn()" routerLink="/profil" class="button-profil">
         <mat-icon>account_circle</mat-icon>
         Profil

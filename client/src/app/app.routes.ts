@@ -7,6 +7,7 @@ import {ListeVoitureComponent} from './liste-voiture/liste-voiture.component';
 import {ClientEditComponent} from './client-edit/client-edit.component';
 import {DetailVoitureComponent} from './detail-voiture/detail-voiture.component';
 import {ReservationFormComponent} from './reservation-form/reservation-form.component';
+import {GestionAgentComponent} from './gestion-agent/gestion-agent.component';
 import {DetailsLocationComponent} from './location/details-location/details-location.component';
 
 export const routes: Routes = [
@@ -14,6 +15,7 @@ export const routes: Routes = [
   {path: 'enregistrement', component: EnregistrementComponent },
   {path: 'login', component: LoginComponent },
   {path: 'profil', component: ProfilComponent },
+  {path: 'agent', component: GestionAgentComponent },
   {path: 'client/:id/edit', component: ClientEditComponent},
   {path: 'search', component: ListeVoitureComponent},
   {path: 'voiture/:id', component: DetailVoitureComponent},

@@ -11,6 +11,7 @@ import {ClientEditComponent} from './app/client-edit/client-edit.component';
 import {DetailVoitureComponent} from './app/detail-voiture/detail-voiture.component';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {ReservationFormComponent} from './app/reservation-form/reservation-form.component';
+import {GestionAgentComponent} from './app/gestion-agent/gestion-agent.component';
 import {DetailsLocationComponent} from './app/location/details-location/details-location.component';
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'search', component: ListeVoitureComponent },
   { path: 'profil', component: ProfilComponent },
+  { path: 'agent', component: GestionAgentComponent },
   { path: 'client/:id/edit', component: ClientEditComponent},
   { path: 'voiture/:id', component: DetailVoitureComponent},
   { path: 'voiture/:id/rent', component: ReservationFormComponent},

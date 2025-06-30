@@ -1,0 +1,51 @@
+<mat-form-field appearance="fill">
+  <mat-label>Sélectionnez une agence</mat-label>
+  <mat-select [(value)]="selectedAgency" (selectionChange)="onAgencyChanged($event.value)">
+    <mat-option *ngFor="let agency of agencies" [value]="agency.id">
+      {{ agency.agency_name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div *ngIf="locations.length === 0">Aucune location disponible</div>
+<div *ngIf="locations.length > 0">
+  <h2>Locations pour l'agence sélectionnée</h2>
+<mat-table [dataSource]="locations" class="mat-elevation-z8" *ngIf="locations.length > 0">
+
+  <ng-container matColumnDef="client_name">
+    <mat-header-cell *matHeaderCellDef> Nom client </mat-header-cell>
+    <mat-cell *matCellDef="let location"> {{ location.client.client_name }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="client_firstname">
+    <mat-header-cell *matHeaderCellDef> Prénom client </mat-header-cell>
+    <mat-cell *matCellDef="let location"> {{ location.client.client_firstname }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="car_brand">
+    <mat-header-cell *matHeaderCellDef> Marque voiture </mat-header-cell>
+    <mat-cell *matCellDef="let location"> {{ location.car.car_brand }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="car_model">
+    <mat-header-cell *matHeaderCellDef> Modèle voiture </mat-header-cell>
+    <mat-cell *matCellDef="let location"> {{ location.car.car_model }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="withdrawal_date">
+    <mat-header-cell *matHeaderCellDef> Date de début </mat-header-cell>
+    <mat-cell *matCellDef="let location">
+      {{ location.retrait?.withdrawal_date ? (location.retrait.withdrawal_date) : '' }}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="return_date">
+    <mat-header-cell *matHeaderCellDef> Date de fin </mat-header-cell>
+    <mat-cell *matCellDef="let location">
+      {{ location.retour?.return_date ? (location.retour.return_date) : '' }}
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
