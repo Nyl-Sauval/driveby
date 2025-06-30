@@ -3,13 +3,15 @@ import {CarService} from '../service/car.service';
 import {NgForOf} from '@angular/common';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-liste-locations',
   imports: [
     NgForOf,
     MatIconButton,
-    MatIcon
+    MatIcon,
+    RouterLink
   ],
   templateUrl: './liste-locations.component.html',
   styleUrl: './liste-locations.component.css'
@@ -56,7 +58,6 @@ export class ListeLocationsComponent implements OnChanges {
   }
 
   getAgencyById(id: number): any {
-    console.log("Agencies :",this.allAgencies);
     return this.allAgencies.find(agency => agency.id === id);
   }
 

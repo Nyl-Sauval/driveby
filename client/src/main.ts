@@ -5,13 +5,13 @@ import {bootstrapApplication} from '@angular/platform-browser';
 import {AppComponent} from './app/app.component';
 import {HomepageComponent} from './app/homepage/homepage.component';
 import {LoginComponent} from './app/login/login.component';
-import {MatDialogModule} from '@angular/material/dialog';
 import {ProfilComponent} from './app/profil/profil.component';
 import {ListeVoitureComponent} from './app/liste-voiture/liste-voiture.component';
 import {ClientEditComponent} from './app/client-edit/client-edit.component';
 import {DetailVoitureComponent} from './app/detail-voiture/detail-voiture.component';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {ReservationFormComponent} from './app/reservation-form/reservation-form.component';
+import {DetailsLocationComponent} from './app/location/details-location/details-location.component';
 
 const routes: Routes = [
   { path: 'enregistrement', component: EnregistrementComponent },
@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'client/:id/edit', component: ClientEditComponent},
   { path: 'voiture/:id', component: DetailVoitureComponent},
   { path: 'voiture/:id/rent', component: ReservationFormComponent},
+  { path: 'location/:id', component: DetailsLocationComponent},
   { path: '', component: HomepageComponent },
 ];
 
