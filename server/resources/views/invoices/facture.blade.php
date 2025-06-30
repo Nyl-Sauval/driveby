@@ -131,7 +131,7 @@
 @php
     $start = new DateTime(optional($location->retrait)->withdrawal_date);
     $end = new DateTime(optional($location->retour)->return_date);
-    $days = max(1, $start->diff($end)->days);
+    $days = $start->diff($end)->days + 1;
     $total = $days * $location->car->car_price/100;
 @endphp
 

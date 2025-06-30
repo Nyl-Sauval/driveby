@@ -40,3 +40,6 @@ Route::get('cars/{carId}/locations', [LocationController::class, 'getLocationsBy
 Route::get('/locations/{id}/invoice', [LocationController::class, 'downloadInvoice']);
 
 Route::delete('locations/{id}', [LocationController::class, 'destroy']);
+
+Route::get('/agency/{id}/locations', [LocationController::class, 'getLocationsByAgency'])->name('location.getByAgency');
+
