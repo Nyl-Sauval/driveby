@@ -12,8 +12,6 @@ class Retrait extends Model
 
     protected $table = 'retrait';
 
-    protected $table = 'retrait';
-
     protected $primaryKey = 'withdrawal_id';
 
     protected $fillable = [
