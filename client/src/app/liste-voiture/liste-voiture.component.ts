@@ -9,11 +9,7 @@ import {CardVoitureComponent} from '../card-voiture/card-voiture.component';
 @Component({
   selector: 'app-liste-voiture',
   standalone: true,
-<<<<<<< HEAD
   imports: [NgFor, CardVoitureComponent, FormsModule, FiltersComponent],
-=======
-  imports: [NgFor, FormsModule, FiltersComponent, CardVoitureComponent],
->>>>>>> origin/dev
   templateUrl: './liste-voiture.component.html',
   styleUrl: './liste-voiture.component.css'
 })
