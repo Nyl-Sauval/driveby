@@ -41,6 +41,7 @@ export class ReservationFormComponent implements OnInit {
   clientInfoLoaded = false;
   car: Car | undefined;
   client: Client | undefined;
+  pricePerDay: string | undefined
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
@@ -114,6 +115,8 @@ export class ReservationFormComponent implements OnInit {
         next: (car) => {
           if (car) {
             this.car = car;
+            this.pricePerDay = car.car_price;
+            console.log(this.car);
             this.reservationForm.get('reservation')?.patchValue({
               startDate: new Date(),
               endDate: new Date(new Date().setDate(new Date().getDate() + 1)) // par défaut 1 jour après
@@ -147,7 +150,8 @@ export class ReservationFormComponent implements OnInit {
         },
         error: (error) => {
           console.error('Erreur lors de la réservation', error);
-          // Afficher un message d'erreur
+          //Notification erreur
+          alert('Erreur lors de la réservation. Veuillez réessayer plus tard.' + error);
         }
       });
     }
@@ -195,6 +199,30 @@ export class ReservationFormComponent implements OnInit {
     const inputDate = new Date(control.value);
     const compareDate = new Date(date);
     return inputDate > compareDate ? null : { dateInvalid: true };
+  }
+
+  carPriceLocation() {
+    const startDate = new Date(this.reservationValues.startDate);
+    const endDate = new Date(this.reservationValues.endDate);
+    const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    console.log('diffDays : ' + diffDays);
+    const pricePerDay = this.car?.price || 0;
+    return diffDays * pricePerDay;
+  }
+
+  guaranteePriceLocation() {
+    return 0;
+  }
+
+  optionPriceLocation(){
+    return 0;
+  }
+
+
+
+  totalPriceLocation(){
+    return this.carPriceLocation() + this.guaranteePriceLocation() + this.optionPriceLocation();
   }
 
 }

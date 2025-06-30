@@ -7,7 +7,7 @@ export interface Car {
   car_mileage: number;
   car_picture: string;
   car_default: string;
-  car_price: number;
+  price: number;
   agency_id: number;
 }
 
