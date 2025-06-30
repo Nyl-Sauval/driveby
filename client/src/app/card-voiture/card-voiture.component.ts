@@ -10,7 +10,7 @@ import {RouterLink} from '@angular/router';
 
 
 @Component({
-  selector: 'app-detail-voiture',
+  selector: 'app-card-voiture',
   standalone: true,
   imports: [CommonModule,
     MatCardModule,
