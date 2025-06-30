@@ -14,7 +14,9 @@ class RetourSeeder extends Seeder
     {
         Retour::factory()->create([
             'return_date' => '2025-06-21',
-            'return_status_car' => 'damaged',
+            'return_interior_status_car' => 'Mauvais',
+            'return_exterior_status_car' => 'Bon',
+            'return_fuel_level' => 50,
             'return_mileage' => '155060.417',
             'return_default' => 'Nesciunt quia dolores sunt est dignissimos porro accusamus officiis.',
             'user_id' => 13,

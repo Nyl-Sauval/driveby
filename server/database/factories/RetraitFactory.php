@@ -15,9 +15,11 @@ class RetraitFactory extends Factory
     {
         return [
             'withdrawal_date' => $this->faker->date(),
-            'withdrawal_status_car' => $this->faker->randomElement(['available', 'unavailable', 'maintenance']),
+            'withdrawal_interior_status_car' => $this->faker->randomElement(['Très bon', 'Bon', 'Moyen', 'Mauvais']),
+            'withdrawal_exterior_status_car' => $this->faker->randomElement(['Très bon', 'Bon', 'Moyen', 'Mauvais']),
             'withdrawal_mileage' => $this->faker->randomFloat(3, 0, 300000),
             'withdrawal_default' => $this->faker->optional()->sentence(),
+            'withdrawal_fuel_level' => $this->faker->numberBetween(0, 100),
             'user_id' => User::factory(),
             'location_id' => Location::factory(),
         ];
