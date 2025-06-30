@@ -51,9 +51,12 @@
           {{license_country}}
         </p>
       </div>
+    </div>
+
+    <div class="profil-actions">
+      <button mat-raised-button color="primary" [routerLink]="['/client', id, 'edit']">Modifier</button>
+    </div>
   </div>
 
-  <div class="profil-actions">
-    <button mat-raised-button color="primary" [routerLink]="['/client', id, 'edit']">Modifier</button>
-  </div>
+  <app-liste-locations [userId]="id"></app-liste-locations>
 </div>
