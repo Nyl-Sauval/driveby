@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('return_fuel_level')->default(0)->comment('Range: 0-100')->nullable();
             $table->string('return_interior_status_car')->default(collect(['Très bon', 'Bon', 'Moyen', 'Mauvais'])->random())->nullable();
             $table->string('return_exterior_status_car')->default(collect(['Très bon', 'Bon', 'Moyen', 'Mauvais'])->random())->nullable();
-            $table->foreignId('user_id')->constrained('user')->onDelete('cascade')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('user')->onDelete('cascade');
             $table->boolean('return_done')->default(false);
             $table->foreignId('location_id')->constrained('location')->onDelete('cascade');
             $table->timestamps();
