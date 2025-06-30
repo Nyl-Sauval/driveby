@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('retour', function (Blueprint $table) {
             $table->id('return_id');
             $table->date('return_date');
-            $table->String('return_status_car',50);
-            $table->decimal('return_mileage',15,3);
+            $table->decimal('return_mileage',15,3)->nullable();
             $table->string('return_default',500)->nullable();
-
-            $table->foreignId('user_id')->constrained('cascade');
-            $table->foreignId('location_id')->constrained('locations')->onDelete('cascade');
+            $table->unsignedTinyInteger('return_fuel_level')->default(0)->comment('Range: 0-100')->nullable();
+            $table->string('return_interior_status_car')->default(collect(['Très bon', 'Bon', 'Moyen', 'Mauvais'])->random())->nullable();
+            $table->string('return_exterior_status_car')->default(collect(['Très bon', 'Bon', 'Moyen', 'Mauvais'])->random())->nullable();
+            $table->foreignId('user_id')->constrained('user')->onDelete('cascade')->nullable();
+            $table->boolean('return_done')->default(false);
+            $table->foreignId('location_id')->constrained('location')->onDelete('cascade');
             $table->timestamps();
         });
     }

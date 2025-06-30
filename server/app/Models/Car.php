@@ -18,6 +18,7 @@ class Car extends Model
         'car_picture',
         'car_default',
         'car_price',
+        'car_disponibility',
         'agency_id'
     ];
 
@@ -29,6 +30,11 @@ class Car extends Model
     public function agency()
     {
         return $this->belongsTo(Agency::class, 'agency_id');
+    }
+
+    public function locations()
+    {
+        return $this->hasMany(Location::class, 'car_id');
     }
 
 }

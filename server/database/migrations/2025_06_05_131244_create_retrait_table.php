@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('retrait', function (Blueprint $table) {
             $table->id('withdrawal_id');
             $table->date('withdrawal_date');
-            $table->string('withdrawal_status_car', 50);
             $table->decimal('withdrawal_mileage', 15, 3);
             $table->string('withdrawal_default', 500)->nullable();
-
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('location_id')->constrained()->onDelete('cascade');
+            $table->unsignedTinyInteger('withdrawal_fuel_level')->default(0)->comment('Range: 0-100')->nullable();
+            $table->string('withdrawal_interior_status_car')->default(collect(['Très bon', 'Bon', 'Moyen', 'Mauvais'])->random())->nullable();
+            $table->string('withdrawal_exterior_status_car')->default(collect(['Très bon', 'Bon', 'Moyen', 'Mauvais'])->random())->nullable();
+            $table->boolean('withdrawal_done')->default(false);
+            $table->foreignId('user_id')->constrained('user')->onDelete('cascade')->nullable();
+            $table->foreignId('location_id')->constrained('location')->onDelete('cascade');
 
             $table->timestamps();
         });

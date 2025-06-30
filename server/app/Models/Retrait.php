@@ -2,21 +2,28 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Retrait extends Model
 
 {
+    use HasFactory;
+
+    protected $table = 'retrait';
 
     protected $primaryKey = 'withdrawal_id';
 
     protected $fillable = [
         'withdrawal_date',
-        'withdrawal_status_car',
+        'withdrawal_interior_status_car',
+        'withdrawal_exterior_status_car',
         'withdrawal_mileage',
         'withdrawal_default',
+        'withdrawal_fuel_level',
+        'withdrawal_done',
         'user_id',
-        'location_id'
+        'location_id',
     ];
 
 

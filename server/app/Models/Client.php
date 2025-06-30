@@ -27,4 +27,10 @@ class Client extends Model
         'client_license_country',
     ];
 
+    public function locations()
+    {
+        return $this->hasMany(Location::class);
+    }
+
+
 }

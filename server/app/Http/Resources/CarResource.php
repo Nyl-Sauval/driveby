@@ -16,6 +16,7 @@ class CarResource extends \Illuminate\Http\Resources\Json\JsonResource
             'picture' => $this->car_picture,
             'price' => $this->car_price,
             'default' => $this->car_default,
+            'disponibility' => $this->car_disponibility,
             'agency' => new AgencyResource($this->whenLoaded('agency')),
             'categories' => CategoryResource::collection($this->whenLoaded('categories')),
         ];
