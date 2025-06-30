@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {CarService} from '../service/car.service';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
@@ -12,7 +12,8 @@ import {LocationService} from '../service/locationService';
     NgForOf,
     MatIconButton,
     MatIcon,
-    RouterLink
+    RouterLink,
+    NgIf
   ],
   templateUrl: './liste-locations.component.html',
   styleUrl: './liste-locations.component.css'
@@ -63,7 +64,24 @@ export class ListeLocationsComponent implements OnChanges {
   }
 
   getLocationsForUser(id: number) {
-    return this.allLocations.filter(loc => loc.client?.id === id);
+    return this.allLocations
+      .filter(loc => loc.client?.id === id)
+      .sort((a, b) => {
+        const dateA = new Date(a.retrait.withdrawal_date).getTime();
+        const dateB = new Date(b.retrait.withdrawal_date).getTime();
+
+        // Tri croissant => les dates les plus proches (récentes) en premier
+        return dateB - dateA;
+      });
+  }
+
+  isLocationPast(location: any): boolean {
+    const withdrawalDate = new Date(location.retrait.withdrawal_date);
+    const today = new Date();
+    withdrawalDate.setHours(0,0,0,0);
+    today.setHours(0,0,0,0);
+
+    return withdrawalDate < today;
   }
 
   formatDate(dateStr: string): string {
