@@ -21,9 +21,9 @@ class Retrait extends Model
         'withdrawal_mileage',
         'withdrawal_default',
         'withdrawal_fuel_level',
+        'withdrawal_done',
         'user_id',
         'location_id',
-        'done',
     ];
 
 
