@@ -4,6 +4,7 @@ import {NgForOf} from '@angular/common';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
+import {LocationService} from '../service/locationService';
 
 @Component({
   selector: 'app-liste-locations',
@@ -22,7 +23,7 @@ export class ListeLocationsComponent implements OnChanges {
   locationsForUser: any[] = [];
   allAgencies: any[] = [];
 
-  constructor(private carService: CarService) {
+  constructor(private carService: CarService, private locationService: LocationService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -71,6 +72,17 @@ export class ListeLocationsComponent implements OnChanges {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
+    });
+  }
+
+  download(locationId:any) {
+    this.locationService.downloadInvoice(locationId).subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `facture-location-${locationId}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
     });
   }
 
