@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Retour extends Model
 
 {
-
+    use HasFactory;
+    //
     protected $table = 'retour';
     protected $primaryKey = 'return_id';
 
     protected $fillable = [
         'return_date',
-        'return_status_',
+        'return_status_car',
         'return_mileage',
         'return_default',
         'user_id',
@@ -25,7 +27,8 @@ class Retour extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function location(){
-        return $this->belongsTo(location::class);
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
     }
 }

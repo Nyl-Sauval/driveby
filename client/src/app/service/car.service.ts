@@ -36,6 +36,11 @@ export class CarService {
     return this.http.get<any[]>(`${this.baseUrl}/categories`);
   }
 
+  getAllLocations() {
+    return this.http.get<any[]>(`${this.baseUrl}/locations`);
+  }
+
+
   checkAvailability(carId: string, startDate: string, endDate: string): void{
     //On récupère les locations passés avec cette voiture
 

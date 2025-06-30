@@ -15,8 +15,8 @@ class LocationController extends BaseController
 
     public function index()
     {
-       $locations = Location::with(['car', 'client'])->get();
-        return response()->json(LocationResource::collection($locations));
+        $locations = Location::with(['client', 'car', 'guarantee', 'retrait', 'retour'])->get();
+        return response()->json($locations);
     }
 
     public function create(Request $request)
