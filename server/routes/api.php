@@ -35,5 +35,5 @@ Route::get('categories', [CategoryController::class, 'index']);
 Route::put('client/{id}', [ClientController::class, 'update'])->name('client.update')->middleware('auth:sanctum');;
 
 Route::get('locations', [LocationController::class, 'index']);
-Route::post('locations', [LocationController::class, 'create'])->name('location.create')->middleware('auth:sanctum');
+Route::post('locations', [LocationController::class, 'create'])->name('location.create');
 Route::get('cars/{carId}/locations', [LocationController::class, 'getLocationsByCar'])->name('location.getByCar');
