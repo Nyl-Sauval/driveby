@@ -92,3 +92,8 @@ h2{
   overflow: hidden;
   padding: 20px;
 }
+
+:host {
+  height: auto;
+  display: inline-block;
+}
