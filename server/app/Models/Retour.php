@@ -20,9 +20,9 @@ class Retour extends Model
         'return_mileage',
         'return_default',
         'return_fuel_level',
+        'return_done',
         'user_id',
         'location_id',
-        'done',
     ];
 
     public function user()

@@ -19,6 +19,7 @@ class RetourSeeder extends Seeder
             'return_fuel_level' => 50,
             'return_mileage' => '155060.417',
             'return_default' => 'Nesciunt quia dolores sunt est dignissimos porro accusamus officiis.',
+            'return_done' => false,
             'user_id' => 13,
             'location_id' => 12
         ]);

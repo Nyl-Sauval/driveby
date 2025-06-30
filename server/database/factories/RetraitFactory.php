@@ -20,6 +20,7 @@ class RetraitFactory extends Factory
             'withdrawal_mileage' => $this->faker->randomFloat(3, 0, 300000),
             'withdrawal_default' => $this->faker->optional()->sentence(),
             'withdrawal_fuel_level' => $this->faker->numberBetween(0, 100),
+            'withdrawal_done' => false,
             'user_id' => User::factory(),
             'location_id' => Location::factory(),
         ];
