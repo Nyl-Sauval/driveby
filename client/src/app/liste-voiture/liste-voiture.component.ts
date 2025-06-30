@@ -108,7 +108,6 @@ export class ListeVoitureComponent implements OnInit {
   filterCars() {
     const agencyIdNumber = Number(this.selectedAgencyId);
     const categoryIdNumber = Number(this.selectedCategoryId);
-    const minSelected = this.minPrice
 
     this.cars = this.allCars.filter(car => {
       const matchesAgency = this.selectedAgencyId
@@ -147,24 +146,44 @@ export class ListeVoitureComponent implements OnInit {
     const returnDateToUse = returnDate || new Date();
 
     return cars.filter(car => {
+      console.log('filtre ');
+      console.log(this.locations);
       const carLocations = this.locations.filter(loc => loc.car_id === car.id);
+      console.log(carLocations);
 
       const isAvailable = !carLocations.some(loc => {
-        if (!loc.retrait || !loc.retour) return false;
+        console.log('loc.retrait:', loc.retrait, 'loc.retour:', loc.retour);
+        if (!loc.retrait) return false; // pas de retrait → la location est invalide
+
+        console.log('after if')
 
         const retraitDate = new Date(loc.retrait.withdrawal_date);
-        const retourDate = new Date(loc.retour.return_date);
+        let retourDate: Date | null = null;
+        if (loc.retour) {
+          retourDate = new Date(loc.retour.return_date);
+        }
 
         console.log('retrait, retour ',retraitDate, retourDate);
 
+        // Cas 1 : départ + retour sélectionnés
         if (departureDate && returnDate) {
-          return (retraitDate <= returnDate) && (retourDate >= departureDate);
+          if (retourDate) {
+            return (retraitDate <= returnDate) && (retourDate >= departureDate);
+          } else {
+            return retraitDate <= returnDate; // en cours de location sans retour
+          }
         }
 
+        // Cas 2 : uniquement départ sélectionné
         if (departureDate && !returnDate) {
-          return retourDate >= departureDate;
+          if (retourDate) {
+            return retourDate >= departureDate;
+          } else {
+            return true; // toujours en location sans retour = potentiellement occupé
+          }
         }
 
+        // Cas 3 : uniquement retour sélectionné
         if (!departureDate && returnDate) {
           return retraitDate <= returnDateToUse;
         }
