@@ -164,11 +164,21 @@ export class ReservationFormComponent implements OnInit {
         license_country: this.licenseValues.license_country
       };
       this.locationService.makeReservation(formData).subscribe({
-        next: (response) => {
+        next: (response: any) => {
+          const locationId=response.location.id;
           console.log('Réservation réussie', response);
           // Notification succès et redirection accueil
           alert('Réservation effectuée avec succès !');
           this.router.navigate(['/']);
+          this.locationService.downloadInvoice(locationId).subscribe(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `facture-location-${locationId}.pdf`;
+            a.click();
+            URL.revokeObjectURL(url);
+          });
+
         },
         error: (error) => {
           console.error('Erreur lors de la réservation', error);

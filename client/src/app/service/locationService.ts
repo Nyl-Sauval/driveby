@@ -19,4 +19,10 @@ export class LocationService {
 
     return this.http.post(`${this.baseUrl}/locations`, formData, { headers });
   }
+
+  downloadInvoice(locationId: number): Observable<Blob> {
+    return this.http.get(`http://localhost:8000/api/locations/${locationId}/invoice`, {
+      responseType: 'blob'
+    });
+  }
 }
