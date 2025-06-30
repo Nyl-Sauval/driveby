@@ -87,6 +87,13 @@ export class AuthService {
     });
   }
 
+  isAgent(): boolean{
+    const user = this.userSubject.value;
+    console.log("user : " + user);
+    console.log("role : " + user?.role);
+    return user && user.role === 'agent';
+  }
+
   checkSession(): Observable<any> {
     const token = localStorage.getItem('token');
     if (!token) {

@@ -25,4 +25,9 @@ export class LocationService {
       responseType: 'blob'
     });
   }
+
+  getLocationsByAgency(agencyId: string) {
+    const url = `${this.baseUrl}/agency/${agencyId}/locations`;
+    return this.http.get(url);
+  }
 }

@@ -22,5 +22,12 @@ class UserSeeder extends Seeder
             'password' => bcrypt('password'),
             'client_id' => 5,
         ]);
+
+        // Créer un utilisateur agent
+        User::factory()->create([
+            'email' => 'agent@example.com',
+            'role' => 'agent',
+            'password' => bcrypt('password')
+        ]);
     }
 }

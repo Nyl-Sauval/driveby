@@ -7,12 +7,14 @@ import {ListeVoitureComponent} from './liste-voiture/liste-voiture.component';
 import {ClientEditComponent} from './client-edit/client-edit.component';
 import {DetailVoitureComponent} from './detail-voiture/detail-voiture.component';
 import {ReservationFormComponent} from './reservation-form/reservation-form.component';
+import {GestionAgentComponent} from './gestion-agent/gestion-agent.component';
 
 export const routes: Routes = [
   {path: '', component: HomepageComponent, pathMatch: 'full'},
   {path: 'enregistrement', component: EnregistrementComponent },
   {path: 'login', component: LoginComponent },
   {path: 'profil', component: ProfilComponent },
+  {path: 'agent', component: GestionAgentComponent },
   {path: 'client/:id/edit', component: ClientEditComponent},
   {path: 'search', component: ListeVoitureComponent},
   {path: 'voiture/:id', component: DetailVoitureComponent},
