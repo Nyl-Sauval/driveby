@@ -13,4 +13,14 @@ class RetourController extends Controller
         return response()->json(Retour::all());
     }
 
+    public function show($id)
+    {
+        $retour = Retour::find($id);
+        if (!$retour) {
+            return response()->json(['message' => 'Retour non trouvé'], 404);
+        }
+
+        return response()->json($retour);
+    }
+
 }

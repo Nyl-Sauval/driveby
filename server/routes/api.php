@@ -46,4 +46,6 @@ Route::get('/agency/{id}/locations', [LocationController::class, 'getLocationsBy
 Route::put('retrait/{retrait}', [RetraitController::class, 'update']);
 Route::get('retrait/{id}', [RetraitController::class, 'show']);
 
+Route::put('retour/{retour}', [RetourController::class, 'update']);
+Route::get('retour/{id}', [RetourController::class, 'show']);
 
