@@ -14,10 +14,8 @@
     </a>
 
     <div class="right-part">
-      @if (!auth.isLoggedIn()) {
-        <button mat-button (click)="openLogin()" class="button-connexion">Connexion</button>
-        <button mat-button (click)="openSignin()" class="button-connexion">Enregistrement</button>
-      }
+        <button *ngIf="!(auth.isLoggedIn$ | async)" mat-button (click)="openLogin()" class="button-connexion">Connexion</button>
+        <button *ngIf="!(auth.isLoggedIn$ | async)" mat-button (click)="openSignin()" class="button-connexion">Enregistrement</button>
 
       <button *ngIf="(auth.isAgent$ | async)" routerLink="/agent" class="button-profil">
         <mat-icon>account_circle</mat-icon>
@@ -25,11 +23,11 @@
       </button>
 
 
-      <button *ngIf="auth.isLoggedIn()" routerLink="/profil" class="button-profil">
+      <button *ngIf="(auth.isLoggedIn$ | async)" routerLink="/profil" class="button-profil">
         <mat-icon>account_circle</mat-icon>
         Profil
       </button>
-      <button mat-button (click)="auth.logout()" class="button-connexion" *ngIf="auth.isLoggedIn()">
+      <button mat-button (click)="auth.logout()" class="button-connexion" *ngIf="(auth.isLoggedIn$ | async)">
         <mat-icon>logout</mat-icon>
       </button>
     </div>
