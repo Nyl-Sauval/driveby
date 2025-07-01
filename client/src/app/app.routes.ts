@@ -23,5 +23,6 @@ export const routes: Routes = [
   {path: 'voiture/:id', component: DetailVoitureComponent},
   {path: 'voiture/:id/rent', component: ReservationFormComponent},
   {path: 'location/:id', component: DetailsLocationComponent},
-  {path: 'retrait/:id', component: RetraitComponent},
+  {path: 'retrait/:id/edit', component: RetraitComponent},
+  {path: 'retour/:id/edit', component: RetourComponent}
 ];

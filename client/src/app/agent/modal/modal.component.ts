@@ -61,10 +61,10 @@ export class ModalComponent {
 
   openRetrait() {
     console.log("data", this.data);
-    this.router.navigate(['/retrait', this.data.retraitId]);
+    this.router.navigate(['/retrait', this.data.retraitId, 'edit']);
   }
 
   openRetour() {
-    this.router.navigate(['/retour', this.data.retourId]);
+    this.router.navigate(['/retour', this.data.retourId, 'edit']);
   }
 }
