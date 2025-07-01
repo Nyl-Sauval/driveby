@@ -57,9 +57,13 @@ class AuthController extends BaseController
             return $this->sendError('Unauthorized', [], 401);
         }
 
-        $success['token'] = $user->createToken('auth_token')->plainTextToken;
-        $success['token_type'] = 'Bearer';
-        $success['name'] = $user->name;
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        $success = [
+            'token' => $token,
+            'token_type' => 'Bearer',
+            'user' => $user,
+        ];
 
         return $this->sendResponse($success, 'User logged in successfully.');
     }
