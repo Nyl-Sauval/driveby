@@ -1,9 +1,9 @@
 <form [formGroup]="retourForm" (ngSubmit)="onSubmit()" class="retour-form">
 
-  <h1>État de la voiture lors du retrait</h1>
+  <h1>État de la voiture lors du retour</h1>
 
   <mat-form-field appearance="fill" class="form-width">
-    <mat-label>Date de retrait</mat-label>
+    <mat-label>Date de retour</mat-label>
     <input matInput formControlName="dateRetour" required type="date"/>
     <mat-error *ngIf="retourForm.get('dateRetour')?.invalid && retourForm.get('dateRetour')?.touched">
       Date de retrait requise
@@ -58,7 +58,7 @@
   </mat-form-field>
 
   <mat-checkbox formControlName="done" required class="done-form">
-    Retrait fait
+    Retour fait
   </mat-checkbox>
   <mat-error *ngIf="retourForm.get('done')?.invalid && retourForm.get('done')?.touched">
     Ce champ est requis
