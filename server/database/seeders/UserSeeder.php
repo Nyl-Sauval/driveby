@@ -15,12 +15,19 @@ class UserSeeder extends Seeder
         // Créer 10 utilisateurs aléatoires
         User::factory()->count(10)->create();
 
+        // Créer un utilisateur client
+        User::factory()->create([
+            'email' => 'client@example.com',
+            'role' => 'user',
+            'password' => bcrypt('password'),
+            'client_id' => 11,
+        ]);
+
         // Créer un utilisateur spécifique
         User::factory()->create([
             'email' => 'test@example.com',
             'role' => 'admin',
             'password' => bcrypt('password'),
-            'client_id' => 5,
         ]);
 
         // Créer un utilisateur agent
