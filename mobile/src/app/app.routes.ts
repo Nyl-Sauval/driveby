@@ -26,6 +26,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./profil/profil.component').then((m) => m.ProfilComponent),
       },
+      {
+        path: 'location/:id',
+        loadComponent: () =>
+          import('./location-detail/location-detail.component').then((m) => m.LocationDetailComponent),
+      }
     ],
   },
 ];

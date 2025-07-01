@@ -21,4 +21,11 @@
     <p><strong>Durée :</strong> {{ getDaysBetweenDates(location?.retrait?.withdrawal_date,location?.retour?.return_date)  }} jour(s)</p>
     <p><strong>Total estimé :</strong> {{ (location?.car.car_price*getDaysBetweenDates(location?.retrait?.withdrawal_date,location?.retour?.return_date))/100| currency:'EUR' }}</p>
   </section>
+
+  <section class="agency-section">
+    <h3>Agence</h3>
+    <p><strong>Nom :</strong> {{ agency?.agency_name }}</p>
+    <p><strong>Adresse :</strong> {{ agency?.agency_address }}</p>
+    <p><strong>Téléphone :</strong> {{ agency?.agency_phone }}</p>
+  </section>
 </main>

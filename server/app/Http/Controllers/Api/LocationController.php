@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\LocationResource;
+use App\Jobs\SendInvoiceEmail;
+use App\Mail\ReservationCreated;
 use App\Models\Agency;
 use App\Models\Car;
 use App\Models\Client;
@@ -13,6 +15,7 @@ use App\Models\Retrait;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Utils\DateUtil;
+use Illuminate\Support\Facades\Mail;
 
 class LocationController extends BaseController
 {
@@ -114,6 +117,8 @@ class LocationController extends BaseController
             'return_done' => false,
         ]);
 
+        $this->sendInvoice($location->id);
+
         return response()->json([
             'location' => new LocationResource($location),
             'retrait' => $retrait,
@@ -133,9 +138,17 @@ class LocationController extends BaseController
         $location = Location::with(['client', 'car', 'retrait', 'retour'])->findOrFail($id);
         $agency = Agency::findOrFail($location->car->agency_id);
 
+        SendInvoiceEmail::dispatch($location, $agency);
+    }
+
+    public function sendInvoice($id)
+    {
+        $location = Location::with(['client', 'car', 'retrait', 'retour'])->findOrFail($id);
+        $agency = Agency::findOrFail($location->car->agency_id);
+
         $pdf = Pdf::loadView('invoices.facture', compact('location', 'agency'));
 
-        return $pdf->download("facture-location-{$id}.pdf");
+        return $pdf->output();
     }
 
     public function getLocationsByAgency($agencyId){
