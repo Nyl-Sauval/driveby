@@ -130,7 +130,6 @@ export class GestionAgentComponent {
     //reset les filtres
     this.clientFilter = '';
     this.departureDate = null;
-
   }
 }
 
