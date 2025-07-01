@@ -9,6 +9,8 @@ import {
 } from '@angular/material/table';
 import {LocationService} from '../service/locationService';
 import {NgForm} from '@angular/forms';
+import {MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-gestion-agent',
@@ -22,7 +24,9 @@ import {NgForm} from '@angular/forms';
     MatTableModule,
     NgIf,
     JsonPipe,
-    DatePipe
+    DatePipe,
+    MatIcon,
+    MatIconButton
   ],
   templateUrl: './gestion-agent.component.html',
   styleUrl: './gestion-agent.component.css'
@@ -68,6 +72,15 @@ export class GestionAgentComponent {
       error: (err) => {
         console.error('Error fetching locations for selected agency:', err);
       }
+    });
+  }
+
+  formatDate(dateStr: string): string {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('fr-FR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     });
   }
 }

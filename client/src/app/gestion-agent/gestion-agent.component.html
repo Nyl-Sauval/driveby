@@ -10,42 +10,32 @@
 <div *ngIf="locations.length === 0">Aucune location disponible</div>
 <div *ngIf="locations.length > 0">
   <h2>Locations pour l'agence sélectionnée</h2>
-<mat-table [dataSource]="locations" class="mat-elevation-z8" *ngIf="locations.length > 0">
+  <div class="locations-list">
+    <h1>Liste de mes réservations</h1>
+    <hr>
 
-  <ng-container matColumnDef="client_name">
-    <mat-header-cell *matHeaderCellDef> Nom client </mat-header-cell>
-    <mat-cell *matCellDef="let location"> {{ location.client.client_name }} </mat-cell>
-  </ng-container>
+    <div class="list">
+      <div class="location-item" *ngFor="let location of locations">
+        <img src="{{location.car.car_picture}}" class="img-car">
 
-  <ng-container matColumnDef="client_firstname">
-    <mat-header-cell *matHeaderCellDef> Prénom client </mat-header-cell>
-    <mat-cell *matCellDef="let location"> {{ location.client.client_firstname }} </mat-cell>
-  </ng-container>
+        <div class="location-info">
+          <strong>
+            <span>{{location.car.car_brand}} {{location.car.car_model}}</span>
+          </strong>
+          <br>
+          <span>Date de retrait : {{location.retrait ? formatDate(location.retrait.withdrawal_date) : ''}}</span>
+          <span>Date de retour : {{location.retour ? formatDate(location.retour.return_date) : ''}}</span>
+        </div>
 
-  <ng-container matColumnDef="car_brand">
-    <mat-header-cell *matHeaderCellDef> Marque voiture </mat-header-cell>
-    <mat-cell *matCellDef="let location"> {{ location.car.car_brand }} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="car_model">
-    <mat-header-cell *matHeaderCellDef> Modèle voiture </mat-header-cell>
-    <mat-cell *matCellDef="let location"> {{ location.car.car_model }} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="withdrawal_date">
-    <mat-header-cell *matHeaderCellDef> Date de début </mat-header-cell>
-    <mat-cell *matCellDef="let location">
-      {{ location.retrait?.withdrawal_date ? (location.retrait.withdrawal_date) : '' }}
-    </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="return_date">
-    <mat-header-cell *matHeaderCellDef> Date de fin </mat-header-cell>
-    <mat-cell *matCellDef="let location">
-      {{ location.retour?.return_date ? (location.retour.return_date) : '' }}
-    </mat-cell>
-  </ng-container>
-
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
+        <div>
+          <button mat-icon-button aria-label="Voir les détails">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button aria-label="Télécharger la facture">
+            <mat-icon>download</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

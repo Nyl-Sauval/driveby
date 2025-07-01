@@ -1,0 +1,41 @@
+:host {
+  width: 80%;
+}
+
+.locations-list {
+
+  .location-item {
+    background-color: #f6f5f5;
+    border-radius: 10px;
+    padding: 20px 50px;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    img {
+      width: 200px;
+    }
+
+    .location-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .agence-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      .address {
+        font-size: 14px;
+        font-style: italic;
+      }
+    }
+
+  }
+}
