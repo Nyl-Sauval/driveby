@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {Router} from '@angular/router';
-import {environment} from '../../environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -10,26 +11,37 @@ import {environment} from '../../environments/environment';
 export class AuthService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient, private router:Router) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   register(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, data);
+    return this.http.post(`${this.apiUrl}/register`, data).pipe(
+      tap((response: any) => {
+        if (response?.success?.token) {
+          localStorage.setItem('token', response.success.token);
+        }
+      })
+    );
   }
 
   login(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, data);
+    return this.http.post(`${this.apiUrl}/login`, data).pipe(
+      tap((response: any) => {
+        if (response?.success?.token) {
+          localStorage.setItem('token', response.success.token);
+        }
+      })
+    );
   }
 
   isLoggedIn(): boolean {
-    const token = localStorage.getItem('token');
-    return !!token;
+    return !!localStorage.getItem('token');
   }
 
   me(): Observable<Object> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
-      Accept: 'application/json'
+      Accept: 'application/json',
     });
     return this.http.get(`${this.apiUrl}/profil`, { headers });
   }
@@ -38,7 +50,7 @@ export class AuthService {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
-      Accept: 'application/json'
+      Accept: 'application/json',
     });
     return this.http.get(`${this.apiUrl}/client/${id}`, { headers });
   }
@@ -47,7 +59,7 @@ export class AuthService {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
-      Accept: 'application/json'
+      Accept: 'application/json',
     });
     return this.http.put(`${this.apiUrl}/client/${id}`, data, { headers });
   }
@@ -64,7 +76,6 @@ export class AuthService {
     this.me().subscribe({
       next: (response: any) => {
         const role = response?.role;
-        console.log("role : " + role);
         this.isAdminSubject.next(role === 'admin');
       },
       error: (err) => {

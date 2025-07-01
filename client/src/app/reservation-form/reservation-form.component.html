@@ -6,12 +6,12 @@
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Date de début</mat-label>
-        <input matInput type="date" formControlName="startDate">
+        <input matInput type="date" formControlName="startDate" />
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Date de fin</mat-label>
-        <input matInput type="date" formControlName="endDate">
+        <input matInput type="date" formControlName="endDate" />
       </mat-form-field>
 
       <div class="step-actions">
@@ -27,27 +27,27 @@
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Nom</mat-label>
-        <input matInput formControlName="name">
+        <input matInput formControlName="name" />
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Prénom</mat-label>
-        <input matInput formControlName="firstname">
+        <input matInput formControlName="firstname" />
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email">
+        <input matInput formControlName="email" />
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Téléphone</mat-label>
-        <input matInput formControlName="phone">
+        <input matInput formControlName="phone" />
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Date de naissance</mat-label>
-        <input matInput type='date' formControlName="birth">
+        <input matInput type="date" formControlName="birth" />
       </mat-form-field>
 
       <div class="step-actions">
@@ -57,29 +57,29 @@
     </form>
   </mat-step>
 
-  <!-- Étape 2.1 : Adresse -->
+  <!-- Étape 3 : Adresse -->
   <mat-step>
     <form [formGroup]="addressGroup">
       <ng-template matStepLabel>Adresse</ng-template>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Adresse</mat-label>
-        <input matInput formControlName="address">
+        <input matInput formControlName="address" />
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Code postal</mat-label>
-        <input matInput formControlName="postal_code">
+        <input matInput formControlName="postal_code" />
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Ville</mat-label>
-        <input matInput formControlName="city">
+        <input matInput formControlName="city" />
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Pays</mat-label>
-        <input matInput formControlName="country">
+        <input matInput formControlName="country" />
       </mat-form-field>
 
       <div class="step-actions">
@@ -89,29 +89,29 @@
     </form>
   </mat-step>
 
-  <!-- Étape 2.2 : Permis -->
+  <!-- Étape 4 : Permis -->
   <mat-step>
     <form [formGroup]="licenseGroup">
       <ng-template matStepLabel>Permis</ng-template>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Numéro de permis</mat-label>
-        <input matInput formControlName="license_number">
+        <input matInput formControlName="license_number" />
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Date de délivrance</mat-label>
-        <input matInput type="date" formControlName="license_issue_date">
+        <input matInput type="date" formControlName="license_issue_date" />
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Date d'expiration</mat-label>
-        <input matInput type="date" formControlName="license_expiry_date">
+        <input matInput type="date" formControlName="license_expiry_date" />
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Pays de délivrance</mat-label>
-        <input matInput formControlName="license_country">
+        <input matInput formControlName="license_country" />
       </mat-form-field>
 
       <div class="step-actions">
@@ -121,27 +121,128 @@
     </form>
   </mat-step>
 
-  <!-- Étape 3 : Récap -->
+  <!-- Étape 5 : Garantie -->
+  <mat-step>
+    <ng-template matStepLabel>Garantie</ng-template>
+
+    <h2 class="titre-centre">Sélectionnez la protection souhaitée</h2>
+    <div class="garantie-container">
+      <div
+        class="garantie-card"
+        *ngFor="let garantie of garanties; let i = index"
+        [class.selected]="isSelected(i)"
+        (click)="select(i)"
+      >
+        <div class="garantie-header">
+          <div>
+            <h3>{{ garantie.guarantee_name }}</h3>
+            <p>{{ garantie.guarantee_description }}</p>
+          </div>
+          <div class="prix">{{ garantie.guarantee_price | currency: 'EUR' }}</div>
+        </div>
+
+        <div *ngIf="isSelected(i)" class="garantie-details">
+          <ul>
+            <li class="inclusion">Assurance au tiers</li>
+            <li class="inclusion">Assistance dépannage 24/7</li>
+            <li class="exclusion">Franchise à vérifier</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-actions">
+      <button mat-button matStepperPrevious>Retour</button>
+      <button mat-button matStepperNext>Suivant</button>
+    </div>
+  </mat-step>
+
+  <!-- Étape 6 : Options -->
+  <mat-step>
+    <ng-template matStepLabel>Options</ng-template>
+
+    <h2>Options disponibles</h2>
+    <div class="option-container">
+      <div *ngFor="let option of options" class="option-card">
+        <div class="option-info">
+          <strong>{{ option.option_name }}</strong>
+          <p>{{ option.option_description }}</p>
+          <span>+{{ option.option_price }} €/jour</span>
+        </div>
+
+        <div *ngIf="option.option_type === 'toggle'" class="toggle">
+          <input
+            type="checkbox"
+            [checked]="selectedOptions[option.option_id] === 1"
+            (change)="onToggleChange(option)"
+          />
+        </div>
+
+        <div *ngIf="option.option_type === 'stepper'" class="stepper">
+          <button (click)="changeQty(option.option_id, -1)">−</button>
+          <span>{{ selectedOptions[option.option_id] }}</span>
+          <button (click)="changeQty(option.option_id, 1)">+</button>
+        </div>
+      </div>
+
+      <div class="total-bar">
+        <div>
+          <strong>Total / jour : {{ getTotal() | number: '1.2-2' }} €</strong><br />
+          <ng-container *ngIf="reservationDays">
+            Total pour {{ reservationDays }} jour(s) :
+            <strong>{{ getTotalReservation() | number: '1.2-2' }} €</strong>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-actions">
+      <button mat-button matStepperPrevious>Retour</button>
+      <button mat-button matStepperNext>Suivant</button>
+    </div>
+  </mat-step>
+
+  <!-- Étape 7 : Récapitulatif -->
   <mat-step>
     <ng-template matStepLabel>Récapitulatif</ng-template>
 
     <p><strong>Début :</strong> {{ reservationValues.startDate }}</p>
     <p><strong>Fin :</strong> {{ reservationValues.endDate }}</p>
-    <p><strong>Agence :</strong> {{ reservationValues.agencyLocation }}</p>
+    <p><strong>Prix voiture :</strong> {{ car?.car_price | number: '1.2-2' }} €/jour</p>
 
     <p><strong>Nom :</strong> {{ clientValues.name }}</p>
     <p><strong>Prénom :</strong> {{ clientValues.firstname }}</p>
     <p><strong>Email :</strong> {{ clientValues.email }}</p>
     <p><strong>Téléphone :</strong> {{ clientValues.phone }}</p>
     <p><strong>Date de naissance :</strong> {{ clientValues.birth }}</p>
+
     <p><strong>Adresse :</strong> {{ addressValues.address }}</p>
     <p><strong>Code postal :</strong> {{ addressValues.postal_code }}</p>
     <p><strong>Ville :</strong> {{ addressValues.city }}</p>
     <p><strong>Pays :</strong> {{ addressValues.country }}</p>
+
     <p><strong>Numéro de permis :</strong> {{ licenseValues.license_number }}</p>
     <p><strong>Date de délivrance :</strong> {{ licenseValues.license_issue_date }}</p>
-    <p><strong>Date d'expiration du permis :</strong> {{ licenseValues.license_expiry_date }}</p>
+    <p><strong>Date d'expiration :</strong> {{ licenseValues.license_expiry_date }}</p>
 
+    <p *ngIf="getSelectedGuarantee() as g">
+      <strong>Garantie choisie :</strong>
+      {{ g.guarantee_name }} ({{ g.guarantee_price | currency:'EUR' }})
+    </p>
+
+    <div *ngIf="getSelectedOptions().length > 0">
+      <p><strong>Options sélectionnées :</strong></p>
+      <ul>
+        <li *ngFor="let opt of getSelectedOptions()">
+          {{ opt.option_name }}
+          <ng-container *ngIf="opt.option_type === 'stepper'">× {{ selectedOptions[opt.option_id] }}</ng-container>
+          <ng-container *ngIf="opt.option_type === 'toggle'">: Oui</ng-container>
+        </li>
+      </ul>
+    </div>
+
+    <p><strong>Total / jour :</strong> {{ getTotal() | number: '1.2-2' }} €</p>
+    <p><strong>Total pour {{ reservationDays }} jour(s) :</strong> {{ getTotalReservation() | number: '1.2-2' }} €</p>
 
     <div class="step-actions">
       <button mat-button matStepperPrevious>Retour</button>
