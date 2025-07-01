@@ -98,7 +98,6 @@ export class GestionAgentComponent {
   }
 
   getRetraitId(location: any) {
-    console.log(location);
     return location.retrait.withdrawal_id;
   }
 

@@ -13,6 +13,8 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import {ReservationFormComponent} from './app/reservation-form/reservation-form.component';
 import {GestionAgentComponent} from './app/gestion-agent/gestion-agent.component';
 import {DetailsLocationComponent} from './app/location/details-location/details-location.component';
+import {RetraitComponent} from './app/agent/retrait/retrait.component';
+import {RetourComponent} from './app/agent/retour/retour.component';
 
 const routes: Routes = [
   { path: 'enregistrement', component: EnregistrementComponent },
@@ -24,6 +26,7 @@ const routes: Routes = [
   { path: 'voiture/:id', component: DetailVoitureComponent},
   { path: 'voiture/:id/rent', component: ReservationFormComponent},
   { path: 'location/:id', component: DetailsLocationComponent},
+  { path: 'retrait/:id', component: RetraitComponent},
   { path: '', component: HomepageComponent },
 ];
 
