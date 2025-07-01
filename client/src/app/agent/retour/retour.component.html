@@ -27,6 +27,19 @@
   </mat-form-field>
 
   <mat-form-field appearance="fill" class="form-width">
+    <mat-label>Disponibilité</mat-label>
+    <mat-select formControlName="disponibility" required>
+      <mat-option value="Disponible">Disponible</mat-option>
+      <mat-option value="En réparation">En réparation</mat-option>
+      <mat-option value="En maintenance">En maintenance</mat-option>
+      <mat-option value="Indisponible">Indisponible</mat-option>
+    </mat-select>
+    <mat-error *ngIf="retourForm.get('disponibility')?.invalid && retourForm.get('disponibility')?.touched">
+      État requis
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="form-width">
     <mat-label>État extérieur de la voiture</mat-label>
     <mat-select formControlName="exteriorStatus" required>
       <mat-option value="tres-bon">Très bon</mat-option>

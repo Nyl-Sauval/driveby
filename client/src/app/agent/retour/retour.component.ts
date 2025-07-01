@@ -52,6 +52,7 @@ export class RetourComponent {
       interiorStatus: ['', [Validators.required]],
       default: ['', []],
       done: [false, Validators.requiredTrue],
+      disponibility: ['', Validators.required]
     });
   }
 
@@ -72,7 +73,8 @@ export class RetourComponent {
         return_exterior_status_car: formData.exteriorStatus,
         return_interior_status_car: formData.interiorStatus,
         return_default: formData.default ?? '',
-        return_done: formData.done
+        return_done: formData.done,
+        car_disponibility: formData.disponibility
       };
       console.log('Payload envoyé à l’API:', payload);
 
@@ -92,6 +94,11 @@ export class RetourComponent {
         },
       });
     }
+    console.log('Erreurs formulaire:', this.retourForm.errors);
+    console.log('Valeurs formulaire:', this.retourForm.value);
+    console.log('done value:', this.retourForm.get('done')?.value);
+    console.log('done invalid:', this.retourForm.get('done')?.invalid);
+    console.log('done errors:', this.retourForm.get('done')?.errors);
   }
 
   populateForms(retour: any): void {
@@ -102,7 +109,8 @@ export class RetourComponent {
       exteriorStatus: retour.return_exterior_status_car?.toLowerCase(),
       interiorStatus: retour.return_interior_status_car?.toLowerCase(),
       default: retour.return_default,
-      done: retour.return_done
+      done: retour.return_done === true || retour.return_done === 1,
+      disponibility: retour.location?.car?.car_disponibility || ''
     });
   }
 
