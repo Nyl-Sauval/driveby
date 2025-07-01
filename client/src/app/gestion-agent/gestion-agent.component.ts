@@ -8,6 +8,10 @@ import {
   MatTableModule
 } from '@angular/material/table';
 import {LocationService} from '../service/locationService';
+import {MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {ModalComponent} from '../agent/modal/modal.component';
+import {MatDialog} from '@angular/material/dialog';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
@@ -17,6 +21,7 @@ import {
   MatDatepickerInputEvent,
   MatDatepickerToggle
 } from '@angular/material/datepicker';
+
 
 @Component({
   selector: 'app-gestion-agent',
@@ -60,7 +65,8 @@ export class GestionAgentComponent {
   originalLocations: any[] = []; // Pour stocker les locations originales
 
   constructor(private carService: CarService,
-              private locationService: LocationService) {
+              private locationService: LocationService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -98,6 +104,27 @@ export class GestionAgentComponent {
       month: 'long',
       day: 'numeric',
     });
+  }
+
+  openModal(location: any) {
+    const dialogRef = this.dialog.open(ModalComponent, {
+      width: '500px',
+      data: {
+        message: 'Que souhaitez-vous faire ?',
+        retraitId: this.getRetraitId(location),
+        retourId: this.getRetourId(location)
+      }
+    });
+
+    return dialogRef.afterClosed();
+  }
+
+  getRetraitId(location: any) {
+    return location.retrait.withdrawal_id;
+  }
+
+  getRetourId(location: any) {
+    return location.retour.return_id;
   }
 
   onDateFilterChange(event: MatDatepickerInputEvent<Date>): void {
