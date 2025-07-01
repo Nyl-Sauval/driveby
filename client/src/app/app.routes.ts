@@ -9,6 +9,8 @@ import {DetailVoitureComponent} from './detail-voiture/detail-voiture.component'
 import {ReservationFormComponent} from './reservation-form/reservation-form.component';
 import {GestionAgentComponent} from './gestion-agent/gestion-agent.component';
 import {DetailsLocationComponent} from './location/details-location/details-location.component';
+import {RetraitComponent} from './agent/retrait/retrait.component';
+import {RetourComponent} from './agent/retour/retour.component';
 import {AuthGuard} from './guards/auth.guard';
 import {AgentGuard} from './guards/agent.guard';
 
@@ -22,5 +24,10 @@ export const routes: Routes = [
   {path: 'search', component: ListeVoitureComponent},
   {path: 'voiture/:id', component: DetailVoitureComponent},
   {path: 'voiture/:id/rent', component: ReservationFormComponent},
+
+  {path: 'location/:id', component: DetailsLocationComponent},
+  {path: 'retrait/:id/edit', component: RetraitComponent},
+  {path: 'retour/:id/edit', component: RetourComponent}
+
   {path: 'location/:id', component: DetailsLocationComponent, canActivate: [AuthGuard]},
 ];

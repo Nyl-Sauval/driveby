@@ -13,6 +13,8 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import {ReservationFormComponent} from './app/reservation-form/reservation-form.component';
 import {GestionAgentComponent} from './app/gestion-agent/gestion-agent.component';
 import {DetailsLocationComponent} from './app/location/details-location/details-location.component';
+import {RetraitComponent} from './app/agent/retrait/retrait.component';
+import {RetourComponent} from './app/agent/retour/retour.component';
 import {AuthGuard} from './app/guards/auth.guard';
 import {AgentGuard} from './app/guards/agent.guard';
 
@@ -25,6 +27,9 @@ const routes: Routes = [
   { path: 'client/:id/edit', component: ClientEditComponent, canActivate: [AuthGuard] },
   { path: 'voiture/:id', component: DetailVoitureComponent},
   { path: 'voiture/:id/rent', component: ReservationFormComponent},
+  { path: 'location/:id', component: DetailsLocationComponent},
+  { path: 'retrait/:id/edit', component: RetraitComponent},
+  { path: 'retour/:id/edit', component: RetourComponent},
   { path: 'location/:id', component: DetailsLocationComponent, canActivate: [AuthGuard] },
   { path: '', component: HomepageComponent },
 ];

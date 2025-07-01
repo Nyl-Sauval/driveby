@@ -44,3 +44,7 @@ Route::delete('locations/{id}', [LocationController::class, 'destroy']);
 
 Route::get('/agency/{id}/locations', [LocationController::class, 'getLocationsByAgency'])->name('location.getByAgency');
 
+Route::put('retrait/{retrait}', [RetraitController::class, 'update']);
+Route::get('retrait/{id}', [RetraitController::class, 'show']);
+
+

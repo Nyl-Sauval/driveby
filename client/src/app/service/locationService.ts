@@ -34,4 +34,13 @@ export class LocationService {
     const url = `${this.baseUrl}/agency/${agencyId}/locations`;
     return this.http.get(url);
   }
+
+  getRetraitById(id: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/retrait/${id}`);
+  }
+
+  updateRetrait(id: string, data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/retrait/${id}`, data);
+  }
+
 }
