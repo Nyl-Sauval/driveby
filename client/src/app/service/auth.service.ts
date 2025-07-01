@@ -11,6 +11,9 @@ import { map, catchError } from 'rxjs/operators';
 export class AuthService {
   private apiUrl = environment.apiUrl;
 
+  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
+  public isLoggedIn$ = this.isLoggedInSubject.asObservable();
+
   private userSubject = new BehaviorSubject<any>(null);
   public user$ = this.userSubject.asObservable();
 
@@ -35,7 +38,8 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/login`, data).pipe(
       map((response: any) => {
         localStorage.setItem('token', response.token);
-        this.userSubject.next(response.user);
+        this.userSubject.next(response.data.user);
+        this.isLoggedInSubject.next(true);
         return response;
       })
     );
@@ -49,6 +53,7 @@ export class AuthService {
     localStorage.removeItem('token');
     this.userSubject.next(null);
     this.isAdminSubject.next(false);
+    this.isLoggedInSubject.next(false);
     this.router.navigate(['/']);
   }
 
@@ -60,8 +65,10 @@ export class AuthService {
 
   restoreSession(): void {
     const token = localStorage.getItem('token');
-    if (!token) return;
-
+    if (!token) {
+      this.isLoggedInSubject.next(false);
+      return;
+    }
     this.me().pipe(
       catchError(() => {
         this.logout();
@@ -70,6 +77,9 @@ export class AuthService {
     ).subscribe(user => {
       if (user) {
         this.setUser(user);
+        this.isLoggedInSubject.next(true);
+      } else {
+        this.isLoggedInSubject.next(false);
       }
     });
   }
@@ -96,9 +106,27 @@ export class AuthService {
     });
   }
 
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+  isLoggedIn(): Observable<boolean> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('User is not logged in, no token found.');
+      return of(false);
+    }
+
+    return this.checkSession().pipe(
+      map(user => {
+        console.log('Session check successful, user is logged in.');
+        this.setUser(user);
+        return true;
+      }),
+      catchError(() => {
+        console.log('Session check failed, logging out user.');
+        this.logout();
+        return of(false);
+      })
+    );
   }
+
 
   isAgent(): boolean {
     console.log('Checking if user is agent...');

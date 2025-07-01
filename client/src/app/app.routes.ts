@@ -9,16 +9,18 @@ import {DetailVoitureComponent} from './detail-voiture/detail-voiture.component'
 import {ReservationFormComponent} from './reservation-form/reservation-form.component';
 import {GestionAgentComponent} from './gestion-agent/gestion-agent.component';
 import {DetailsLocationComponent} from './location/details-location/details-location.component';
+import {AuthGuard} from './guards/auth.guard';
+import {AgentGuard} from './guards/agent.guard';
 
 export const routes: Routes = [
   {path: '', component: HomepageComponent, pathMatch: 'full'},
   {path: 'enregistrement', component: EnregistrementComponent },
   {path: 'login', component: LoginComponent },
-  {path: 'profil', component: ProfilComponent },
-  {path: 'agent', component: GestionAgentComponent },
-  {path: 'client/:id/edit', component: ClientEditComponent},
+  {path: 'profil', component: ProfilComponent, canActivate: [AuthGuard]},
+  {path: 'agent', component: GestionAgentComponent, canActivate: [AgentGuard]},
+  {path: 'client/:id/edit', component: ClientEditComponent, canActivate: [AuthGuard]},
   {path: 'search', component: ListeVoitureComponent},
   {path: 'voiture/:id', component: DetailVoitureComponent},
   {path: 'voiture/:id/rent', component: ReservationFormComponent},
-  {path: 'location/:id', component: DetailsLocationComponent}
+  {path: 'location/:id', component: DetailsLocationComponent, canActivate: [AuthGuard]},
 ];
