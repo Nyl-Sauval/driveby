@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Jobs\SendRetraitEmail;
 use App\Models\Retrait;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -37,6 +38,9 @@ class RetraitController extends Controller
         ]);
 
         $retrait->update($validated);
+        $location = $retrait->location;
+
+        SendRetraitEmail::dispatch($location);
 
         return response()->json([
             'message' => 'Retrait mis à jour avec succès',

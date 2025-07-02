@@ -117,7 +117,7 @@ class LocationController extends BaseController
             'return_done' => false,
         ]);
 
-        $this->sendInvoice($location->id);
+        SendInvoiceEmail::dispatch($location, $car->agency);
 
         return response()->json([
             'location' => new LocationResource($location),
