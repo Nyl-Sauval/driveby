@@ -1,69 +1,28 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common'; // ⬅️ AJOUT ICI
+import { GuaranteeService, Guarantee } from '../service/guarantee.service';
 
 @Component({
   selector: 'app-garantie',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule], // ⬅️ AJOUT ICI AUSSI
   templateUrl: './garantie.component.html',
   styleUrls: ['./garantie.component.css']
 })
-export class GarantieComponent {
+export class GarantieComponent implements OnInit {
   selectedIndex: number | null = null;
+  garanties: Guarantee[] = [];
 
-  garanties = [
-    {
-      titre: 'Garantie Prenium',
-      description: 'Meilleur rapport tranquillité / prix',
-      prix: '+19.90 €/jour',
-      inclusions: [
-        'Assurance au tiers',
-        'Assistance dépannage 24/7 (50€)',
-        'Garantie dommages',
-        'Protection vol',
-        'Protection accident'
-      ],
-      exclusions: [
-        'Protection intérieure',
-        'Protection bris de glaces'
-      ]
-    },
-    {
-      titre: 'Garantie Basic',
-      description: 'Le minimum conseillé',
-      prix: '+14.90 €/jour',
-      inclusions: [
-        'Assurance au tiers',
-        'Assistance dépannage 24/7 (200€)',
-        'Garantie dommages',
-        'Protection vol'
-      ],
-      exclusions: [
-        'Protection accident',
-        'Protection intérieure',
-        'Protection bris de glaces'
-      ]
-    },
-    {
-      titre: 'Assurance au tiers',
-      description: 'Aucune protection complémentaire',
-      franchise: 'illimitée',
-      prix: '9.90 €/jour',
-      inclusions: [
-        'Assurance au tiers',
-        'Assistance dépannage 24/7 (200€)'
-      ],
-      exclusions: [
-        'Garantie dommages',
-        'Protection vol',
-        'Protection accident',
-        'Protection intérieure',
-        'Protection bris de glaces'
-      ]
-    }
-  ];
+  constructor(private guaranteeService: GuaranteeService) {}
 
-  select(index: number) {
+  ngOnInit(): void {
+    this.guaranteeService.getGuarantees().subscribe((data) => {
+      console.log(data); // utile pour debug
+      this.garanties = data;
+    });
+  }
+
+  select(index: number): void {
     this.selectedIndex = index;
   }
 

@@ -3,23 +3,23 @@
 <div class="garantie-container">
   <div
     class="garantie-card"
-    *ngFor="let garantie of garanties; index as i"
+    *ngFor="let garantie of garanties; let i = index"
     [class.selected]="isSelected(i)"
     (click)="select(i)"
   >
     <div class="garantie-header">
       <div>
-        <h3>{{ garantie.titre }}</h3>
-        <p>{{ garantie.description }}</p>
-        <p><strong>Franchise</strong> {{ garantie.franchise }}</p>
+        <h3>{{ garantie.guarantee_name }}</h3>
+        <p>{{ garantie.guarantee_description }}</p>
       </div>
-      <div class="prix">{{ garantie.prix }}</div>
+      <div class="prix">{{ garantie.guarantee_price | currency:'EUR' }}</div>
     </div>
 
     <div *ngIf="isSelected(i)" class="garantie-details">
       <ul>
-        <li *ngFor="let item of garantie.inclusions" class="inclusion">{{ item }}</li>
-        <li *ngFor="let item of garantie.exclusions" class="exclusion">{{ item }}</li>
+        <li class="inclusion">Assurance au tiers</li>
+        <li class="inclusion">Assistance dépannage 24/7</li>
+        <li class="exclusion">Franchise à vérifier</li>
       </ul>
     </div>
   </div>

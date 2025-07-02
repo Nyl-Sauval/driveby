@@ -47,5 +47,5 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(),
     provideRouter(routes),
     provideNativeDateAdapter()
-  ],
+  ]
 });
