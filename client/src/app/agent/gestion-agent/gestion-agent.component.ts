@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
-import {CarService} from '../service/car.service';
+import {CarService} from '../../service/car.service';
 import {NgFor, NgForOf, NgIf} from '@angular/common';
 import {MatFormField, MatInput, MatSuffix} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatLabel} from '@angular/material/form-field';
 import {MatTableModule} from '@angular/material/table';
-import {LocationService} from '../service/locationService';
-import {ModalComponent} from '../agent/modal/modal.component';
+import {LocationService} from '../../service/locationService';
+import {ModalComponent} from '../modal/modal.component';
 import {MatDialog} from '@angular/material/dialog';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButton, MatIconButton} from '@angular/material/button';
@@ -163,6 +163,17 @@ export class GestionAgentComponent {
       return false;
     }
     return true;
+  }
+
+  download(locationId:any) {
+    this.locationService.downloadInvoice(locationId).subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `facture-location-${locationId}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
   }
 }
 

@@ -61,7 +61,7 @@
     </form>
   </mat-step>
 
-  <!-- Étape 2.1 : Adresse -->
+  <!-- Étape 3 : Adresse -->
   <mat-step>
     <form [formGroup]="addressGroup">
       <ng-template matStepLabel>Adresse</ng-template>
@@ -93,7 +93,7 @@
     </form>
   </mat-step>
 
-  <!-- Étape 2.2 : Permis -->
+  <!-- Étape 4 : Permis -->
   <mat-step>
     <form [formGroup]="licenseGroup">
       <ng-template matStepLabel>Permis</ng-template>
@@ -118,10 +118,6 @@
         <input matInput formControlName="license_country">
       </mat-form-field>
 
-      <div *ngIf="reservationGroup.hasError('carUnavailable') && reservationGroup.invalid && reservationGroup.dirty" class="error">
-        Cette voiture est déjà réservée aux dates sélectionnées.
-      </div>
-
       <div class="step-actions">
         <button mat-button matStepperPrevious>Retour</button>
         <button mat-button matStepperNext>Suivant</button>
@@ -129,13 +125,93 @@
     </form>
   </mat-step>
 
-  <!-- Étape 3 : Récap -->
+  <!-- Étape 5 : Garantie -->
+  <mat-step>
+    <ng-template matStepLabel>Garantie</ng-template>
+
+    <h2 class="titre-centre">Sélectionnez la protection souhaitée</h2>
+    <div class="garantie-container">
+      <div
+        class="garantie-card"
+        *ngFor="let garantie of garanties; let i = index"
+        [class.selected]="isSelected(i)"
+        (click)="select(i)"
+      >
+        <div class="garantie-header">
+          <div>
+            <h3>{{ garantie.guarantee_name }}</h3>
+            <p>{{ garantie.guarantee_description }}</p>
+          </div>
+          <div class="prix">{{ garantie.guarantee_price | currency:'EUR':'symbol':'1.2-2' }}</div>
+        </div>
+
+        <div *ngIf="isSelected(i)" class="garantie-details">
+          <ul>
+            <li class="inclusion">Assurance au tiers</li>
+            <li class="inclusion">Assistance dépannage 24/7</li>
+            <li class="exclusion">Franchise à vérifier</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-actions">
+      <button mat-button matStepperPrevious>Retour</button>
+      <button mat-button matStepperNext>Suivant</button>
+    </div>
+  </mat-step>
+
+  <!-- Étape 6 : Options -->
+  <mat-step>
+    <ng-template matStepLabel>Options</ng-template>
+
+    <h2>Options disponibles</h2>
+    <div class="option-container">
+      <div *ngFor="let option of options" class="option-card">
+        <div class="option-info">
+          <strong>{{ option.option_name }}</strong>
+          <p>{{ option.option_description }}</p>
+          <span>+{{ option.option_price | currency:'EUR':'symbol':'1.2-2' }}/jour</span>
+        </div>
+
+        <div *ngIf="option.option_type === 'toggle'" class="toggle">
+          <input
+            type="checkbox"
+            [checked]="selectedOptions[option.option_id] === 1"
+            (change)="onToggleChange(option)"
+          />
+        </div>
+
+        <div *ngIf="option.option_type === 'stepper'" class="stepper">
+          <button (click)="changeQty(option.option_id, -1)">−</button>
+          <span>{{ selectedOptions[option.option_id] }}</span>
+          <button (click)="changeQty(option.option_id, 1)">+</button>
+        </div>
+      </div>
+
+      <div class="total-bar">
+        <div>
+          <strong>Total / jour : {{ getDailyTotal() | currency:'EUR' }}</strong><br />
+          <ng-container *ngIf="reservationDays">
+            Total pour {{ reservationDays }} jour(s) :
+            <strong>{{ getTotalReservation() | currency:'EUR' }}</strong>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-actions">
+      <button mat-button matStepperPrevious>Retour</button>
+      <button mat-button matStepperNext>Suivant</button>
+    </div>
+  </mat-step>
+
+  <!-- Étape 7 : Récapitulatif -->
   <mat-step>
     <ng-template matStepLabel>Récapitulatif</ng-template>
 
     <p><strong>Début :</strong> {{ reservationValues.startDate }}</p>
     <p><strong>Fin :</strong> {{ reservationValues.endDate }}</p>
-    <p><strong>Agence :</strong> {{ reservationValues.agency }}</p>
 
     <p><strong>Nom :</strong> {{ clientValues.name }}</p>
     <p><strong>Prénom :</strong> {{ clientValues.firstname }}</p>
@@ -149,11 +225,30 @@
     <p><strong>Numéro de permis :</strong> {{ licenseValues.license_number }}</p>
     <p><strong>Date de délivrance :</strong> {{ licenseValues.license_issue_date }}</p>
     <p><strong>Date d'expiration du permis :</strong> {{ licenseValues.license_expiry_date }}</p>
-    <h3>Prix voiture : {{carPriceLocation()/100}} €</h3>
-    <h3>Prix garantie : {{guaranteePriceLocation()/100}} €</h3>
-    <h3>Prix options : {{optionPriceLocation()/100}} €</h3>
-    <h2>Prix total : {{totalPriceLocation()/100}} €</h2>
 
+    <p *ngIf="getSelectedGuarantee() as g">
+      <strong>Garantie choisie :</strong>
+      {{ g.guarantee_name }} ({{ g.guarantee_price | currency:'EUR':'symbol':'1.2-2' }})
+    </p>
+
+    <div *ngIf="getSelectedOptions().length > 0">
+      <p><strong>Options sélectionnées :</strong></p>
+      <ul>
+        <li *ngFor="let opt of getSelectedOptions()">
+          {{ opt.option_name }}
+          <ng-container *ngIf="opt.option_type === 'stepper'">× {{ selectedOptions[opt.option_id] }}</ng-container>
+          <ng-container *ngIf="opt.option_type === 'toggle'">: Oui</ng-container>
+        </li>
+      </ul>
+    </div>
+
+    <p><strong>Total / jour :</strong> {{ getDailyTotal() | currency:'EUR':'symbol':'1.2-2' }}</p>
+    <p><strong>Total pour {{ reservationDays }} jour(s) :</strong> {{ getTotalReservation() | currency:'EUR':'symbol':'1.2-2' }}</p>
+
+    <h3>Prix voiture : {{ carPriceLocation() | currency:'EUR':'symbol':'1.2-2' }}</h3>
+    <h3>Prix garantie : {{ guaranteePriceLocation() | currency:'EUR':'symbol':'1.2-2' }}</h3>
+    <h3>Prix options : {{ optionPriceLocation() | currency:'EUR':'symbol':'1.2-2' }}</h3>
+    <h2>Prix total : {{ totalPriceLocation() | currency:'EUR':'symbol':'1.2-2' }}</h2>
 
     <div class="step-actions">
       <button mat-button matStepperPrevious>Retour</button>

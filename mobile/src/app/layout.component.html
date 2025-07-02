@@ -5,16 +5,26 @@
 <ion-footer>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button routerLink="/home">
+      <ion-button routerLink="/">
         <ion-icon name="home-outline" slot="start"></ion-icon>
         Accueil
       </ion-button>
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button routerLink="/login">
+      <ion-button *ngIf="!isLoggedIn()" routerLink="/login">
         <ion-icon name="log-in-outline" slot="start"></ion-icon>
         Connexion
+      </ion-button>
+
+      <ion-button *ngIf="isLoggedIn()" routerLink="/profil">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        Profil
+      </ion-button>
+
+      <ion-button *ngIf="isLoggedIn()" (click)="logout()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        Déconnexion
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

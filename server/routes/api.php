@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\RetourController;
 use App\Http\Controllers\Api\RetraitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\OptionController;
 
 Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
     return response()->json([
@@ -33,6 +34,7 @@ Route::get('cars/{carId}', [CarController::class, 'show'])->name('car.show');
 Route::get('agencies', [AgencyController::class, 'index']);
 Route::get('agencies/{id}', [AgencyController::class, 'show'])->name('agency.show');
 Route::get('categories', [CategoryController::class, 'index']);
+
 Route::put('client/{id}', [ClientController::class, 'update'])->name('client.update')->middleware('auth:sanctum');;
 
 Route::get('locations', [LocationController::class, 'index']);
@@ -52,3 +54,6 @@ Route::get('retour/{id}', [RetourController::class, 'show']);
 
 Route::get('location/{id}', [LocationController::class, 'show']);
 Route::put('location/{location}', [LocationController::class, 'update']);
+
+
+Route::get('/options', [OptionController::class, 'index']);

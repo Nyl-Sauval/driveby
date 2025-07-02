@@ -9,6 +9,9 @@ import {environment} from "../../environments/environment";
 })
 export class AuthService {
   private apiUrl = environment.apiUrl;
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('token');
+  }
 
   constructor(private http: HttpClient) {}
 
@@ -19,5 +22,9 @@ export class AuthService {
       Accept: 'application/json'
     });
     return this.http.get(`${this.apiUrl}/profil`, { headers });
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
   }
 }

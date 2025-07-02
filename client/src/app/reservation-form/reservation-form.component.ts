@@ -1,31 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   MatStep,
   MatStepLabel,
   MatStepper,
-  MatStepperModule,
   MatStepperNext,
   MatStepperPrevious
 } from '@angular/material/stepper';
-import {MatFormField, MatFormFieldModule, MatLabel} from '@angular/material/form-field';
-import {MatInput, MatInputModule} from '@angular/material/input';
-import {AbstractControl, AsyncValidatorFn, ReactiveFormsModule, ValidationErrors} from '@angular/forms';
-import {MatButton, MatButtonModule} from '@angular/material/button';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
 import { AuthService } from '../service/auth.service';
-import {CarService} from '../service/car.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {LocationService} from '../service/locationService';
-import {Car} from '../models/car.model';
-import {Client} from '../models/client.model';
-import {HttpClient} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {NgIf} from '@angular/common';
+import { CarService } from '../service/car.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LocationService } from '../service/locationService';
+import { Car } from '../models/car.model';
+import { Client } from '../models/client.model';
+import { CurrencyPipe, NgIf, NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-reservation-form',
   templateUrl: './reservation-form.component.html',
+  styleUrls: ['./reservation-form.component.css'],
   imports: [
     MatStepper,
     MatStep,
@@ -37,24 +33,43 @@ import {NgIf} from '@angular/common';
     MatStepLabel,
     MatStepperPrevious,
     MatLabel,
-    NgIf
-  ],
-  styleUrls: ['./reservation-form.component.css']
+    NgIf,
+    NgForOf,
+    CurrencyPipe
+  ]
 })
 export class ReservationFormComponent implements OnInit {
   reservationForm!: FormGroup;
   clientInfoLoaded = false;
   car: Car | undefined;
   client: Client | undefined;
-  pricePerDay: string | undefined
+  pricePerDay: string | undefined;
 
-  constructor(private fb: FormBuilder,
-              private authService: AuthService,
-              private carService: CarService,
-              private route: ActivatedRoute,
-              private locationService: LocationService,
-              private router:Router,
-              ) {}
+  garanties = [
+    { guarantee_id: 1, guarantee_name: 'Standard', guarantee_description: 'Couverture de base', guarantee_price: 10 },
+    { guarantee_id: 2, guarantee_name: 'Confort', guarantee_description: 'Couverture étendue', guarantee_price: 20 },
+    { guarantee_id: 3, guarantee_name: 'Premium', guarantee_description: 'Protection complète', guarantee_price: 30 }
+  ];
+
+  options = [
+    { option_id: 1, option_name: 'GPS intégré', option_description: 'Navigation embarquée', option_price: 4.9, option_type: 'toggle' },
+    { option_id: 2, option_name: 'Siège bébé', option_description: 'Enfant 9-18 kg', option_price: 6, option_type: 'stepper' },
+    { option_id: 3, option_name: 'Conducteur additionnel', option_description: 'Autre conducteur', option_price: 7.5, option_type: 'stepper' },
+    { option_id: 4, option_name: 'Pneu neige / chaînes', option_description: 'Équipement hivernal', option_price: 5, option_type: 'toggle' },
+    { option_id: 5, option_name: 'Wi-Fi embarqué', option_description: 'Internet à bord', option_price: 3.5, option_type: 'toggle' }
+  ];
+
+  selectedOptions: { [key: number]: number } = {};
+  selectedIndex: number | null = null;
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private carService: CarService,
+    private route: ActivatedRoute,
+    private locationService: LocationService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.reservationForm = this.fb.group({
@@ -63,9 +78,8 @@ export class ReservationFormComponent implements OnInit {
         endDate: ['', Validators.required],
       }, {
         asyncValidators: this.carService.checkAvailabilityValidator(this.route.snapshot.paramMap.get('id') || ''),
-        updateOn:'change'
+        updateOn: 'change'
       }),
-
       client: this.fb.group({
         name: ['', Validators.required],
         firstname: ['', Validators.required],
@@ -87,87 +101,68 @@ export class ReservationFormComponent implements OnInit {
       })
     });
 
-    // Préremplissage si connecté
     this.authService.me().subscribe({
       next: (res: any) => {
         this.client = res?.client;
-        const clientGroup = this.reservationForm.get('client');
-        console.log(res);
         if (res?.client) {
-          clientGroup?.patchValue({
-            name: res.client.name,
-            firstname: res.client.firstname,
-            email: res.client.email,
-            phone: res.client.phone,
-            birth: res.client.birth
-          });
-          this.reservationForm.get('address')?.patchValue({
-            address: res.client.address,
-            postal_code: res.client.postal_code,
-            city: res.client.city,
-            country: res.client.country,
-          });
-          this.reservationForm.get('license')?.patchValue({
-            license_number: res.client.license_number,
-            license_issue_date: res.client.license_issue_date,
-            license_expiry_date: res.client.license_expiry_date,
-            license_country: res.client.license_country
-          });
+          this.reservationForm.get('client')?.patchValue(res.client);
+          this.reservationForm.get('address')?.patchValue(res.client);
+          this.reservationForm.get('license')?.patchValue(res.client);
           this.clientInfoLoaded = true;
         }
       }
     });
-    //Préremplissage voiture
+
     const carId = this.route.snapshot.paramMap.get('id');
-    if(carId){
+    if (carId) {
       this.carService.getCarById(carId).subscribe({
         next: (car) => {
           if (car) {
-            this.car = car;
-            this.pricePerDay = car.car_price;
-            console.log(this.car);
+            this.car = {
+              ...car,
+              price: car.price / 100
+            };
+            this.pricePerDay = this.car?.price?.toFixed(2);
             this.reservationForm.get('reservation')?.patchValue({
               startDate: new Date(),
-              endDate: new Date(new Date().setDate(new Date().getDate() + 1)) // par défaut 1 jour après
+              endDate: new Date(new Date().setDate(new Date().getDate() + 1))
             });
           }
         },
-        error: (err) => {
-          console.error('Erreur chargement voiture sélectionnée :', err);
-        }
+        error: (err) => console.error('Erreur chargement voiture :', err)
       });
     }
+
+    this.garanties = this.garanties.map(g => ({
+      ...g,
+      guarantee_price: g.guarantee_price
+    }));
+
+    this.options = this.options.map(o => ({
+      ...o,
+      option_price: o.option_price
+    }));
+
+    this.options.forEach(opt => this.selectedOptions[opt.option_id] = 0);
   }
 
   onSubmit() {
     if (this.reservationForm.valid) {
-      console.log('Réservation envoyée :', this.reservationForm.value);
-      // envoyer à l’API
-      //requete avec car_id client_id, start_date, end_date
       const formData = {
         car_id: this.car?.id,
         client_id: this.client?.id,
         start_date: this.reservationValues.startDate,
         end_date: this.reservationValues.endDate,
-        name: this.clientValues.name,
-        firstname: this.clientValues.firstname,
-        email: this.clientValues.email,
-        phone: this.clientValues.phone,
-        birth: this.clientValues.birth,
-        address: this.addressValues.address,
-        postal_code: this.addressValues.postal_code,
-        city: this.addressValues.city,
-        country: this.addressValues.country,
-        license_number: this.licenseValues.license_number,
-        license_issue_date: this.licenseValues.license_issue_date,
-        license_expiry_date: this.licenseValues.license_expiry_date,
-        license_country: this.licenseValues.license_country
+        guarantee_id: this.getSelectedGuarantee()?.guarantee_id,
+        options: this.selectedOptions,
+        ...this.clientValues,
+        ...this.addressValues,
+        ...this.licenseValues
       };
+
       this.locationService.makeReservation(formData).subscribe({
-        next: (response: any) => {
-          const locationId=response.location.id;
-          console.log('Réservation réussie', response);
-          // Notification succès et redirection accueil
+        next: (res: any) => {
+          const locationId = res.location.id;
           alert('Réservation effectuée avec succès !');
           this.router.navigate(['/']);
           this.locationService.downloadInvoice(locationId).subscribe(blob => {
@@ -178,15 +173,82 @@ export class ReservationFormComponent implements OnInit {
             a.click();
             URL.revokeObjectURL(url);
           });
-
         },
-        error: (error) => {
-          console.error('Erreur lors de la réservation', error);
-          //Notification erreur
-          alert('Erreur lors de la réservation. Veuillez réessayer plus tard.' + error);
-        }
+        error: (err) => alert('Erreur lors de la réservation.')
       });
     }
+  }
+
+  onToggleChange(option: any) {
+    this.selectedOptions[option.option_id] = this.selectedOptions[option.option_id] === 1 ? 0 : 1;
+  }
+
+  changeQty(optionId: number, delta: number) {
+    const newValue = (this.selectedOptions[optionId] || 0) + delta;
+    this.selectedOptions[optionId] = Math.max(0, newValue);
+  }
+
+  get reservationDays(): number {
+    const start = new Date(this.reservationValues.startDate);
+    const end = new Date(this.reservationValues.endDate);
+    const timeDiff = end.getTime() - start.getTime();
+    return Math.max(Math.ceil(timeDiff / (1000 * 3600 * 24)), 1);
+  }
+
+  getDailyTotal(): number {
+    let total = this.car?.price || 0;
+    const g = this.getSelectedGuarantee();
+    if (g) total += g.guarantee_price;
+    this.options.forEach(opt => {
+      const qty = this.selectedOptions[opt.option_id] || 0;
+      total += opt.option_type === 'toggle' ? (qty === 1 ? opt.option_price : 0) : qty * opt.option_price;
+    });
+    return total;
+  }
+
+  getTotalReservation(): number {
+    return this.getDailyTotal() * this.reservationDays;
+  }
+
+  carPriceLocation(): number {
+    return (this.car?.price || 0) * this.reservationDays;
+  }
+
+  guaranteePriceLocation(): number {
+    const g = this.getSelectedGuarantee();
+    return g ? g.guarantee_price * this.reservationDays : 0;
+  }
+
+  optionPriceLocation(): number {
+    let total = 0;
+    this.options.forEach(opt => {
+      const qty = this.selectedOptions[opt.option_id] || 0;
+      total += opt.option_type === 'toggle' ? (qty === 1 ? opt.option_price : 0) : qty * opt.option_price;
+    });
+    return total * this.reservationDays;
+  }
+
+  totalPriceLocation(): number {
+    return this.carPriceLocation() + this.guaranteePriceLocation() + this.optionPriceLocation();
+  }
+
+  getSelectedOptions() {
+    return this.options.filter(opt => {
+      const val = this.selectedOptions[opt.option_id];
+      return opt.option_type === 'toggle' ? val === 1 : val > 0;
+    });
+  }
+
+  getSelectedGuarantee() {
+    return this.selectedIndex !== null ? this.garanties[this.selectedIndex] : null;
+  }
+
+  select(i: number): void {
+    this.selectedIndex = i;
+  }
+
+  isSelected(i: number): boolean {
+    return this.selectedIndex === i;
   }
 
   get reservationGroup(): FormGroup {
@@ -221,39 +283,15 @@ export class ReservationFormComponent implements OnInit {
     return this.reservationForm.get('license')?.value ?? {};
   }
 
-  dateAfterTodayValidator(control: AbstractControl): { [key: string]: any } | null {
+  dateAfterTodayValidator(control: AbstractControl): ValidationErrors | null {
     const today = new Date();
     const inputDate = new Date(control.value);
     return inputDate > today ? null : { dateInvalid: true };
   }
 
-  dateAfter(control: AbstractControl, date: string): { [key: string]: any } | null {
+  dateAfter(control: AbstractControl, date: string): ValidationErrors | null {
     const inputDate = new Date(control.value);
     const compareDate = new Date(date);
     return inputDate > compareDate ? null : { dateInvalid: true };
-  }
-
-  carPriceLocation() {
-    const startDate = new Date(this.reservationValues.startDate);
-    const endDate = new Date(this.reservationValues.endDate);
-    const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    console.log('diffDays : ' + diffDays);
-    const pricePerDay = this.car?.price || 0;
-    return diffDays * pricePerDay;
-  }
-
-  guaranteePriceLocation() {
-    return 0;
-  }
-
-  optionPriceLocation(){
-    return 0;
-  }
-
-
-
-  totalPriceLocation(){
-    return this.carPriceLocation() + this.guaranteePriceLocation() + this.optionPriceLocation();
   }
 }
