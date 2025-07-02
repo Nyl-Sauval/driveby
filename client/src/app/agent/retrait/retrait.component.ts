@@ -77,12 +77,10 @@ export class RetraitComponent implements OnInit {
 
       this.locationService.updateRetrait(this.retraitId!, payload).subscribe({
         next: (response: any) => {
-          localStorage.setItem('token', response.data.token);
           this.snackBar.open('Retrait effectué', 'Fermer', {
             duration: 5000,
             panelClass: ['snackbar-success']
           });
-          this.signinDialogRef?.close(true);
         },
         error: (error: any) => {
           console.error('Erreur de création créer', error);
