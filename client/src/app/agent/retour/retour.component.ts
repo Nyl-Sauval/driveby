@@ -6,12 +6,13 @@ import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angula
 import {LocationService} from '../../service/locationService';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute} from '@angular/router';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MatButton} from '@angular/material/button';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {NgIf} from '@angular/common';
 import {MatOption, MatSelect} from '@angular/material/select';
+import {AvenantFormComponent} from '../avenant-form/avenant-form.component';
 
 @Component({
   selector: 'app-retour',
@@ -42,6 +43,7 @@ export class RetourComponent {
               private locationService: LocationService,
               private snackBar: MatSnackBar,
               private route: ActivatedRoute,
+              private dialog: MatDialog,
               @Optional() private signinDialogRef?: MatDialogRef<RetourComponent>
   ) {
     this.retourForm = this.fb.group({
@@ -128,6 +130,19 @@ export class RetourComponent {
       },
       error: (error) => {
         console.error('Erreur lors de la récupération du client', error);
+      }
+    });
+  }
+
+  ouvrirFormulaireAvenant(): void {
+    const dialogRef = this.dialog.open(AvenantFormComponent, {
+      width: '400px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Avenant créé :', result);
       }
     });
   }
