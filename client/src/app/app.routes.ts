@@ -14,6 +14,7 @@ import {RetourComponent} from './agent/retour/retour.component';
 import {AuthGuard} from './guards/auth.guard';
 import {AgentGuard} from './guards/agent.guard';
 import {EditLocationComponent} from './location/edit-location/edit-location.component';
+import { GarantieComponent } from './garantie/garantie.component';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent, pathMatch: 'full', data: { breadcrumb: 'Accueil' } },
@@ -28,6 +29,7 @@ export const routes: Routes = [
   { path: 'location/:id', component: DetailsLocationComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Détails location' } },
   { path: 'retrait/:id/edit', component: RetraitComponent, data: { breadcrumb: 'Modifier retrait' } },
   { path: 'retour/:id/edit', component: RetourComponent, data: { breadcrumb: 'Modifier retour' } },
-  { path: 'location/edit/:id', component: EditLocationComponent, data: { breadcrumb: 'Modifier location' } }
+  { path: 'location/edit/:id', component: EditLocationComponent, data: { breadcrumb: 'Modifier location' } },
+  { path: 'garantie', component: GarantieComponent },
+  { path: 'options', loadComponent: () => import('./option/option.component').then(m => m.OptionComponent) }
 ];
-

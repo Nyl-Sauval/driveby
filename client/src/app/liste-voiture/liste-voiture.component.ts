@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CarService } from '../service/car.service';
 import {NgFor} from '@angular/common';
-
+import {CardVoitureComponent} from '../card-voiture/card-voiture.component';
 import {FormsModule} from '@angular/forms';
 import {FiltersComponent} from '../filters/filters.component';
-import {CardVoitureComponent} from '../card-voiture/card-voiture.component';
 
 @Component({
   selector: 'app-liste-voiture',
@@ -109,6 +108,7 @@ export class ListeVoitureComponent implements OnInit {
   filterCars() {
     const agencyIdNumber = Number(this.selectedAgencyId);
     const categoryIdNumber = Number(this.selectedCategoryId);
+    const minSelected = this.minPrice
 
     this.cars = this.allCars.filter(car => {
       const matchesAgency = this.selectedAgencyId

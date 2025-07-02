@@ -1,0 +1,32 @@
+<h2 class="titre-centre">Sélectionnez la protection souhaitée</h2>
+
+<div class="garantie-container">
+  <div
+    class="garantie-card"
+    *ngFor="let garantie of garanties; index as i"
+    [class.selected]="isSelected(i)"
+    (click)="select(i)"
+  >
+    <div class="garantie-header">
+      <div>
+        <h3>{{ garantie.titre }}</h3>
+        <p>{{ garantie.description }}</p>
+        <p><strong>Franchise</strong> {{ garantie.franchise }}</p>
+      </div>
+      <div class="prix">{{ garantie.prix }}</div>
+    </div>
+
+    <div *ngIf="isSelected(i)" class="garantie-details">
+      <ul>
+        <li *ngFor="let item of garantie.inclusions" class="inclusion">{{ item }}</li>
+        <li *ngFor="let item of garantie.exclusions" class="exclusion">{{ item }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <button [disabled]="selectedIndex === null" class="btn-continuer">
+    CONTINUER
+  </button>
+</div>
