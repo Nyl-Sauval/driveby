@@ -23,8 +23,8 @@ export class AuthService {
       Authorization: `Bearer ${token}`,
       Accept: 'application/json'
     });
-    return this.http.get(`${this.apiUrl}/profil`, { headers });
-    }
+    return this.http.get(`${this.apiUrl}/profil`, {headers});
+  }
 
   logout(): void {
     localStorage.removeItem('token');
