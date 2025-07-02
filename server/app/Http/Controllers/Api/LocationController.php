@@ -97,7 +97,7 @@ class LocationController extends BaseController
         }
         $car = $request->car_id;
         $car = Car::findOrFail($car);
-        $location = Location::create($request->only(['car_id']) + ['guarantee_id' => 1, 'client_id' => $client->id]);
+        $location = Location::create($request->only(['car_id', 'client_id']) + ['guarantee_id' => $request->guarantee_id ?? 1]);
         $retrait = Retrait::create([
             'withdrawal_date' => $request->start_date, DateUtil::DEFAULT_DATE_TIME_PATTERN,
             'location_id' => $location->id,
