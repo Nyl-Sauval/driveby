@@ -50,4 +50,12 @@ export class LocationService {
   updateRetour(id: string, data: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/retour/${id}`, data);
   }
+
+  getLocationById(id: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/location/${id}`);
+  }
+
+  updateLocation(id: string, data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/location/${id}`, data);
+  }
 }

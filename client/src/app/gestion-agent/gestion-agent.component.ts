@@ -17,6 +17,7 @@ import {
   MatDatepickerToggle
 } from '@angular/material/datepicker';
 import {MatIcon} from '@angular/material/icon';
+import {RouterLink} from '@angular/router';
 
 
 @Component({
@@ -39,7 +40,8 @@ import {MatIcon} from '@angular/material/icon';
     ReactiveFormsModule,
     MatSuffix,
     FormsModule,
-    MatButton
+    MatButton,
+    RouterLink,
   ],
   templateUrl: './gestion-agent.component.html',
   styleUrl: './gestion-agent.component.css'
