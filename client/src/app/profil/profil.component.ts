@@ -4,7 +4,7 @@ import {MatIcon} from '@angular/material/icon';
 import {MatButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import {NgIf} from '@angular/common';
-import {ListeLocationsComponent} from '../liste-locations/liste-locations.component';
+import {ListeLocationsComponent} from '../client/liste-locations/liste-locations.component';
 
 @Component({
   selector: 'app-profil',
