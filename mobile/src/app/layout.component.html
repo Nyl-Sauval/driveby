@@ -17,6 +17,11 @@
         Connexion
       </ion-button>
 
+      <ion-button *ngIf="isLoggedIn()" routerLink="/profil">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        Profil
+      </ion-button>
+
       <ion-button *ngIf="isLoggedIn()" (click)="logout()">
         <ion-icon name="log-out-outline" slot="start"></ion-icon>
         Déconnexion

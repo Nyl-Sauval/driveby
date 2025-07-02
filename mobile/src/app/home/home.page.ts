@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
-  imports: [CommonModule, IonicModule, RouterModule, NgIf],
+  imports: [CommonModule, IonicModule, RouterModule],
 })
 export class HomePage implements OnInit {
   user: any = null;
