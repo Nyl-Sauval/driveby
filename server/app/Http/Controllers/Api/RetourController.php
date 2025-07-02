@@ -35,6 +35,12 @@ class RetourController extends Controller
             'return_default' => 'nullable|string',
             'return_done' => 'required|boolean',
             'car_disponibility' => 'required|string',
+
+            // Validation de l'avenant (optionnel)
+            'avenant' => 'nullable|array',
+            'avenant.date' => 'required_with:avenant|date',
+            'avenant.details' => 'required_with:avenant|string',
+            'avenant.prix' => 'required_with:avenant|numeric',
         ]);
 
         $retour->update([
@@ -52,6 +58,23 @@ class RetourController extends Controller
                 'car_disponibility' => $validated['car_disponibility'],
                 'car_mileage' => $validated['return_mileage']
             ]);
+        }
+
+        // Gestion de l'avenant (si présent)
+        if (!empty($validated['avenant'])) {
+            // Ex : si tu as une relation hasOne Avenant dans Retour
+            $avenantData = $validated['avenant'];
+
+            $location = $retour->location;
+
+            $location->avenant()->updateOrCreate(
+                ['location_id' => $location->id],
+                [
+                    'avenant_date' => $avenantData['date'],
+                    'avenant_details' => $avenantData['details'],
+                    'avenant_price' => $avenantData['prix']
+                ]
+            );
         }
 
         $location = $retour->location;

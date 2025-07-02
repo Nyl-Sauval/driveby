@@ -6,12 +6,13 @@ import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angula
 import {LocationService} from '../../service/locationService';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute} from '@angular/router';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MatButton} from '@angular/material/button';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {NgIf} from '@angular/common';
 import {MatOption, MatSelect} from '@angular/material/select';
+import {AvenantFormComponent} from '../avenant-form/avenant-form.component';
 
 @Component({
   selector: 'app-retour',
@@ -37,11 +38,13 @@ export class RetourComponent {
   retourForm;
   retour: Retour = createFakeRetour();
   retourId: string | null = null;
+  avenantData: { date: string; details: string; prix: number } | null = null;
 
   constructor(private fb: FormBuilder,
               private locationService: LocationService,
               private snackBar: MatSnackBar,
               private route: ActivatedRoute,
+              private dialog: MatDialog,
               @Optional() private signinDialogRef?: MatDialogRef<RetourComponent>
   ) {
     this.retourForm = this.fb.group({
@@ -66,7 +69,7 @@ export class RetourComponent {
     if (this.retourForm.valid) {
       const formData = this.retourForm.value;
       console.log('Formulaire valide', formData);
-      const payload = {
+      const payload: any = {
         return_date: formData.dateRetour,
         return_mileage: Number(formData.mileage),
         return_fuel_level: Number(formData.fuel),
@@ -76,6 +79,14 @@ export class RetourComponent {
         return_done: formData.done,
         car_disponibility: formData.disponibility
       };
+
+      if (this.avenantData) {
+        payload.avenant = {
+          date: this.avenantData.date,
+          details: this.avenantData.details,
+          prix: Number(this.avenantData.prix)
+        };
+      }
       console.log('Payload envoyé à l’API:', payload);
 
       this.locationService.updateRetour(this.retourId!, payload).subscribe({
@@ -128,6 +139,20 @@ export class RetourComponent {
       },
       error: (error) => {
         console.error('Erreur lors de la récupération du client', error);
+      }
+    });
+  }
+
+  ouvrirFormulaireAvenant(): void {
+    const dialogRef = this.dialog.open(AvenantFormComponent, {
+      width: '400px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.avenantData = result;
+        console.log('Avenant sélectionné :', this.avenantData);
       }
     });
   }

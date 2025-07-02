@@ -1,0 +1,37 @@
+# Dockerfile.queue
+
+FROM php:8.2-cli
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Installer dépendances système et extensions PHP nécessaires
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    libonig-dev \
+    libxml2-dev \
+    unzip \
+    zip \
+    git \
+    sqlite3 \
+    libsqlite3-dev \
+    && docker-php-ext-install pdo pdo_sqlite mbstring zip exif pcntl bcmath
+
+# Installer Composer globalement
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+WORKDIR /app
+
+# Copier fichiers composer pour cache
+COPY composer.json composer.lock ./
+
+# Copier le reste de l’application
+COPY . .
+
+RUN composer install --optimize-autoloader --no-dev --no-interaction
+
+# Permissions
+RUN chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
+# Commande pour exécuter la queue Laravel en mode production
+CMD ["php", "artisan", "queue:work", "--sleep=3", "--tries=3", "--timeout=90"]

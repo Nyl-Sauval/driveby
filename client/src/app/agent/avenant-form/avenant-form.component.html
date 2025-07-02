@@ -1,0 +1,23 @@
+<h2>Créer un avenant</h2>
+
+<form [formGroup]="avenantForm" (ngSubmit)="submit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Date</mat-label>
+    <input matInput type="date" formControlName="date" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Détails</mat-label>
+    <textarea matInput formControlName="details"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Prix (€)</mat-label>
+    <input matInput type="number" formControlName="prix" />
+  </mat-form-field>
+
+  <div class="actions">
+    <button mat-button type="button" (click)="cancel()">Annuler</button>
+    <button mat-raised-button color="primary" type="submit">Créer</button>
+  </div>
+</form>

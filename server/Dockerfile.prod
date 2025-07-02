@@ -1,0 +1,47 @@
+# Dockerfile.prod
+
+FROM php:8.2-apache
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Installer les dépendances système et extensions PHP nécessaires
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    libonig-dev \
+    libxml2-dev \
+    unzip \
+    zip \
+    git \
+    sqlite3 \
+    libsqlite3-dev \
+    && docker-php-ext-install pdo pdo_sqlite mbstring zip exif pcntl bcmath
+
+# Activer mod_rewrite Apache
+RUN a2enmod rewrite
+
+# Installer Composer globalement
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+WORKDIR /var/www/html
+
+# Copier uniquement composer pour cache d’installation
+COPY composer.json composer.lock ./
+
+# Copier le reste du code
+COPY . .
+
+RUN composer install --optimize-autoloader --no-dev --no-interaction
+
+# Permissions pour storage et cache
+RUN chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
+# Générer la clé Laravel
+RUN php artisan key:generate
+
+# Optimiser config, routes, vues
+RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
+
+EXPOSE 80
+
+CMD ["apache2-foreground"]

@@ -173,6 +173,7 @@ export class ReservationFormComponent implements OnInit {
           alert('Réservation effectuée avec succès !');
           this.router.navigate(['/']);
           this.locationService.downloadInvoice(locationId).subscribe(blob => {
+            console.log('Blob size:', blob.size);
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
