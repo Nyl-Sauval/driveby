@@ -107,7 +107,7 @@ class LocationController extends BaseController
         }
         $car = $request->car_id;
         $car = Car::findOrFail($car);
-        $location = Location::create($request->only(['car_id', 'client_id']) + ['guarantee_id' => $request->guarantee_id ?? 1]);
+        $location = Location::create($request->only(['car_id']) + ['guarantee_id' => 1, 'client_id' => $client->id]);
         $retrait = Retrait::create([
             'withdrawal_date' => $request->start_date, DateUtil::DEFAULT_DATE_TIME_PATTERN,
             'location_id' => $location->id,
@@ -146,12 +146,6 @@ class LocationController extends BaseController
         $agency = Agency::findOrFail($location->car->agency_id);
 
         SendInvoiceEmail::dispatch($location, $agency);
-    }
-
-    public function sendInvoice($id)
-    {
-        $location = Location::with(['client', 'car', 'retrait', 'retour'])->findOrFail($id);
-        $agency = Agency::findOrFail($location->car->agency_id);
 
         $pdf = Pdf::loadView('invoices.facture', compact('location', 'agency'));
 
