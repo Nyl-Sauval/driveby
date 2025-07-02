@@ -1,15 +1,11 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {CarService} from '../service/car.service';
-import {DatePipe, JsonPipe, NgFor, NgForOf, NgIf} from '@angular/common';
+import {NgFor, NgForOf, NgIf} from '@angular/common';
 import {MatFormField, MatInput, MatSuffix} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatLabel} from '@angular/material/form-field';
-import {
-  MatTableModule
-} from '@angular/material/table';
+import {MatTableModule} from '@angular/material/table';
 import {LocationService} from '../service/locationService';
-import {MatIconButton} from '@angular/material/button';
-import {MatIcon} from '@angular/material/icon';
 import {ModalComponent} from '../agent/modal/modal.component';
 import {MatDialog} from '@angular/material/dialog';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -157,6 +153,13 @@ export class GestionAgentComponent {
     //reset les filtres
     this.clientFilter = '';
     this.departureDate = null;
+  }
+
+  haveWithdrawalAndReturn(location:any): boolean {
+    if (location.retrait === null && location.retour === null) {
+      return false;
+    }
+    return true;
   }
 }
 

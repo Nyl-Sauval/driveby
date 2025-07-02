@@ -1,10 +1,8 @@
 import {Component, OnInit, Optional} from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormsModule,
   ReactiveFormsModule,
-  ValidationErrors,
   Validators
 } from "@angular/forms";
 import {MatError, MatFormField, MatInput, MatLabel} from "@angular/material/input";
@@ -65,11 +63,8 @@ export class RetraitComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Valeur dateRetrait au submit:', this.retraitForm.get('dateRetrait')?.value);
-    console.log('Form valid:', this.retraitForm.valid);
     if (this.retraitForm.valid) {
       const formData = this.retraitForm.value;
-      console.log('Formulaire valide', formData);
       const payload = {
         withdrawal_date: formData.dateRetrait,
         withdrawal_mileage: Number(formData.mileage),
@@ -79,11 +74,9 @@ export class RetraitComponent implements OnInit {
         withdrawal_default: formData.default ?? '',
         withdrawal_done: formData.done
       };
-      console.log('Payload envoyé à l’API:', payload);
 
       this.locationService.updateRetrait(this.retraitId!, payload).subscribe({
         next: (response: any) => {
-          console.log('Retrait réussie', response);
           localStorage.setItem('token', response.data.token);
           this.snackBar.open('Retrait effectué', 'Fermer', {
             duration: 5000,
@@ -93,7 +86,6 @@ export class RetraitComponent implements OnInit {
         },
         error: (error: any) => {
           console.error('Erreur de création créer', error);
-          console.log('Détail de l\'erreur backend :', error.error);
         },
       });
     }
