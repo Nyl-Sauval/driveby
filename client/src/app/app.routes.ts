@@ -13,6 +13,7 @@ import {RetraitComponent} from './agent/retrait/retrait.component';
 import {RetourComponent} from './agent/retour/retour.component';
 import {AuthGuard} from './guards/auth.guard';
 import {AgentGuard} from './guards/agent.guard';
+import {EditLocationComponent} from './location/edit-location/edit-location.component';
 
 export const routes: Routes = [
   {path: '', component: HomepageComponent, pathMatch: 'full'},
@@ -27,7 +28,8 @@ export const routes: Routes = [
 
   {path: 'location/:id', component: DetailsLocationComponent},
   {path: 'retrait/:id/edit', component: RetraitComponent},
-  {path: 'retour/:id/edit', component: RetourComponent}
+  {path: 'retour/:id/edit', component: RetourComponent},
 
   {path: 'location/:id', component: DetailsLocationComponent, canActivate: [AuthGuard]},
+  {path: 'location/edit/:id', component: EditLocationComponent},
 ];

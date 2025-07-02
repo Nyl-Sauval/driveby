@@ -9,13 +9,15 @@ import {LocationService} from '../service/locationService';
 import {ModalComponent} from '../agent/modal/modal.component';
 import {MatDialog} from '@angular/material/dialog';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {
   MatDatepicker,
   MatDatepickerInput,
   MatDatepickerInputEvent,
   MatDatepickerToggle
 } from '@angular/material/datepicker';
+import {MatIcon} from '@angular/material/icon';
+import {RouterLink} from '@angular/router';
 
 
 @Component({
@@ -38,7 +40,8 @@ import {
     ReactiveFormsModule,
     MatSuffix,
     FormsModule,
-    MatButton
+    MatButton,
+    RouterLink,
   ],
   templateUrl: './gestion-agent.component.html',
   styleUrl: './gestion-agent.component.css'

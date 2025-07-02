@@ -17,6 +17,7 @@ import {RetraitComponent} from './app/agent/retrait/retrait.component';
 import {RetourComponent} from './app/agent/retour/retour.component';
 import {AuthGuard} from './app/guards/auth.guard';
 import {AgentGuard} from './app/guards/agent.guard';
+import {EditLocationComponent} from './app/location/edit-location/edit-location.component';
 
 const routes: Routes = [
   { path: 'enregistrement', component: EnregistrementComponent },
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'retrait/:id/edit', component: RetraitComponent},
   { path: 'retour/:id/edit', component: RetourComponent},
   { path: 'location/:id', component: DetailsLocationComponent, canActivate: [AuthGuard] },
+  { path: 'location/edit/:id', component: EditLocationComponent},
   { path: '', component: HomepageComponent },
 ];
 
