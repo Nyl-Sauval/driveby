@@ -7,7 +7,7 @@ import {ListeVoitureComponent} from './liste-voiture/liste-voiture.component';
 import {ClientEditComponent} from './client-edit/client-edit.component';
 import {DetailVoitureComponent} from './detail-voiture/detail-voiture.component';
 import {ReservationFormComponent} from './reservation-form/reservation-form.component';
-import {GestionAgentComponent} from './gestion-agent/gestion-agent.component';
+import {GestionAgentComponent} from './agent/gestion-agent/gestion-agent.component';
 import {DetailsLocationComponent} from './location/details-location/details-location.component';
 import {RetraitComponent} from './agent/retrait/retrait.component';
 import {RetourComponent} from './agent/retour/retour.component';

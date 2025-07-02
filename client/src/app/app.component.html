@@ -23,7 +23,7 @@
       </button>
 
 
-      <button *ngIf="(auth.isLoggedIn$ | async)" routerLink="/profil" class="button-profil">
+      <button *ngIf="((auth.isLoggedIn$ | async) && !(auth.isAgent$ | async))" routerLink="/profil" class="button-profil">
         <mat-icon>account_circle</mat-icon>
         Profil
       </button>

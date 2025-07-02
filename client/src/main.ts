@@ -11,7 +11,7 @@ import {ClientEditComponent} from './app/client-edit/client-edit.component';
 import {DetailVoitureComponent} from './app/detail-voiture/detail-voiture.component';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {ReservationFormComponent} from './app/reservation-form/reservation-form.component';
-import {GestionAgentComponent} from './app/gestion-agent/gestion-agent.component';
+import {GestionAgentComponent} from './app/agent/gestion-agent/gestion-agent.component';
 import {DetailsLocationComponent} from './app/location/details-location/details-location.component';
 import {RetraitComponent} from './app/agent/retrait/retrait.component';
 import {RetourComponent} from './app/agent/retour/retour.component';

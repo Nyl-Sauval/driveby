@@ -73,7 +73,7 @@
             <button mat-icon-button aria-label="Voir les détails" [routerLink]="['/location', location.id]">
               <mat-icon>visibility</mat-icon>
             </button>
-            <button mat-icon-button aria-label="Télécharger la facture">
+            <button mat-icon-button aria-label="Télécharger la facture" (click)="download(location.id)">
               <mat-icon>download</mat-icon>
             </button>
           </div>
