@@ -14,4 +14,7 @@ export class LocationService {
     return this.http.get<any[]>(`${this.apiUrl}/locations`);
   }
 
+  getAgencyById(id: number) {
+    return this.http.get<any>(`${this.apiUrl}/agencies/${id}`);
+  }
 }

@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
         // Créer un utilisateur spécifique
         User::factory()->create([
             'email' => 'test@example.com',
-            'role' => 'admin',
+            'role' => 'user',
             'password' => bcrypt('password'),
         ]);
 

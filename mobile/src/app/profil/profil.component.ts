@@ -4,6 +4,7 @@ import {AuthService} from "../services/auth.service";
 import {LocationService} from "../services/location.service";
 import {Observable} from "rxjs";
 import {NgForOf} from "@angular/common";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-profil',
@@ -14,7 +15,8 @@ import {NgForOf} from "@angular/common";
     IonAvatar,
     IonLabel,
     NgForOf,
-    IonItem
+    IonItem,
+    RouterLink
   ]
 })
 export class ProfilComponent  implements OnInit {

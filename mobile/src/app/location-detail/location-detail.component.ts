@@ -16,6 +16,7 @@ import {CurrencyPipe, DatePipe} from "@angular/common";
 export class LocationDetailComponent  implements OnInit {
   allLocations: any[] = [];
   location:any;
+  agency: any;
 
   constructor(private auth: AuthService,
               private loc: LocationService,
@@ -23,6 +24,7 @@ export class LocationDetailComponent  implements OnInit {
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
+    let agencyId;
     this.auth.me().subscribe({
       next: (response: any) => {
         const client = response.client;
@@ -33,6 +35,16 @@ export class LocationDetailComponent  implements OnInit {
             console.log('alllocation : ', this.allLocations);
             this.location = this.getLocationsById(id);
             console.log('📦 Location :', this.location);
+            agencyId = this.location.car.agency_id;
+            this.loc.getAgencyById(agencyId).subscribe({
+              next: (agency) => {
+                this.agency = agency;
+                console.log('📦 Agence :', this.agency);
+              },
+              error: (err) => {
+                console.error('Erreur chargement agence :', err);
+              }
+            });
           },
           error: (err) => {
             console.error('Erreur chargement locations :', err);
@@ -55,5 +67,17 @@ export class LocationDetailComponent  implements OnInit {
     const timeDiff = end.getTime() - start.getTime();
     const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
     return daysDiff;
+  }
+
+  getAgencyById(id: number) {
+    return this.loc.getAgencyById(id).subscribe({
+      next: (agency) => {
+        console.log('📦 Agence :', agency);
+        return agency;
+      },
+      error: (err) => {
+        console.error('Erreur chargement agence :', err);
+      }
+    });
   }
 }

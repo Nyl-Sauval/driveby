@@ -13,8 +13,7 @@ import {MatIcon} from '@angular/material/icon';
 import {ModalComponent} from '../agent/modal/modal.component';
 import {MatDialog} from '@angular/material/dialog';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {MatIcon} from '@angular/material/icon';
+import {MatButton} from '@angular/material/button';
 import {
   MatDatepicker,
   MatDatepickerInput,
