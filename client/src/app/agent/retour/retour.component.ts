@@ -81,12 +81,10 @@ export class RetourComponent {
       this.locationService.updateRetour(this.retourId!, payload).subscribe({
         next: (response: any) => {
           console.log('retour réussie', response);
-          localStorage.setItem('token', response.data.token);
           this.snackBar.open('retour effectué', 'Fermer', {
             duration: 5000,
             panelClass: ['snackbar-success']
           });
-          this.signinDialogRef?.close(true);
         },
         error: (error: any) => {
           console.error('Erreur de création créer', error);
