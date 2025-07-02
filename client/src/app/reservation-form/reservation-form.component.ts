@@ -17,6 +17,10 @@ import { LocationService } from '../service/locationService';
 import { Car } from '../models/car.model';
 import { Client } from '../models/client.model';
 import { CurrencyPipe, NgIf, NgForOf } from '@angular/common';
+import {GarantieComponent} from '../garantie/garantie.component';
+import {Guarantee, GuaranteeService} from '../service/guarantee.service';
+import {Option, OptionService} from '../service/option.service';
+import {MatCheckbox} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-reservation-form',
@@ -35,7 +39,8 @@ import { CurrencyPipe, NgIf, NgForOf } from '@angular/common';
     MatLabel,
     NgIf,
     NgForOf,
-    CurrencyPipe
+    CurrencyPipe,
+    MatCheckbox
   ]
 })
 export class ReservationFormComponent implements OnInit {
@@ -44,22 +49,10 @@ export class ReservationFormComponent implements OnInit {
   car: Car | undefined;
   client: Client | undefined;
   pricePerDay: string | undefined;
-
-  garanties = [
-    { guarantee_id: 1, guarantee_name: 'Standard', guarantee_description: 'Couverture de base', guarantee_price: 10 },
-    { guarantee_id: 2, guarantee_name: 'Confort', guarantee_description: 'Couverture étendue', guarantee_price: 20 },
-    { guarantee_id: 3, guarantee_name: 'Premium', guarantee_description: 'Protection complète', guarantee_price: 30 }
-  ];
-
-  options = [
-    { option_id: 1, option_name: 'GPS intégré', option_description: 'Navigation embarquée', option_price: 4.9, option_type: 'toggle' },
-    { option_id: 2, option_name: 'Siège bébé', option_description: 'Enfant 9-18 kg', option_price: 6, option_type: 'stepper' },
-    { option_id: 3, option_name: 'Conducteur additionnel', option_description: 'Autre conducteur', option_price: 7.5, option_type: 'stepper' },
-    { option_id: 4, option_name: 'Pneu neige / chaînes', option_description: 'Équipement hivernal', option_price: 5, option_type: 'toggle' },
-    { option_id: 5, option_name: 'Wi-Fi embarqué', option_description: 'Internet à bord', option_price: 3.5, option_type: 'toggle' }
-  ];
-
-  selectedOptions: { [key: number]: number } = {};
+  garanties: Guarantee[] = [];
+  selectedGuarantee: any = null;
+  options: Option[] = [];
+  selectedOptionIds: number[] = [];
   selectedIndex: number | null = null;
 
   constructor(
@@ -68,7 +61,9 @@ export class ReservationFormComponent implements OnInit {
     private carService: CarService,
     private route: ActivatedRoute,
     private locationService: LocationService,
-    private router: Router
+    private router: Router,
+    private garantieService: GuaranteeService,
+    private optionService: OptionService
   ) {}
 
   ngOnInit(): void {
@@ -98,7 +93,7 @@ export class ReservationFormComponent implements OnInit {
         license_issue_date: ['', Validators.required],
         license_expiry_date: ['', Validators.required],
         license_country: ['', Validators.required]
-      })
+      }),
     });
 
     this.authService.me().subscribe({
@@ -133,28 +128,39 @@ export class ReservationFormComponent implements OnInit {
       });
     }
 
-    this.garanties = this.garanties.map(g => ({
-      ...g,
-      guarantee_price: g.guarantee_price
-    }));
+    this.garantieService.getGuarantees().subscribe({
+      next: (garanties) => {
+        this.garanties = garanties.map(g => ({
+          ...g,
+          guarantee_price: g.guarantee_price
+        }));
+      },
+      error: (err) => console.error('Erreur chargement garanties :', err)
+    });
 
-    this.options = this.options.map(o => ({
-      ...o,
-      option_price: o.option_price
-    }));
-
-    this.options.forEach(opt => this.selectedOptions[opt.option_id] = 0);
+    this.optionService.getOptions().subscribe({
+      next: (options) => {
+        this.options = options;
+        this.selectedOptionIds = [];
+      },
+      error: (err) => console.error('Erreur chargement options :', err)
+    });
   }
 
   onSubmit() {
+    console.log('Form values:', this.reservationForm.value);
+    console.log(this.selectedOptionIds);
     if (this.reservationForm.valid) {
+      console.log('Form is valid, proceeding with reservation...');
+      console.log('gantie selected:', this.selectedGuarantee);
+      console.log('selected options:', this.selectedOptionIds);
       const formData = {
         car_id: this.car?.id,
         client_id: this.client?.id,
         start_date: this.reservationValues.startDate,
         end_date: this.reservationValues.endDate,
-        guarantee_id: this.getSelectedGuarantee()?.guarantee_id,
-        options: this.selectedOptions,
+        guarantee_id: this.selectedGuarantee.id,
+        options: this.selectedOptionIds,
         ...this.clientValues,
         ...this.addressValues,
         ...this.licenseValues
@@ -177,16 +183,29 @@ export class ReservationFormComponent implements OnInit {
         },
         error: (err) => alert('Erreur lors de la réservation.')
       });
+    } else {
+      console.log('Form is invalid:', this.reservationForm.errors);
     }
   }
 
-  onToggleChange(option: any) {
-    this.selectedOptions[option.option_id] = this.selectedOptions[option.option_id] === 1 ? 0 : 1;
+  toggleOption(option: Option): void {
+    console.log('Toggling option:', option);
+    const index = this.selectedOptionIds.indexOf(option.id);// Check if the option is already selected
+    if (index > -1) {
+      console.log('Option already selected, removing it:', option.id);
+      // If selected, remove it
+      this.selectedOptionIds.splice(index, 1);
+    } else {
+      console.log('Option not selected, adding it:', option.id);
+      // If not selected, add it
+      this.selectedOptionIds.push(option.id);
+    }
   }
 
-  changeQty(optionId: number, delta: number) {
-    const newValue = (this.selectedOptions[optionId] || 0) + delta;
-    this.selectedOptions[optionId] = Math.max(0, newValue);
+  isOptionSelected(option: Option): boolean {
+    console.log('Select option:', option);
+    console.log('Selected option IDs:', this.selectedOptionIds);
+    return this.selectedOptionIds.includes(option.id);
   }
 
   get reservationDays(): number {
@@ -200,11 +219,17 @@ export class ReservationFormComponent implements OnInit {
     let total = this.car?.price || 0;
     const g = this.getSelectedGuarantee();
     if (g) total += g.guarantee_price;
-    this.options.forEach(opt => {
-      const qty = this.selectedOptions[opt.option_id] || 0;
-      total += opt.option_type === 'toggle' ? (qty === 1 ? opt.option_price : 0) : qty * opt.option_price;
-    });
+
+    total += this.options
+      .filter(opt => this.selectedOptionIds.includes(opt.id))
+      .reduce((sum, opt) => sum + opt.option_price, 0);
+
     return total;
+  }
+
+
+  getSelectedOptions(): Option[] {
+    return this.options.filter(opt => this.selectedOptionIds.includes(opt.id));
   }
 
   getTotalReservation(): number {
@@ -221,31 +246,26 @@ export class ReservationFormComponent implements OnInit {
   }
 
   optionPriceLocation(): number {
-    let total = 0;
-    this.options.forEach(opt => {
-      const qty = this.selectedOptions[opt.option_id] || 0;
-      total += opt.option_type === 'toggle' ? (qty === 1 ? opt.option_price : 0) : qty * opt.option_price;
-    });
-    return total * this.reservationDays;
+    const totalPerDay = this.options
+      .filter(opt => this.selectedOptionIds.includes(opt.id))
+      .reduce((sum, opt) => sum + opt.option_price, 0);
+
+    return totalPerDay * this.reservationDays;
   }
 
   totalPriceLocation(): number {
     return this.carPriceLocation() + this.guaranteePriceLocation() + this.optionPriceLocation();
   }
 
-  getSelectedOptions() {
-    return this.options.filter(opt => {
-      const val = this.selectedOptions[opt.option_id];
-      return opt.option_type === 'toggle' ? val === 1 : val > 0;
-    });
-  }
-
   getSelectedGuarantee() {
-    return this.selectedIndex !== null ? this.garanties[this.selectedIndex] : null;
+    const guaranteeId = this.reservationForm.get('guarantee.guarantee_id')?.value;
+    return this.garanties.find(g => g.guarantee_id === guaranteeId) || null;
   }
 
   select(i: number): void {
     this.selectedIndex = i;
+    this.reservationForm.get('guarantee.guarantee_id')?.setValue(this.garanties[i].guarantee_id);
+    this.selectedGuarantee = this.garanties[i];
   }
 
   isSelected(i: number): boolean {

@@ -13,11 +13,12 @@ export interface Guarantee {
   providedIn: 'root'
 })
 export class GuaranteeService {
-  private apiUrl = 'http://localhost:8000/api/guarantees'; // adapte selon ton .env
+  private apiUrl = 'http://localhost:8000/api/';
 
   constructor(private http: HttpClient) {}
 
   getGuarantees(): Observable<Guarantee[]> {
-    return this.http.get<Guarantee[]>(this.apiUrl);
+    const url = `${this.apiUrl}garanties`;
+    return this.http.get<Guarantee[]>(url);
   }
 }

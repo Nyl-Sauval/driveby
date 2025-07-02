@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: laravel-app-prod
+    ports:
+      - "80:80"
+    environment:
+      - MAIL_HOST=mailpit
+      - DB_CONNECTION=sqlite
+      - DB_DATABASE=/var/www/html/database/database.sqlite
+      - QUEUE_CONNECTION=database
+      - APP_ENV=production
+      - APP_DEBUG=false
+    depends_on:
+      - mailpit
+
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile.queue
+    container_name: laravel-queue-prod
+    command: php artisan queue:work --sleep=3 --tries=3 --timeout=90
+    environment:
+      - QUEUE_CONNECTION=database
+      - APP_ENV=production
+    depends_on:
+      - app
+
+  mailpit:
+    image: axllent/mailpit
+    container_name: mailpit-prod
+    ports:
+      - "8025:8025"   # Interface web
+      - "1025:1025"   # SMTP

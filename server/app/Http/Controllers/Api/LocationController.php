@@ -13,6 +13,7 @@ use App\Models\Retrait;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Utils\DateUtil;
+use Illuminate\Support\Facades\DB;
 
 class LocationController extends BaseController
 {
@@ -65,6 +66,9 @@ class LocationController extends BaseController
             'license_issue_date' => 'required|date',
             'license_expiry_date' => 'required|date|after_or_equal:license_issue_date',
             'license_country' => 'required|string|max:100',
+            'guarantee_id' => 'exists:garanties,id',
+            'options' => 'nullable|array',
+            'options.*' => 'integer|exists:options,id',
         ]);
 
         $client = Client::find($request->client_id);
@@ -107,7 +111,7 @@ class LocationController extends BaseController
         }
         $car = $request->car_id;
         $car = Car::findOrFail($car);
-        $location = Location::create($request->only(['car_id']) + ['guarantee_id' => 1, 'client_id' => $client->id]);
+        $location = Location::create($request->only(['car_id', 'guarantee_id']) + ['client_id' => $client->id]);
         $retrait = Retrait::create([
             'withdrawal_date' => $request->start_date, DateUtil::DEFAULT_DATE_TIME_PATTERN,
             'location_id' => $location->id,
@@ -123,6 +127,21 @@ class LocationController extends BaseController
             'return_default' => $car->car_default,
             'return_done' => false,
         ]);
+
+        // Gestion options (location_options)
+        if ($request->has('options') && is_array($request->options)) {
+            $insertData = array_map(function($optionId) use ($location) {
+                return [
+                    'location_id' => $location->id,
+                    'option_id' => $optionId,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }, $request->options);
+
+            // Insertion en masse
+            DB::table('location_option')->insert($insertData);
+        }
 
         SendInvoiceEmail::dispatch($location, $car->agency);
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CarController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ClientController;
+use App\Http\Controllers\Api\GuaranteeController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\RetourController;
 use App\Http\Controllers\Api\RetraitController;
@@ -57,3 +58,4 @@ Route::put('location/{location}', [LocationController::class, 'update']);
 
 
 Route::get('/options', [OptionController::class, 'index']);
+Route::get("/garanties", [GuaranteeController::class, 'index'])->name('guarantee.index');
