@@ -146,12 +146,6 @@ class LocationController extends BaseController
         $agency = Agency::findOrFail($location->car->agency_id);
 
         SendInvoiceEmail::dispatch($location, $agency);
-    }
-
-    public function sendInvoice($id)
-    {
-        $location = Location::with(['client', 'car', 'retrait', 'retour'])->findOrFail($id);
-        $agency = Agency::findOrFail($location->car->agency_id);
 
         $pdf = Pdf::loadView('invoices.facture', compact('location', 'agency'));
 
