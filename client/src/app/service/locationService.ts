@@ -43,4 +43,11 @@ export class LocationService {
     return this.http.put(`${this.baseUrl}/retrait/${id}`, data);
   }
 
+  getRetourById(id: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/retour/${id}`);
+  }
+
+  updateRetour(id: string, data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/retour/${id}`, data);
+  }
 }

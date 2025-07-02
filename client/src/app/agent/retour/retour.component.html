@@ -1,1 +1,82 @@
-<p>retour works!</p>
+<form [formGroup]="retourForm" (ngSubmit)="onSubmit()" class="retour-form">
+
+  <h1>État de la voiture lors du retour</h1>
+
+  <mat-form-field appearance="fill" class="form-width">
+    <mat-label>Date de retour</mat-label>
+    <input matInput formControlName="dateRetour" required type="date"/>
+    <mat-error *ngIf="retourForm.get('dateRetour')?.invalid && retourForm.get('dateRetour')?.touched">
+      Date de retrait requise
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="form-width">
+    <mat-label>Kilométrage</mat-label>
+    <input matInput formControlName="mileage" required />
+    <mat-error *ngIf="retourForm.get('mileage')?.invalid && retourForm.get('mileage')?.touched">
+      Kilométrage requis
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="form-width">
+    <mat-label>Niveau d'essence (%)</mat-label>
+    <input matInput formControlName="fuel" required />
+    <mat-error *ngIf="retourForm.get('fuel')?.invalid && retourForm.get('fuel')?.touched">
+      Kilométrage requis
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="form-width">
+    <mat-label>Disponibilité</mat-label>
+    <mat-select formControlName="disponibility" required>
+      <mat-option value="Disponible">Disponible</mat-option>
+      <mat-option value="En réparation">En réparation</mat-option>
+      <mat-option value="En maintenance">En maintenance</mat-option>
+      <mat-option value="Indisponible">Indisponible</mat-option>
+    </mat-select>
+    <mat-error *ngIf="retourForm.get('disponibility')?.invalid && retourForm.get('disponibility')?.touched">
+      État requis
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="form-width">
+    <mat-label>État extérieur de la voiture</mat-label>
+    <mat-select formControlName="exteriorStatus" required>
+      <mat-option value="tres-bon">Très bon</mat-option>
+      <mat-option value="bon">Bon</mat-option>
+      <mat-option value="moyen">Moyen</mat-option>
+      <mat-option value="mauvais">Mauvais</mat-option>
+    </mat-select>
+    <mat-error *ngIf="retourForm.get('exteriorStatus')?.invalid && retourForm.get('exteriorStatus')?.touched">
+      État extérieur de la voiture requis
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="form-width">
+    <mat-label>État intérieur de la voiture</mat-label>
+    <mat-select formControlName="interiorStatus" required>
+      <mat-option value="tres-bon">Très bon</mat-option>
+      <mat-option value="bon">Bon</mat-option>
+      <mat-option value="moyen">Moyen</mat-option>
+      <mat-option value="mauvais">Mauvais</mat-option>
+    </mat-select>
+    <mat-error *ngIf="retourForm.get('interiorStatus')?.invalid && retourForm.get('interiorStatus')?.touched">
+      État intérieur de la voiture requis
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Défaut de la voiture</mat-label>
+    <textarea matInput formControlName="default" rows="5"></textarea>
+  </mat-form-field>
+
+  <mat-checkbox formControlName="done" required class="done-form">
+    Retour fait
+  </mat-checkbox>
+  <mat-error *ngIf="retourForm.get('done')?.invalid && retourForm.get('done')?.touched">
+    Ce champ est requis
+  </mat-error>
+
+  <button mat-button (click)="onSubmit()" color="primary">ENREGISTRER</button>
+
+</form>

@@ -1,0 +1,14 @@
+.retour-form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding-left: 100px;
+
+  .form-width {
+    width: 400px;
+  }
+
+  .full-width {
+    width: 600px;
+  }
+}
