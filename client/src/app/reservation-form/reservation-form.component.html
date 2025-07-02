@@ -6,13 +6,17 @@
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Date de début</mat-label>
-        <input matInput type="date" formControlName="startDate" />
+        <input matInput type="date" formControlName="startDate">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Date de fin</mat-label>
-        <input matInput type="date" formControlName="endDate" />
+        <input matInput type="date" formControlName="endDate">
       </mat-form-field>
+
+      <div *ngIf="reservationGroup.errors?.['carUnavailable'] && reservationGroup.dirty" class="error">
+        Cette voiture est déjà réservée aux dates sélectionnées.
+      </div>
 
       <div class="step-actions">
         <button mat-button matStepperNext>Suivant</button>
@@ -27,27 +31,27 @@
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Nom</mat-label>
-        <input matInput formControlName="name" />
+        <input matInput formControlName="name">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Prénom</mat-label>
-        <input matInput formControlName="firstname" />
+        <input matInput formControlName="firstname">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email" />
+        <input matInput formControlName="email">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Téléphone</mat-label>
-        <input matInput formControlName="phone" />
+        <input matInput formControlName="phone">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Date de naissance</mat-label>
-        <input matInput type="date" formControlName="birth" />
+        <input matInput type='date' formControlName="birth">
       </mat-form-field>
 
       <div class="step-actions">
@@ -64,22 +68,22 @@
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Adresse</mat-label>
-        <input matInput formControlName="address" />
+        <input matInput formControlName="address">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Code postal</mat-label>
-        <input matInput formControlName="postal_code" />
+        <input matInput formControlName="postal_code">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Ville</mat-label>
-        <input matInput formControlName="city" />
+        <input matInput formControlName="city">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Pays</mat-label>
-        <input matInput formControlName="country" />
+        <input matInput formControlName="country">
       </mat-form-field>
 
       <div class="step-actions">
@@ -96,22 +100,22 @@
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Numéro de permis</mat-label>
-        <input matInput formControlName="license_number" />
+        <input matInput formControlName="license_number">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Date de délivrance</mat-label>
-        <input matInput type="date" formControlName="license_issue_date" />
+        <input matInput type="date" formControlName="license_issue_date">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Date d'expiration</mat-label>
-        <input matInput type="date" formControlName="license_expiry_date" />
+        <input matInput type="date" formControlName="license_expiry_date">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Pays de délivrance</mat-label>
-        <input matInput formControlName="license_country" />
+        <input matInput formControlName="license_country">
       </mat-form-field>
 
       <div class="step-actions">
@@ -138,7 +142,7 @@
             <h3>{{ garantie.guarantee_name }}</h3>
             <p>{{ garantie.guarantee_description }}</p>
           </div>
-          <div class="prix">{{ garantie.guarantee_price | currency: 'EUR' }}</div>
+          <div class="prix">{{ garantie.guarantee_price | currency:'EUR':'symbol':'1.2-2' }}</div>
         </div>
 
         <div *ngIf="isSelected(i)" class="garantie-details">
@@ -167,7 +171,7 @@
         <div class="option-info">
           <strong>{{ option.option_name }}</strong>
           <p>{{ option.option_description }}</p>
-          <span>+{{ option.option_price }} €/jour</span>
+          <span>+{{ option.option_price | currency:'EUR':'symbol':'1.2-2' }}/jour</span>
         </div>
 
         <div *ngIf="option.option_type === 'toggle'" class="toggle">
@@ -187,10 +191,10 @@
 
       <div class="total-bar">
         <div>
-          <strong>Total / jour : {{ getTotal() | number: '1.2-2' }} €</strong><br />
+          <strong>Total / jour : {{ getDailyTotal() | currency:'EUR' }}</strong><br />
           <ng-container *ngIf="reservationDays">
             Total pour {{ reservationDays }} jour(s) :
-            <strong>{{ getTotalReservation() | number: '1.2-2' }} €</strong>
+            <strong>{{ getTotalReservation() | currency:'EUR' }}</strong>
           </ng-container>
         </div>
       </div>
@@ -208,26 +212,23 @@
 
     <p><strong>Début :</strong> {{ reservationValues.startDate }}</p>
     <p><strong>Fin :</strong> {{ reservationValues.endDate }}</p>
-    <p><strong>Prix voiture :</strong> {{ car?.car_price | number: '1.2-2' }} €/jour</p>
 
     <p><strong>Nom :</strong> {{ clientValues.name }}</p>
     <p><strong>Prénom :</strong> {{ clientValues.firstname }}</p>
     <p><strong>Email :</strong> {{ clientValues.email }}</p>
     <p><strong>Téléphone :</strong> {{ clientValues.phone }}</p>
     <p><strong>Date de naissance :</strong> {{ clientValues.birth }}</p>
-
     <p><strong>Adresse :</strong> {{ addressValues.address }}</p>
     <p><strong>Code postal :</strong> {{ addressValues.postal_code }}</p>
     <p><strong>Ville :</strong> {{ addressValues.city }}</p>
     <p><strong>Pays :</strong> {{ addressValues.country }}</p>
-
     <p><strong>Numéro de permis :</strong> {{ licenseValues.license_number }}</p>
     <p><strong>Date de délivrance :</strong> {{ licenseValues.license_issue_date }}</p>
-    <p><strong>Date d'expiration :</strong> {{ licenseValues.license_expiry_date }}</p>
+    <p><strong>Date d'expiration du permis :</strong> {{ licenseValues.license_expiry_date }}</p>
 
     <p *ngIf="getSelectedGuarantee() as g">
       <strong>Garantie choisie :</strong>
-      {{ g.guarantee_name }} ({{ g.guarantee_price | currency:'EUR' }})
+      {{ g.guarantee_name }} ({{ g.guarantee_price | currency:'EUR':'symbol':'1.2-2' }})
     </p>
 
     <div *ngIf="getSelectedOptions().length > 0">
@@ -241,8 +242,13 @@
       </ul>
     </div>
 
-    <p><strong>Total / jour :</strong> {{ getTotal() | number: '1.2-2' }} €</p>
-    <p><strong>Total pour {{ reservationDays }} jour(s) :</strong> {{ getTotalReservation() | number: '1.2-2' }} €</p>
+    <p><strong>Total / jour :</strong> {{ getDailyTotal() | currency:'EUR':'symbol':'1.2-2' }}</p>
+    <p><strong>Total pour {{ reservationDays }} jour(s) :</strong> {{ getTotalReservation() | currency:'EUR':'symbol':'1.2-2' }}</p>
+
+    <h3>Prix voiture : {{ carPriceLocation() | currency:'EUR':'symbol':'1.2-2' }}</h3>
+    <h3>Prix garantie : {{ guaranteePriceLocation() | currency:'EUR':'symbol':'1.2-2' }}</h3>
+    <h3>Prix options : {{ optionPriceLocation() | currency:'EUR':'symbol':'1.2-2' }}</h3>
+    <h2>Prix total : {{ totalPriceLocation() | currency:'EUR':'symbol':'1.2-2' }}</h2>
 
     <div class="step-actions">
       <button mat-button matStepperPrevious>Retour</button>

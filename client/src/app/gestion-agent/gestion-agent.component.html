@@ -1,0 +1,76 @@
+<mat-form-field appearance="fill">
+  <mat-label>Sélectionnez une agence</mat-label>
+  <mat-select [(value)]="selectedAgency" (selectionChange)="onAgencyChanged($event.value)">
+    <mat-option *ngFor="let agency of agencies" [value]="agency.id">
+      {{ agency.agency_name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div *ngIf="selectedAgency">
+  <h2>Locations pour l'agence sélectionnée</h2>
+  <div class="locations-list">
+    <h1>Liste de mes réservations</h1>
+    <hr>
+
+    <div class="list-filters">
+      <mat-form-field appearance="fill">
+        <mat-label>Date de départ</mat-label>
+        <input matInput [matDatepicker]="picker1" [(ngModel)]="departureDate" (dateChange)="onDateFilterChange($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Filtrer par nom/prénom</mat-label>
+        <input matInput [(ngModel)]="clientFilter" (input)="onClientFilterChange()" placeholder="Rechercher un client">
+      </mat-form-field>
+
+
+      <button mat-raised-button color="warn" (click)="resetFilters()">Réinitialiser les filtres</button>
+    </div>
+    <div *ngIf="locations.length === 0">Aucune location disponible</div>
+    <div class="list">
+      <div class="location-item" *ngFor="let location of locations">
+        <img src="{{location.car.car_picture}}" class="img-car">
+
+        <div class="client-info">
+          <strong>
+            <span>
+              Client
+            </span>
+          </strong>
+          <br>
+          <strong>
+            <span>{{location.client.client_firstname}} {{location.client.client_name}}</span>
+          </strong>
+          <br>
+          <span>Email : {{location.client.client_email}}</span>
+          <br>
+          <span>Téléphone : {{location.client.client_phone}}</span>
+        </div>
+
+        <div class="location-info">
+          <strong>
+            <span>{{location.car.car_brand}} {{location.car.car_model}}</span>
+          </strong>
+          <br>
+          <span>Date de retrait : {{location.retrait ? formatDate(location.retrait.withdrawal_date) : ''}}</span>
+          <span>Date de retour : {{location.retour ? formatDate(location.retour.return_date) : ''}}</span>
+        </div>
+
+        <div>
+          <button mat-icon-button aria-label="Modifier retrait/retour" (click)="openModal(location)">
+            <mat-icon>event</mat-icon>
+          </button>
+          <button mat-icon-button aria-label="Voir les détails">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button aria-label="Télécharger la facture">
+            <mat-icon>download</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

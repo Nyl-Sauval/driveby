@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgIf} from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
-  imports: [CommonModule, IonicModule, RouterModule],
+  imports: [CommonModule, IonicModule, RouterModule, NgIf],
 })
 export class HomePage implements OnInit {
   user: any = null;
@@ -23,7 +23,7 @@ export class HomePage implements OnInit {
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/me', {
+      const response = await fetch('http://localhost:8000/api/me', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -42,5 +42,10 @@ export class HomePage implements OnInit {
     } catch (err) {
       console.error('❌ Erreur réseau lors de l’appel API :', err);
     }
+  }
+
+  isLoggedIn(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token;
   }
 }

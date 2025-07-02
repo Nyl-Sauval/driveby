@@ -7,17 +7,24 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: '', // racine = redirigé vers 'home'
+        path: '',
         redirectTo: 'home',
         pathMatch: 'full',
       },
       {
         path: 'home',
-        loadComponent: () => import('./home/home.page').then(m => m.HomePage),
+        loadComponent: () =>
+          import('./home/home.page').then((m) => m.HomePage),
       },
       {
         path: 'login',
-        loadComponent: () => import('./pages/login/login.page').then(m => m.LoginPage),
+        loadComponent: () =>
+          import('./pages/login/login.page').then((m) => m.LoginPage),
+      },
+      {
+        path: 'profil',
+        loadComponent: () =>
+          import('./profil/profil.component').then((m) => m.ProfilComponent),
       },
       {
         path: 'register',

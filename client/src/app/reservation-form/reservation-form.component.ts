@@ -1,29 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import {
+  MatStep,
+  MatStepLabel,
+  MatStepper,
+  MatStepperNext,
+  MatStepperPrevious
+} from '@angular/material/stepper';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
 import { AuthService } from '../service/auth.service';
 import { CarService } from '../service/car.service';
-import { LocationService } from '../service/locationService';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LocationService } from '../service/locationService';
 import { Car } from '../models/car.model';
 import { Client } from '../models/client.model';
+import { CurrencyPipe, NgIf, NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-reservation-form',
-  standalone: true,
   templateUrl: './reservation-form.component.html',
   styleUrls: ['./reservation-form.component.css'],
   imports: [
-    CommonModule,
+    MatStepper,
+    MatStep,
     ReactiveFormsModule,
-    MatStepperModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule
+    MatFormField,
+    MatInput,
+    MatButton,
+    MatStepperNext,
+    MatStepLabel,
+    MatStepperPrevious,
+    MatLabel,
+    NgIf,
+    NgForOf,
+    CurrencyPipe
   ]
 })
 export class ReservationFormComponent implements OnInit {
@@ -31,13 +43,13 @@ export class ReservationFormComponent implements OnInit {
   clientInfoLoaded = false;
   car: Car | undefined;
   client: Client | undefined;
+  pricePerDay: string | undefined;
 
-
-    garanties = [
-      { guarantee_id: 1, guarantee_name: 'Standard', guarantee_description: 'Couverture de base', guarantee_price: 10 },
-      { guarantee_id: 2, guarantee_name: 'Confort', guarantee_description: 'Couverture étendue', guarantee_price: 20 },
-      { guarantee_id: 3, guarantee_name: 'Premium', guarantee_description: 'Protection complète', guarantee_price: 30 }
-    ];
+  garanties = [
+    { guarantee_id: 1, guarantee_name: 'Standard', guarantee_description: 'Couverture de base', guarantee_price: 10 },
+    { guarantee_id: 2, guarantee_name: 'Confort', guarantee_description: 'Couverture étendue', guarantee_price: 20 },
+    { guarantee_id: 3, guarantee_name: 'Premium', guarantee_description: 'Protection complète', guarantee_price: 30 }
+  ];
 
   options = [
     { option_id: 1, option_name: 'GPS intégré', option_description: 'Navigation embarquée', option_price: 4.9, option_type: 'toggle' },
@@ -63,14 +75,17 @@ export class ReservationFormComponent implements OnInit {
     this.reservationForm = this.fb.group({
       reservation: this.fb.group({
         startDate: [new Date(), [Validators.required, this.dateAfterTodayValidator]],
-        endDate: ['', Validators.required]
+        endDate: ['', Validators.required],
+      }, {
+        asyncValidators: this.carService.checkAvailabilityValidator(this.route.snapshot.paramMap.get('id') || ''),
+        updateOn: 'change'
       }),
       client: this.fb.group({
         name: ['', Validators.required],
         firstname: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         phone: ['', [Validators.required, Validators.maxLength(20)]],
-        birth: ['', Validators.required]
+        birth: ['', [Validators.required]]
       }),
       address: this.fb.group({
         address: ['', Validators.required],
@@ -90,9 +105,9 @@ export class ReservationFormComponent implements OnInit {
       next: (res: any) => {
         this.client = res?.client;
         if (res?.client) {
-          this.clientGroup.patchValue(res.client);
-          this.addressGroup.patchValue(res.client);
-          this.licenseGroup.patchValue(res.client);
+          this.reservationForm.get('client')?.patchValue(res.client);
+          this.reservationForm.get('address')?.patchValue(res.client);
+          this.reservationForm.get('license')?.patchValue(res.client);
           this.clientInfoLoaded = true;
         }
       }
@@ -102,40 +117,64 @@ export class ReservationFormComponent implements OnInit {
     if (carId) {
       this.carService.getCarById(carId).subscribe({
         next: (car) => {
-          this.car = car;
-          this.reservationGroup.patchValue({
-            startDate: new Date(),
-            endDate: new Date(new Date().setDate(new Date().getDate() + 1))
-          });
+          if (car) {
+            this.car = {
+              ...car,
+              price: car.price / 100
+            };
+            this.pricePerDay = this.car?.price?.toFixed(2);
+            this.reservationForm.get('reservation')?.patchValue({
+              startDate: new Date(),
+              endDate: new Date(new Date().setDate(new Date().getDate() + 1))
+            });
+          }
         },
         error: (err) => console.error('Erreur chargement voiture :', err)
       });
     }
 
-    this.options.forEach(option => this.selectedOptions[option.option_id] = 0);
+    this.garanties = this.garanties.map(g => ({
+      ...g,
+      guarantee_price: g.guarantee_price
+    }));
+
+    this.options = this.options.map(o => ({
+      ...o,
+      option_price: o.option_price
+    }));
+
+    this.options.forEach(opt => this.selectedOptions[opt.option_id] = 0);
   }
 
   onSubmit() {
     if (this.reservationForm.valid) {
-      const selectedGuarantee = this.getSelectedGuarantee();const formData = {
+      const formData = {
         car_id: this.car?.id,
         client_id: this.client?.id,
         start_date: this.reservationValues.startDate,
         end_date: this.reservationValues.endDate,
-        guarantee_id: this.getSelectedGuarantee()?.guarantee_id, // ✅ C'est ce que Laravel veut
-        options: this.selectedOptions
+        guarantee_id: this.getSelectedGuarantee()?.guarantee_id,
+        options: this.selectedOptions,
+        ...this.clientValues,
+        ...this.addressValues,
+        ...this.licenseValues
       };
 
-
       this.locationService.makeReservation(formData).subscribe({
-        next: () => {
+        next: (res: any) => {
+          const locationId = res.location.id;
           alert('Réservation effectuée avec succès !');
           this.router.navigate(['/']);
+          this.locationService.downloadInvoice(locationId).subscribe(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `facture-location-${locationId}.pdf`;
+            a.click();
+            URL.revokeObjectURL(url);
+          });
         },
-        error: (error) => {
-          console.error('Erreur lors de la réservation', error);
-          alert('Erreur lors de la réservation');
-        }
+        error: (err) => alert('Erreur lors de la réservation.')
       });
     }
   }
@@ -149,34 +188,6 @@ export class ReservationFormComponent implements OnInit {
     this.selectedOptions[optionId] = Math.max(0, newValue);
   }
 
-  getTotal(): number {
-    return this.getDailyTotal();
-  }
-
-  getTotalReservation(): number {
-    return this.getDailyTotal() * this.reservationDays;
-  }
-
-  getDailyTotal(): number {
-    let total = 0;
-
-    if (this.car?.car_price) total += this.car.car_price;
-
-    const g = this.getSelectedGuarantee();
-    if (g) total += g.guarantee_price;
-
-    this.options.forEach(opt => {
-      const qty = this.selectedOptions[opt.option_id] || 0;
-      if (opt.option_type === 'toggle') {
-        total += qty === 1 ? opt.option_price : 0;
-      } else {
-        total += qty * opt.option_price;
-      }
-    });
-
-    return total;
-  }
-
   get reservationDays(): number {
     const start = new Date(this.reservationValues.startDate);
     const end = new Date(this.reservationValues.endDate);
@@ -184,12 +195,41 @@ export class ReservationFormComponent implements OnInit {
     return Math.max(Math.ceil(timeDiff / (1000 * 3600 * 24)), 1);
   }
 
-  isSelected(i: number): boolean {
-    return this.selectedIndex === i;
+  getDailyTotal(): number {
+    let total = this.car?.price || 0;
+    const g = this.getSelectedGuarantee();
+    if (g) total += g.guarantee_price;
+    this.options.forEach(opt => {
+      const qty = this.selectedOptions[opt.option_id] || 0;
+      total += opt.option_type === 'toggle' ? (qty === 1 ? opt.option_price : 0) : qty * opt.option_price;
+    });
+    return total;
   }
 
-  select(i: number): void {
-    this.selectedIndex = i;
+  getTotalReservation(): number {
+    return this.getDailyTotal() * this.reservationDays;
+  }
+
+  carPriceLocation(): number {
+    return (this.car?.price || 0) * this.reservationDays;
+  }
+
+  guaranteePriceLocation(): number {
+    const g = this.getSelectedGuarantee();
+    return g ? g.guarantee_price * this.reservationDays : 0;
+  }
+
+  optionPriceLocation(): number {
+    let total = 0;
+    this.options.forEach(opt => {
+      const qty = this.selectedOptions[opt.option_id] || 0;
+      total += opt.option_type === 'toggle' ? (qty === 1 ? opt.option_price : 0) : qty * opt.option_price;
+    });
+    return total * this.reservationDays;
+  }
+
+  totalPriceLocation(): number {
+    return this.carPriceLocation() + this.guaranteePriceLocation() + this.optionPriceLocation();
   }
 
   getSelectedOptions() {
@@ -201,6 +241,14 @@ export class ReservationFormComponent implements OnInit {
 
   getSelectedGuarantee() {
     return this.selectedIndex !== null ? this.garanties[this.selectedIndex] : null;
+  }
+
+  select(i: number): void {
+    this.selectedIndex = i;
+  }
+
+  isSelected(i: number): boolean {
+    return this.selectedIndex === i;
   }
 
   get reservationGroup(): FormGroup {
@@ -220,24 +268,30 @@ export class ReservationFormComponent implements OnInit {
   }
 
   get reservationValues() {
-    return this.reservationGroup.value;
+    return this.reservationForm.get('reservation')?.value ?? {};
   }
 
   get clientValues() {
-    return this.clientGroup.value;
+    return this.reservationForm.get('client')?.value ?? {};
   }
 
   get addressValues() {
-    return this.addressGroup.value;
+    return this.reservationForm.get('address')?.value ?? {};
   }
 
   get licenseValues() {
-    return this.licenseGroup.value;
+    return this.reservationForm.get('license')?.value ?? {};
   }
 
-  dateAfterTodayValidator(control: AbstractControl): { [key: string]: any } | null {
+  dateAfterTodayValidator(control: AbstractControl): ValidationErrors | null {
     const today = new Date();
     const inputDate = new Date(control.value);
     return inputDate > today ? null : { dateInvalid: true };
+  }
+
+  dateAfter(control: AbstractControl, date: string): ValidationErrors | null {
+    const inputDate = new Date(control.value);
+    const compareDate = new Date(date);
+    return inputDate > compareDate ? null : { dateInvalid: true };
   }
 }

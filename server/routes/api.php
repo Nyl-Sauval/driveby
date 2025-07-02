@@ -39,4 +39,17 @@ Route::put('client/{id}', [ClientController::class, 'update'])->name('client.upd
 Route::get('/options', [OptionController::class, 'index']);
 
 Route::get('locations', [LocationController::class, 'index']);
-Route::post('locations', [LocationController::class, 'create'])->name('location.create')->middleware('auth:sanctum');
+Route::post('locations', [LocationController::class, 'create'])->name('location.create');
+Route::get('cars/{carId}/locations', [LocationController::class, 'getLocationsByCar'])->name('location.getByCar');
+Route::get('/locations/{id}/invoice', [LocationController::class, 'downloadInvoice']);
+
+Route::delete('locations/{id}', [LocationController::class, 'destroy']);
+
+Route::get('/agency/{id}/locations', [LocationController::class, 'getLocationsByAgency'])->name('location.getByAgency');
+
+Route::put('retrait/{retrait}', [RetraitController::class, 'update']);
+Route::get('retrait/{id}', [RetraitController::class, 'show']);
+
+Route::put('retour/{retour}', [RetourController::class, 'update']);
+Route::get('retour/{id}', [RetourController::class, 'show']);
+

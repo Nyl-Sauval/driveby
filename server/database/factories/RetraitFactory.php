@@ -14,7 +14,7 @@ class RetraitFactory extends Factory
     public function definition(): array
     {
         return [
-            'withdrawal_date' => $this->faker->date(),
+            'withdrawal_date' => $this->faker->dateTimeBetween('now', '+1 month'),
             'withdrawal_interior_status_car' => $this->faker->randomElement(['Très bon', 'Bon', 'Moyen', 'Mauvais']),
             'withdrawal_exterior_status_car' => $this->faker->randomElement(['Très bon', 'Bon', 'Moyen', 'Mauvais']),
             'withdrawal_mileage' => $this->faker->randomFloat(3, 0, 300000),

@@ -1,0 +1,24 @@
+<main class="location-detail-container">
+  <section class="car-section">
+    <img [src]="location?.car.car_picture" alt="Photo voiture" class="car-image" />
+    <h2>{{ location?.car.car_brand }} {{ location?.car.car_model }}</h2>
+    <p><strong>Immatriculation :</strong> {{ location?.car.car_registration }}</p>
+    <p><strong>Carburant :</strong> {{ location?.car.car_fuel }}</p>
+    <p><strong>Prix/jour :</strong> {{ location?.car.car_price / 100 | currency:'EUR' }}</p>
+  </section>
+
+  <section class="client-section">
+    <h3>Client</h3>
+    <p><strong>Nom :</strong> {{ location?.client.client_firstname }} {{ location?.client.client_name }}</p>
+    <p><strong>Email :</strong> {{ location?.client.client_email }}</p>
+    <p><strong>Téléphone :</strong> {{ location?.client.client_phone }}</p>
+  </section>
+
+  <section class="date-section">
+    <h3>Période</h3>
+    <p><strong>Début :</strong> {{ location?.retrait?.withdrawal_date | date:'longDate' }}</p>
+    <p><strong>Fin :</strong> {{ location?.retour?.return_date | date:'longDate' }}</p>
+    <p><strong>Durée :</strong> {{ getDaysBetweenDates(location?.retrait?.withdrawal_date,location?.retour?.return_date)  }} jour(s)</p>
+    <p><strong>Total estimé :</strong> {{ (location?.car.car_price*getDaysBetweenDates(location?.retrait?.withdrawal_date,location?.retour?.return_date))/100| currency:'EUR' }}</p>
+  </section>
+</main>

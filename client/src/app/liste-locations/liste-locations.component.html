@@ -1,0 +1,45 @@
+<div class="locations-list">
+  <h1>Liste de mes réservations</h1>
+  <hr>
+
+  <div class="list">
+    <div class="location-item" *ngFor="let location of locationsForUser">
+      <img src="{{location.car.car_picture}}" class="img-car">
+
+      <div class="location-info">
+        <strong>
+          <span>{{location.car.car_brand}} {{location.car.car_model}}</span>
+        </strong>
+        <br>
+        <span>Date de retrait : {{formatDate(location.retrait.withdrawal_date)}}</span>
+        <span>Date de retour : {{ formatDate(location.retour.return_date) }}</span>
+      </div>
+
+      <div class="agence-info">
+        <strong>Agence :</strong>
+        <span> {{getAgencyById(location.car.agency_id)?.agency_name}} </span>
+        <div class="address">
+          <span> {{getAgencyById(location.car.agency_id)?.agency_address}} </span>
+          <span> {{getAgencyById(location.car.agency_id)?.agency_postal_code}} </span>
+          <span> {{getAgencyById(location.car.agency_id)?.agency_city}} </span>
+        </div>
+      </div>
+
+      <div>
+        <button mat-icon-button aria-label="Voir les détails" [routerLink]="['/location', location.id]">
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Télécharger la facture" (click)="download(location.id)">
+          <mat-icon>download</mat-icon>
+        </button>
+        <button mat-icon-button
+                aria-label="Annuler la réservation"
+                *ngIf="!isLocationPast(location)"
+                (click)="cancelLocation(location.id)">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -13,7 +13,7 @@ class RetourFactory extends Factory
     public function definition()
     {
         return [
-            'return_date' => $this->faker->date(),
+            'return_date' => $this->faker->dateTimeBetween('now', '+1 month'),
             'return_interior_status_car' => $this->faker->randomElement(['Très bon', 'Bon', 'Moyen', 'Mauvais']),
             'return_exterior_status_car' => $this->faker->randomElement(['Très bon', 'Bon', 'Moyen', 'Mauvais']),
             'return_mileage' => $this->faker->randomFloat(3, 0, 200000), // entre 0 et 200000 km avec 3 décimales

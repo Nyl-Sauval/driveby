@@ -1,12 +1,30 @@
 import { Injectable } from '@angular/core';
+import {Observable} from "rxjs";
+import {HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
 @Injectable({
-  providedIn: 'root'  // Auto-injecté dans toute l'application
+  providedIn: 'root'
 })
 export class AuthService {
+  private apiUrl = environment.apiUrl;
+
+
+  constructor(private http: HttpClient) {}
+
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
   }
+
+  me(): Observable<Object> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json'
+    });
+    return this.http.get(`${this.apiUrl}/profil`, { headers });
+    }
 
   logout(): void {
     localStorage.removeItem('token');
