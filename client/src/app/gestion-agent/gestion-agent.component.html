@@ -70,7 +70,7 @@
                     *ngIf="location.retour.return_done">
               <mat-icon style="color: green;">check</mat-icon>
             </button>
-            <button mat-icon-button aria-label="Voir les détails">
+            <button mat-icon-button aria-label="Voir les détails" [routerLink]="['/location', location.id]">
               <mat-icon>visibility</mat-icon>
             </button>
             <button mat-icon-button aria-label="Télécharger la facture">

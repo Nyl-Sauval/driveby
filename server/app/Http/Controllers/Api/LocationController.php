@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Resources\LocationResource;
 use App\Jobs\SendInvoiceEmail;
-use App\Mail\ReservationCreated;
 use App\Models\Agency;
 use App\Models\Car;
 use App\Models\Client;
@@ -15,7 +13,6 @@ use App\Models\Retrait;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Utils\DateUtil;
-use Illuminate\Support\Facades\Mail;
 
 class LocationController extends BaseController
 {
@@ -24,6 +21,16 @@ class LocationController extends BaseController
     {
         $locations = Location::with(['client', 'car', 'guarantee', 'retrait', 'retour'])->get();
         return response()->json($locations);
+    }
+
+    public function show($id)
+    {
+        $location = Location::with(['client', 'car', 'guarantee', 'retrait', 'retour'])->find($id);
+        if (!$location) {
+            return response()->json(['message' => 'Location non trouvé'], 404);
+        }
+
+        return response()->json($location);
     }
 
     public function destroy($id)
@@ -162,4 +169,76 @@ class LocationController extends BaseController
             'locations' => $location
         ]);
     }
+
+    public function update(Request $request, Location $location)
+    {
+        $validated = $request->validate([
+            // Champs date
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
+
+            // Client
+            'name' => 'required|string',
+            'firstname' => 'required|string',
+            'email' => 'required|email',
+            'phone' => 'required|string|max:20',
+            'birth' => 'required|date',
+            'address' => 'required|string',
+            'postal_code' => 'required|string',
+            'city' => 'required|string',
+            'country' => 'required|string',
+            'license_number' => 'required|string',
+            'license_issue_date' => 'required|date',
+            'license_expiry_date' => 'required|date',
+            'license_country' => 'required|string'
+
+            // Garantie (à faire)
+
+            // Options (à faire)
+        ]);
+
+        // Mise à jour client lié
+        if ($location->client) {
+            $location->client->update([
+                'client_name' => $validated['name'],
+                'client_firstname' => $validated['firstname'],
+                'client_email' => $validated['email'],
+                'client_phone' => $validated['phone'],
+                'client_birth' => $validated['birth'],
+                'client_address' => $validated['address'],
+                'client_postal_code' => $validated['postal_code'],
+                'client_city' => $validated['city'],
+                'client_country' => $validated['country'],
+                'client_license_number' => $validated['license_number'],
+                'client_license_issue_date' => $validated['license_issue_date'],
+                'client_license_expiry_date' => $validated['license_expiry_date'],
+                'client_license_country' => $validated['license_country']
+            ]);
+        }
+
+        // Mise à jour retrait (si existant)
+        if ($location->retrait) {
+            $location->retrait->update([
+                'withdrawal_date' => $validated['start_date'],
+            ]);
+        }
+
+        // Mise à jour retour (si existant)
+        if ($location->retour) {
+            $location->retour->update([
+                'return_date' => $validated['end_date'],
+            ]);
+        }
+
+        // Mise à jour options (many-to-many)
+//        if (isset($validated['options'])) {
+//            $location->options()->sync($validated['options']);
+//        }
+
+        return response()->json([
+            'message' => 'Location mise à jour avec succès',
+            'data' => $location->load('car', 'client', 'guarantee', 'retrait', 'retour')
+        ]);
+    }
+
 }

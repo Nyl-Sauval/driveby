@@ -50,3 +50,5 @@ Route::get('retrait/{id}', [RetraitController::class, 'show']);
 Route::put('retour/{retour}', [RetourController::class, 'update']);
 Route::get('retour/{id}', [RetourController::class, 'show']);
 
+Route::get('location/{id}', [LocationController::class, 'show']);
+Route::put('location/{location}', [LocationController::class, 'update']);
