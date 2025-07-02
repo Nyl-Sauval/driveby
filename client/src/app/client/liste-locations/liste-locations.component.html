@@ -35,7 +35,7 @@
                 *ngIf="!isLocationPast(location)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button aria-label="Télécharger la facture" (click)="download(location.id)">
+        <button mat-icon-button aria-label="Télécharger la facture" (click)="openModalDownload(location)">
           <mat-icon>download</mat-icon>
         </button>
         <button mat-icon-button

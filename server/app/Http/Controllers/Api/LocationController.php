@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Resources\LocationResource;
 use App\Jobs\SendInvoiceEmail;
 use App\Models\Agency;
+use App\Models\Avenant;
 use App\Models\Car;
 use App\Models\Client;
 use App\Models\Location;
@@ -19,13 +20,13 @@ class LocationController extends BaseController
 
     public function index()
     {
-        $locations = Location::with(['client', 'car', 'guarantee', 'retrait', 'retour'])->get();
+        $locations = Location::with(['client', 'car', 'guarantee', 'retrait', 'retour', 'avenant'])->get();
         return response()->json($locations);
     }
 
     public function show($id)
     {
-        $location = Location::with(['client', 'car', 'guarantee', 'retrait', 'retour'])->find($id);
+        $location = Location::with(['client', 'car', 'guarantee', 'retrait', 'retour', 'avenant'])->find($id);
         if (!$location) {
             return response()->json(['message' => 'Location non trouvé'], 404);
         }
@@ -142,12 +143,22 @@ class LocationController extends BaseController
 
     public function downloadInvoice($id)
     {
-        $location = Location::with(['client', 'car', 'retrait', 'retour'])->findOrFail($id);
+        $location = Location::with(['client', 'car', 'retrait', 'retour', 'avenant'])->findOrFail($id);
         $agency = Agency::findOrFail($location->car->agency_id);
 
         SendInvoiceEmail::dispatch($location, $agency);
 
         $pdf = Pdf::loadView('invoices.facture', compact('location', 'agency'));
+
+        return $pdf->output();
+    }
+
+    public function downloadAvenant($id)
+    {
+        $location = Location::with(['client', 'car', 'retrait', 'retour', 'avenant'])->findOrFail($id);
+        $avenant = $location->avenant;
+
+        $pdf = Pdf::loadView('invoices.avenant', compact('location', 'avenant'));
 
         return $pdf->output();
     }

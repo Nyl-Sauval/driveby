@@ -26,6 +26,12 @@ export class LocationService {
     });
   }
 
+  downloadAvenant(locationId: number): Observable<Blob> {
+    return this.http.get(`http://localhost:8000/api/locations/${locationId}/avenant`, {
+      responseType: 'blob'
+    });
+  }
+
   deleteLocation(locationId: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/locations/${locationId}`);
   }

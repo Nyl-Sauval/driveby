@@ -1,13 +1,14 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {CarService} from '../service/car.service';
+import {CarService} from '../../service/car.service';
 import {NgForOf, NgIf} from '@angular/common';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
-import {LocationService} from '../service/locationService';
+import {LocationService} from '../../service/locationService';
 import {Observable} from 'rxjs';
-import {ConfirmDialogComponent} from '../location/confirm-dialog/confirm-dialog.component';
+import {ConfirmDialogComponent} from '../../location/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {DownloadDocumentsComponent} from '../download-documents/download-documents.component';
 
 @Component({
   selector: 'app-liste-locations',
@@ -96,15 +97,18 @@ export class ListeLocationsComponent implements OnChanges {
     });
   }
 
-  download(locationId:any) {
-    this.locationService.downloadInvoice(locationId).subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `facture-location-${locationId}.pdf`;
-      a.click();
-      URL.revokeObjectURL(url);
+  openModalDownload(location: any) {
+    console.log(location);
+    const dialogRef = this.dialog.open(DownloadDocumentsComponent, {
+      width: '300px',
+      data: {
+        message: 'Documents disponibles',
+        locationId: location.id,
+        avenant: location.avenant
+      }
     });
+
+    return dialogRef.afterClosed();
   }
 
   confirmCancel(): Observable<boolean> {
