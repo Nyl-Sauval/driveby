@@ -53,4 +53,7 @@ class Location extends Model
         return $this->hasOne(Retour::class, 'location_id');
     }
 
+    public function avenant() {
+        return $this->hasOne(Avenant::class);
+    }
 }
