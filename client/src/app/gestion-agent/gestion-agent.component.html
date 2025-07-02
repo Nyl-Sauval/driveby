@@ -59,8 +59,16 @@
           </div>
 
           <div class="buttons">
-            <button mat-icon-button aria-label="Modifier retrait/retour" (click)="openModal(location)">
+            <button mat-icon-button
+                    aria-label="Modifier retrait/retour"
+                    (click)="openModal(location)"
+            *ngIf="!location.retour.return_done">
               <mat-icon>event</mat-icon>
+            </button>
+            <button mat-icon-button
+                    aria-label="retrait/retour fait"
+                    *ngIf="location.retour.return_done">
+              <mat-icon style="color: green;">check</mat-icon>
             </button>
             <button mat-icon-button aria-label="Voir les détails">
               <mat-icon>visibility</mat-icon>

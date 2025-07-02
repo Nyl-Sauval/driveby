@@ -108,7 +108,8 @@ export class GestionAgentComponent {
       data: {
         message: 'Que souhaitez-vous faire ?',
         retraitId: this.getRetraitId(location),
-        retourId: this.getRetourId(location)
+        retourId: this.getRetourId(location),
+        withdrawal_done: location.retrait.withdrawal_done
       }
     });
 
