@@ -65,6 +65,7 @@ class LocationController extends BaseController
             'license_issue_date' => 'required|date',
             'license_expiry_date' => 'required|date|after_or_equal:license_issue_date',
             'license_country' => 'required|string|max:100',
+            'guarantee_id' => 'exists:garanties,id',
         ]);
 
         $client = Client::find($request->client_id);
@@ -107,7 +108,7 @@ class LocationController extends BaseController
         }
         $car = $request->car_id;
         $car = Car::findOrFail($car);
-        $location = Location::create($request->only(['car_id', 'client_id']) + ['guarantee_id' => $request->guarantee_id ?? 1]);
+        $location = Location::create($request->only(['car_id', 'client_id', 'guarantee_id']));
         $retrait = Retrait::create([
             'withdrawal_date' => $request->start_date, DateUtil::DEFAULT_DATE_TIME_PATTERN,
             'location_id' => $location->id,

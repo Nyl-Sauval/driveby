@@ -127,38 +127,37 @@
 
   <!-- Étape 5 : Garantie -->
   <mat-step>
-    <ng-template matStepLabel>Garantie</ng-template>
+      <ng-template matStepLabel>Garantie</ng-template>
 
-    <h2 class="titre-centre">Sélectionnez la protection souhaitée</h2>
-    <div class="garantie-container">
-      <div
-        class="garantie-card"
-        *ngFor="let garantie of garanties; let i = index"
-        [class.selected]="isSelected(i)"
-        (click)="select(i)"
-      >
-        <div class="garantie-header">
-          <div>
-            <h3>{{ garantie.guarantee_name }}</h3>
-            <p>{{ garantie.guarantee_description }}</p>
+      <h2 class="titre-centre">Sélectionnez la protection souhaitée</h2>
+      <div class="garantie-container">
+        <div
+          class="garantie-card"
+          *ngFor="let garantie of garanties; let i = index"
+          [class.selected]="isSelected(i)"
+          (click)="select(i)"
+        >
+          <div class="garantie-header">
+            <div>
+              <h3>{{ garantie.guarantee_name }}</h3>
+              <p>{{ garantie.guarantee_description }}</p>
+            </div>
+            <div class="prix">{{ garantie.guarantee_price | currency:'EUR':'symbol':'1.2-2' }}</div>
           </div>
-          <div class="prix">{{ garantie.guarantee_price | currency:'EUR':'symbol':'1.2-2' }}</div>
-        </div>
 
-        <div *ngIf="isSelected(i)" class="garantie-details">
-          <ul>
-            <li class="inclusion">Assurance au tiers</li>
-            <li class="inclusion">Assistance dépannage 24/7</li>
-            <li class="exclusion">Franchise à vérifier</li>
-          </ul>
+          <div *ngIf="isSelected(i)" class="garantie-details">
+            <ul>
+              <li class="inclusion">Assurance au tiers</li>
+              <li class="inclusion">Assistance dépannage 24/7</li>
+              <li class="exclusion">Franchise à vérifier</li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="step-actions">
-      <button mat-button matStepperPrevious>Retour</button>
-      <button mat-button matStepperNext>Suivant</button>
-    </div>
+      <div class="step-actions">
+        <button mat-button matStepperPrevious>Retour</button>
+        <button mat-button matStepperNext>Suivant</button>
+      </div>
   </mat-step>
 
   <!-- Étape 6 : Options -->

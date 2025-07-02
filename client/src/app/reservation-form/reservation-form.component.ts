@@ -17,6 +17,8 @@ import { LocationService } from '../service/locationService';
 import { Car } from '../models/car.model';
 import { Client } from '../models/client.model';
 import { CurrencyPipe, NgIf, NgForOf } from '@angular/common';
+import {GarantieComponent} from '../garantie/garantie.component';
+import {Guarantee, GuaranteeService} from '../service/guarantee.service';
 
 @Component({
   selector: 'app-reservation-form',
@@ -44,12 +46,8 @@ export class ReservationFormComponent implements OnInit {
   car: Car | undefined;
   client: Client | undefined;
   pricePerDay: string | undefined;
-
-  garanties = [
-    { guarantee_id: 1, guarantee_name: 'Standard', guarantee_description: 'Couverture de base', guarantee_price: 10 },
-    { guarantee_id: 2, guarantee_name: 'Confort', guarantee_description: 'Couverture étendue', guarantee_price: 20 },
-    { guarantee_id: 3, guarantee_name: 'Premium', guarantee_description: 'Protection complète', guarantee_price: 30 }
-  ];
+  garanties: Guarantee[] = [];
+  selectedGuarantee: any = null;
 
   options = [
     { option_id: 1, option_name: 'GPS intégré', option_description: 'Navigation embarquée', option_price: 4.9, option_type: 'toggle' },
@@ -68,7 +66,8 @@ export class ReservationFormComponent implements OnInit {
     private carService: CarService,
     private route: ActivatedRoute,
     private locationService: LocationService,
-    private router: Router
+    private router: Router,
+    private garantieService: GuaranteeService
   ) {}
 
   ngOnInit(): void {
@@ -98,7 +97,7 @@ export class ReservationFormComponent implements OnInit {
         license_issue_date: ['', Validators.required],
         license_expiry_date: ['', Validators.required],
         license_country: ['', Validators.required]
-      })
+      }),
     });
 
     this.authService.me().subscribe({
@@ -133,10 +132,15 @@ export class ReservationFormComponent implements OnInit {
       });
     }
 
-    this.garanties = this.garanties.map(g => ({
-      ...g,
-      guarantee_price: g.guarantee_price
-    }));
+    this.garantieService.getGuarantees().subscribe({
+      next: (garanties) => {
+        this.garanties = garanties.map(g => ({
+          ...g,
+          guarantee_price: g.guarantee_price
+        }));
+      },
+      error: (err) => console.error('Erreur chargement garanties :', err)
+    });
 
     this.options = this.options.map(o => ({
       ...o,
@@ -147,13 +151,16 @@ export class ReservationFormComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('Form values:', this.reservationForm.value);
     if (this.reservationForm.valid) {
+      console.log('Form is valid, proceeding with reservation...');
+      console.log('gantie selected:', this.selectedGuarantee);
       const formData = {
         car_id: this.car?.id,
         client_id: this.client?.id,
         start_date: this.reservationValues.startDate,
         end_date: this.reservationValues.endDate,
-        guarantee_id: this.getSelectedGuarantee()?.guarantee_id,
+        guarantee_id: this.selectedGuarantee.id,
         options: this.selectedOptions,
         ...this.clientValues,
         ...this.addressValues,
@@ -176,6 +183,8 @@ export class ReservationFormComponent implements OnInit {
         },
         error: (err) => alert('Erreur lors de la réservation.')
       });
+    } else {
+      console.log('Form is invalid:', this.reservationForm.errors);
     }
   }
 
@@ -240,11 +249,14 @@ export class ReservationFormComponent implements OnInit {
   }
 
   getSelectedGuarantee() {
-    return this.selectedIndex !== null ? this.garanties[this.selectedIndex] : null;
+    const guaranteeId = this.reservationForm.get('guarantee.guarantee_id')?.value;
+    return this.garanties.find(g => g.guarantee_id === guaranteeId) || null;
   }
 
   select(i: number): void {
     this.selectedIndex = i;
+    this.reservationForm.get('guarantee.guarantee_id')?.setValue(this.garanties[i].guarantee_id);
+    this.selectedGuarantee = this.garanties[i];
   }
 
   isSelected(i: number): boolean {
