@@ -8,10 +8,11 @@ import {MatIcon} from '@angular/material/icon';
 import {LoginComponent} from './login/login.component';
 import {EnregistrementComponent} from './enregistrement/enregistrement.component';
 import {MatDialog} from '@angular/material/dialog';
+import {BreadcrumbComponent} from './breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatIcon, NgIf, RouterLink, MatButton, AsyncPipe],
+  imports: [RouterOutlet, MatIcon, NgIf, RouterLink, MatButton, AsyncPipe, BreadcrumbComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
