@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Jobs\SendRetourEmail;
 use App\Models\Retour;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -52,6 +53,10 @@ class RetourController extends Controller
                 'car_mileage' => $validated['return_mileage']
             ]);
         }
+
+        $location = $retour->location;
+
+        SendRetourEmail::dispatch($location);
 
         return response()->json([
             'message' => 'Retrait mis à jour avec succès',
