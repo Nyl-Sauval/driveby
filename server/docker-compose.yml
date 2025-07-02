@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+    app:
+        build: .
+        container_name: laravel-app
+        ports:
+            - "8000:8000"
+        volumes:
+            - .:/app
+        depends_on:
+            - mailpit
+        environment:
+            - DB_CONNECTION=sqlite
+            - DB_DATABASE=/app/database/database.sqlite
+            - QUEUE_CONNECTION=database
+
+    queue:
+        build: .
+        container_name: laravel-queue
+        command: php artisan queue:work
+        volumes:
+            - .:/app
+        depends_on:
+            - app
+
+    mailpit:
+        image: axllent/mailpit
+        container_name: mailpit
+        ports:
+            - "8025:8025"   # Interface web
+            - "1025:1025"   # SMTP
