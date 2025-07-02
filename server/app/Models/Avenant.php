@@ -20,4 +20,9 @@ class Avenant extends Model
         'avenant_price',
         'location_id',
     ];
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
 }

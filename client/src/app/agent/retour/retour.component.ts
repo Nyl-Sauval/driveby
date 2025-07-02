@@ -38,6 +38,7 @@ export class RetourComponent {
   retourForm;
   retour: Retour = createFakeRetour();
   retourId: string | null = null;
+  avenantData: { date: string; details: string; prix: number } | null = null;
 
   constructor(private fb: FormBuilder,
               private locationService: LocationService,
@@ -68,7 +69,7 @@ export class RetourComponent {
     if (this.retourForm.valid) {
       const formData = this.retourForm.value;
       console.log('Formulaire valide', formData);
-      const payload = {
+      const payload: any = {
         return_date: formData.dateRetour,
         return_mileage: Number(formData.mileage),
         return_fuel_level: Number(formData.fuel),
@@ -78,6 +79,14 @@ export class RetourComponent {
         return_done: formData.done,
         car_disponibility: formData.disponibility
       };
+
+      if (this.avenantData) {
+        payload.avenant = {
+          date: this.avenantData.date,
+          details: this.avenantData.details,
+          prix: Number(this.avenantData.prix)
+        };
+      }
       console.log('Payload envoyé à l’API:', payload);
 
       this.locationService.updateRetour(this.retourId!, payload).subscribe({
@@ -142,7 +151,8 @@ export class RetourComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Avenant créé :', result);
+        this.avenantData = result;
+        console.log('Avenant sélectionné :', this.avenantData);
       }
     });
   }
