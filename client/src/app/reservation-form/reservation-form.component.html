@@ -166,36 +166,18 @@
 
     <h2>Options disponibles</h2>
     <div class="option-container">
-      <div *ngFor="let option of options" class="option-card">
-        <div class="option-info">
+      <div
+        *ngFor="let option of options"
+        class="option-card"
+      >
+        <mat-checkbox
+          (change)="toggleOption(option)"
+        >
           <strong>{{ option.option_name }}</strong>
-          <p>{{ option.option_description }}</p>
-          <span>+{{ option.option_price | currency:'EUR':'symbol':'1.2-2' }}/jour</span>
-        </div>
+        </mat-checkbox>
 
-        <div *ngIf="option.option_type === 'toggle'" class="toggle">
-          <input
-            type="checkbox"
-            [checked]="selectedOptions[option.option_id] === 1"
-            (change)="onToggleChange(option)"
-          />
-        </div>
-
-        <div *ngIf="option.option_type === 'stepper'" class="stepper">
-          <button (click)="changeQty(option.option_id, -1)">−</button>
-          <span>{{ selectedOptions[option.option_id] }}</span>
-          <button (click)="changeQty(option.option_id, 1)">+</button>
-        </div>
-      </div>
-
-      <div class="total-bar">
-        <div>
-          <strong>Total / jour : {{ getDailyTotal() | currency:'EUR' }}</strong><br />
-          <ng-container *ngIf="reservationDays">
-            Total pour {{ reservationDays }} jour(s) :
-            <strong>{{ getTotalReservation() | currency:'EUR' }}</strong>
-          </ng-container>
-        </div>
+        <p>{{ option.option_description }}</p>
+        <span>+{{ option.option_price | currency:'EUR' }}/jour</span>
       </div>
     </div>
 
@@ -234,12 +216,11 @@
       <p><strong>Options sélectionnées :</strong></p>
       <ul>
         <li *ngFor="let opt of getSelectedOptions()">
-          {{ opt.option_name }}
-          <ng-container *ngIf="opt.option_type === 'stepper'">× {{ selectedOptions[opt.option_id] }}</ng-container>
-          <ng-container *ngIf="opt.option_type === 'toggle'">: Oui</ng-container>
+          {{ opt.option_name }} : Oui
         </li>
       </ul>
     </div>
+
 
     <p><strong>Total / jour :</strong> {{ getDailyTotal() | currency:'EUR':'symbol':'1.2-2' }}</p>
     <p><strong>Total pour {{ reservationDays }} jour(s) :</strong> {{ getTotalReservation() | currency:'EUR':'symbol':'1.2-2' }}</p>

@@ -3,11 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Option {
-  option_id: number;
+  id: number;
   option_name: string;
   option_price: number;
   option_description: string;
-  option_type: 'toggle' | 'stepper';
 }
 
 @Injectable({

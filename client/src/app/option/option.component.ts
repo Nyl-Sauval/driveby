@@ -30,7 +30,7 @@ export class OptionComponent implements OnInit {
         }));
 
         this.options.forEach(opt => {
-          this.selectedOptions[opt.option_id] = 0;
+          this.selectedOptions[opt.id] = 0;
         });
 
         // Optionnel : test temporaire
@@ -46,12 +46,12 @@ export class OptionComponent implements OnInit {
   }
 
   onToggleChange(option: Option): void {
-    this.selectedOptions[option.option_id] = this.selectedOptions[option.option_id] ? 0 : 1;
+    this.selectedOptions[option.id] = this.selectedOptions[option.id] ? 0 : 1;
   }
 
   getTotal(): number {
     return this.options.reduce((total, option) => {
-      const qty = this.selectedOptions[option.option_id] || 0;
+      const qty = this.selectedOptions[option.id] || 0;
       return total + (qty * option.option_price);
     }, 0);
   }
