@@ -1,31 +1,50 @@
-.titre-centre {
-  text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+/* Conteneur général */
+mat-horizontal-stepper {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
 }
+
+/* Champs de formulaire */
+mat-form-field.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+/* Actions de navigation */
+.step-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+/* Message d'erreur */
+.error {
+  color: #d32f2f;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+/* Styles des cartes garanties */
 .garantie-container {
   display: flex;
-  flex-direction: column; /* ✅ aligne verticalement */
-  gap: 1rem;
-  padding: 1rem;
-  max-width: 600px;
-  margin: 0 auto; /* centre horizontalement */
+  flex-direction: column;
+  gap: 16px;
 }
 
-
 .garantie-card {
-  border: 2px solid #ccc;
-  border-radius: 12px;
-  padding: 1rem;
-  background: #fff;
-  transition: all 0.3s ease;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
   cursor: pointer;
+  transition: border-color 0.3s, background-color 0.3s;
 }
 
 .garantie-card.selected {
-  background-color: dimgrey; /* Noir qui se rapproche du gris */
-  color: #fff;
+  border-color: #1976d2;
+  background-color: #e3f2fd;
 }
+
 .garantie-header {
   display: flex;
   justify-content: space-between;
@@ -36,137 +55,128 @@
   margin: 0;
 }
 
-.prix {
-  font-weight: bold;
+.garantie-details ul {
+  padding-left: 16px;
+  margin: 8px 0 0;
 }
 
-.garantie-details {
-  margin-top: 1rem;
-}
 .inclusion {
-  color: #fff; /* Écriture blanche */
+  color: #2e7d32;
 }
 
 .exclusion {
-  color: #fff; /* Écriture blanche */
-  text-decoration: line-through; /* Texte barré */
+  color: #c62828;
 }
 
-.footer {
-  text-align: center;
-  margin-top: 2rem;
-}
-
-.btn-continuer {
-  background-color: black;
-  border: none;
-  border-radius: 8px;
-  padding: 0.75rem 2rem;
-  color: white;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.btn-continuer:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
+/* Styles des options */
 .option-container {
-  padding: 16px;
-  font-family: sans-serif;
-  background-color: #f7f7f7;
-  min-height: 100vh;
-}
-
-h2 {
-  font-size: 20px;
-  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .option-card {
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.option-info {
-  max-width: 70%;
-}
-
-.option-info strong {
-  font-size: 16px;
-  display: block;
-  margin-bottom: 4px;
-}
-
-.option-info p {
-  font-size: 14px;
-  color: #555;
-  margin: 0 0 4px;
-}
-
-.option-info span {
-  font-size: 14px;
-  font-weight: bold;
-  color: #444;
-}
-
-.toggle input[type="checkbox"] {
-  width: 48px;
-  height: 24px;
-  accent-color: black;
-  cursor: pointer;
-}
-
-.stepper {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.stepper button {
-  width: 28px;
-  height: 28px;
-  border: none;
-  background-color: #333;
-  color: #fff;
-  font-size: 18px;
+  border: 1px solid #ccc;
   border-radius: 6px;
-  cursor: pointer;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
 }
 
-.stepper span {
-  font-weight: bold;
-  min-width: 20px;
+.option-card p {
+  margin: 4px 0;
+}
+
+/* Titre centré */
+.titre-centre {
   text-align: center;
 }
 
-.total-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #ffffff;
-  padding: 16px;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 16px;
+/* Responsive */
+@media (min-width: 600px) {
+  .garantie-container, .option-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .garantie-card,
+  .option-card {
+    flex: 1 1 calc(50% - 12px);
+    box-sizing: border-box;
+  }
 }
 
-.total-bar button {
-  background-color: black;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 10px 20px;
-  font-weight: bold;
-  cursor: pointer;
+/* Section récapitulatif */
+.recap-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 24px;
+  background-color: #fafafa;
+  margin-top: 16px;
 }
+
+.recap-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.recap-grid p,
+.recap-grid li {
+  margin: 0;
+  padding: 4px 0;
+}
+
+.recap-grid strong {
+  color: #424242;
+}
+
+.recap-grid ul {
+  margin: 4px 0 0 16px;
+  padding: 0;
+}
+
+/* Totaux */
+.recap-pricing {
+  margin-top: 24px;
+  border-top: 1px solid #ccc;
+  padding-top: 16px;
+}
+
+.recap-pricing h2,
+.recap-pricing h3 {
+  margin: 8px 0;
+  font-weight: 500;
+}
+
+/* Responsive : 2 colonnes à partir de 768px */
+@media (min-width: 768px) {
+  .recap-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Style noir pour les boutons Angular Material */
+.mat-mdc-button:not(:disabled),
+.mat-mdc-button.mat-primary {
+  color: #000000;
+}
+
+/* Enlever le fond bleu au focus */
+.mat-mdc-button.mat-primary:focus,
+.mat-mdc-button.mat-primary:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Pour les boutons de stepper (étapes en haut) */
+.mat-step-header .mat-step-label {
+  color: #000000 !important;
+}
+
+.mat-step-header.mat-step-header-selected .mat-step-label {
+  font-weight: bold;
+  color: #000000 !important;
+}
+
+

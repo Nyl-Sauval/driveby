@@ -141,6 +141,7 @@ export class ReservationFormComponent implements OnInit {
     this.optionService.getOptions().subscribe({
       next: (options) => {
         this.options = options;
+        console.log('Options loaded:', this.options);
         this.selectedOptionIds = [];
       },
       error: (err) => console.error('Erreur chargement options :', err)
@@ -200,12 +201,6 @@ export class ReservationFormComponent implements OnInit {
       // If not selected, add it
       this.selectedOptionIds.push(option.id);
     }
-  }
-
-  isOptionSelected(option: Option): boolean {
-    console.log('Select option:', option);
-    console.log('Selected option IDs:', this.selectedOptionIds);
-    return this.selectedOptionIds.includes(option.id);
   }
 
   get reservationDays(): number {
@@ -314,5 +309,9 @@ export class ReservationFormComponent implements OnInit {
     const inputDate = new Date(control.value);
     const compareDate = new Date(date);
     return inputDate > compareDate ? null : { dateInvalid: true };
+  }
+
+  getRoundedPrice(price: number): string {
+    return price.toFixed(2);
   }
 }

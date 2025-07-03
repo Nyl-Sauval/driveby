@@ -8,7 +8,7 @@ class Option extends Model
 {
     protected $table = 'options';
     //
-    protected $primaryKey = 'option_id';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'option_name',
         'option_price',

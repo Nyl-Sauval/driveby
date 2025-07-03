@@ -2,7 +2,7 @@ import {Component, Optional} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious} from "@angular/material/stepper";
-import {NgIf} from "@angular/common";
+import {CurrencyPipe, NgForOf, NgIf} from "@angular/common";
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Car} from '../../models/car.model';
 import {Client} from '../../models/client.model';
@@ -12,6 +12,9 @@ import {LocationService} from '../../service/locationService';
 import {Location, createFakeLocation} from '../../models/location.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialogRef} from '@angular/material/dialog';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {Guarantee, GuaranteeService} from '../../service/guarantee.service';
+import {Option, OptionService} from '../../service/option.service';
 
 @Component({
   selector: 'app-edit-location',
@@ -27,7 +30,10 @@ import {MatDialogRef} from '@angular/material/dialog';
     MatStepperPrevious,
     NgIf,
     ReactiveFormsModule,
-    MatFormField
+    MatFormField,
+    MatCheckbox,
+    CurrencyPipe,
+    NgForOf
   ],
   templateUrl: './edit-location.component.html',
   styleUrl: './edit-location.component.css'
@@ -40,18 +46,24 @@ export class EditLocationComponent {
   pricePerDay: string | undefined
   location: Location = createFakeLocation();
   locationId: string | null = null;
+  garanties: any[] = [];
+  selectedGuarantee: any = null;
+  selectedGuaranteeId: number | null = null;
+  options: Option[] = [];
+  selectedOptionIds: number[] = [];
+  selectedIndex: number | null = null;
 
   constructor(private fb: FormBuilder,
               private carService: CarService,
               private route: ActivatedRoute,
               private locationService: LocationService,
               private snackBar: MatSnackBar,
+              private garantieService: GuaranteeService,
+              private optionService: OptionService,
               @Optional() private signinDialogRef?: MatDialogRef<EditLocationComponent>
   ) {}
 
   ngOnInit(): void {
-    this.loadLocationAndPopulateForm();
-
     this.reservationForm = this.fb.group({
       reservation: this.fb.group({
         startDate: [new Date(), [Validators.required, this.dateAfterTodayValidator]],
@@ -78,6 +90,26 @@ export class EditLocationComponent {
         license_country: ['', Validators.required]
       })
     });
+
+    this.garantieService.getGuarantees().subscribe({
+      next: (garanties) => {
+        this.garanties = garanties.map(g => ({
+          ...g,
+          guarantee_price: g.guarantee_price
+        }));
+      },
+      error: (err) => console.error('Erreur chargement garanties :', err)
+    });
+
+    this.optionService.getOptions().subscribe({
+      next: (options) => {
+        this.options = options;
+        console.log('options chargé :', this.options);
+        this.selectedOptionIds = [];
+      },
+      error: (err) => console.error('Erreur chargement options :', err)
+    });
+    this.loadLocationAndPopulateForm();
   }
 
   onSubmit() {
@@ -102,16 +134,16 @@ export class EditLocationComponent {
         license_number: this.licenseValues.license_number,
         license_issue_date: this.licenseValues.license_issue_date,
         license_expiry_date: this.licenseValues.license_expiry_date,
-        license_country: this.licenseValues.license_country
+        license_country: this.licenseValues.license_country,
+        guarantee_id: this.selectedGuarantee.id,
+        options: this.selectedOptionIds,
       };
       this.locationService.updateLocation(this.locationId!, formData).subscribe({
         next: (response: any) => {
-          localStorage.setItem('token', response.data.token);
           this.snackBar.open('Location effectuée', 'Fermer', {
             duration: 5000,
             panelClass: ['snackbar-success']
           });
-          this.signinDialogRef?.close(true);
         },
         error: (error) => {
           console.error('Erreur lors de la réservation', error);
@@ -121,6 +153,83 @@ export class EditLocationComponent {
         }
       });
     }
+  }
+
+  toggleOption(option: Option): void {
+    console.log('Toggling option:', option);
+    const index = this.selectedOptionIds.indexOf(option.id);
+    if (index > -1) {
+      console.log('Option already selected, removing it:', option.id);
+      // If selected, remove it
+      this.selectedOptionIds.splice(index, 1);
+    } else {
+      console.log('Option not selected, adding it:', option.id);
+      // If not selected, add it
+      this.selectedOptionIds.push(option.id);
+    }
+  }
+
+  get reservationDays(): number {
+    const start = new Date(this.reservationValues.startDate);
+    const end = new Date(this.reservationValues.endDate);
+    const timeDiff = end.getTime() - start.getTime();
+    return Math.max(Math.ceil(timeDiff / (1000 * 3600 * 24)), 1);
+  }
+
+  getDailyTotal(): number {
+    let total = this.car?.price || 0;
+    const g = this.getSelectedGuarantee();
+    if (g) total += g.guarantee_price;
+
+    total += this.options
+      .filter(opt => this.selectedOptionIds.includes(opt.id))
+      .reduce((sum, opt) => sum + opt.option_price, 0);
+
+    return total;
+  }
+
+  getSelectedOptions(): Option[] {
+    return this.options.filter(opt => this.selectedOptionIds.includes(opt.id));
+  }
+
+  getTotalReservation(): number {
+    return this.getDailyTotal() * this.reservationDays;
+  }
+
+  carPriceLocation(): number {
+    return (this.car?.price || 0) * this.reservationDays;
+  }
+
+  guaranteePriceLocation(): number {
+    const g = this.getSelectedGuarantee();
+    return g ? g.guarantee_price * this.reservationDays : 0;
+  }
+
+  optionPriceLocation(): number {
+    const totalPerDay = this.options
+      .filter(opt => this.selectedOptionIds.includes(opt.id))
+      .reduce((sum, opt) => sum + opt.option_price, 0);
+
+    return totalPerDay * this.reservationDays;
+  }
+
+  totalPriceLocation(): number {
+    return this.carPriceLocation() + this.guaranteePriceLocation() + this.optionPriceLocation();
+  }
+
+  getSelectedGuarantee() {
+    const guaranteeId = this.reservationForm.get('guarantee.guarantee_id')?.value;
+    return this.garanties.find(g => g.guarantee_id === guaranteeId) || null;
+  }
+
+  select(i: number): void {
+    this.selectedIndex = i;
+    this.reservationForm.get('guarantee.guarantee_id')?.setValue(this.garanties[i].guarantee_id);
+    this.selectedGuarantee = this.garanties[i];
+  }
+
+  isSelected(i: number): boolean {
+    return this.selectedIndex === i;
   }
 
   get reservationGroup(): FormGroup {
@@ -167,28 +276,6 @@ export class EditLocationComponent {
     return inputDate > compareDate ? null : { dateInvalid: true };
   }
 
-  carPriceLocation() {
-    const startDate = new Date(this.reservationValues.startDate);
-    const endDate = new Date(this.reservationValues.endDate);
-    const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    console.log('diffDays : ' + diffDays);
-    const pricePerDay = this.car?.price || 0;
-    return diffDays * pricePerDay;
-  }
-
-  guaranteePriceLocation() {
-    return 0;
-  }
-
-  optionPriceLocation(){
-    return 0;
-  }
-
-  totalPriceLocation(){
-    return this.carPriceLocation() + this.guaranteePriceLocation() + this.optionPriceLocation();
-  }
-
   populateForms(location: any): void {
     this.reservationForm.patchValue({
       reservation: {
@@ -216,11 +303,28 @@ export class EditLocationComponent {
       }
     });
 
+    console.log('garantie : ', location.guarantee_id);
+    console.log('garanties : ', this.garanties);
+    // Sélectionner la garantie en charchant dans la liste garanties id = location.guarantee_id
+    this.selectedGuarantee = this.garanties.find(g => g.id == location.guarantee_id) || null;
+    console.log('Garantie sélectionnée :', this.selectedGuarantee);
+    this.selectedIndex = this.selectedGuarantee.id-1;
+    console.log('Index sélectionné :', this.selectedIndex);
     this.clientInfoLoaded = true;
   }
 
   private loadLocationAndPopulateForm(): void {
     this.locationId = this.route.snapshot.paramMap.get('id');
+
+    this.optionService.getOptionsByLocationId(this.locationId).subscribe({
+      next: (options: Option[]) => {
+        this.selectedOptionIds = options.map((option: Option) => option.id);
+        console.log('Options sélectionnées :', this.selectedOptionIds);
+      },
+      error: (error: unknown) => {
+        console.error('Erreur lors du chargement des options pour la location:', error);
+      }
+    });
 
     if (!this.locationId) {
       console.error('Aucun id de location trouvé dans l\'URL');
@@ -250,5 +354,13 @@ export class EditLocationComponent {
         console.error('Erreur lors de la récupération du client', error);
       }
     });
+  }
+
+  isOptionSelected(option: Option) {
+    return this.selectedOptionIds.includes(option.id);
+  }
+
+  getRoundedPrice(price: number): string {
+    return price.toFixed(2);
   }
 }

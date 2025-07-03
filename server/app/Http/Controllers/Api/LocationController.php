@@ -214,11 +214,14 @@ class LocationController extends BaseController
             'license_number' => 'required|string',
             'license_issue_date' => 'required|date',
             'license_expiry_date' => 'required|date',
-            'license_country' => 'required|string'
+            'license_country' => 'required|string',
 
             // Garantie (à faire)
+            'guarantee_id' => 'required|exists:garanties,id',
 
             // Options (à faire)
+            'options' => 'nullable|array',
+            'options.*' => 'integer|exists:options,id',
         ]);
 
         // Mise à jour client lié
@@ -254,15 +257,45 @@ class LocationController extends BaseController
             ]);
         }
 
+        //Mise a jour garantie
+        if ($request->has('guarantee_id')) {
+            $location->guarantee_id = $validated['guarantee_id'];
+            $location->save();
+        }
+
         // Mise à jour options (many-to-many)
-//        if (isset($validated['options'])) {
-//            $location->options()->sync($validated['options']);
-//        }
+        if ($request->has('options') && is_array($request->options)) {
+            $insertData = array_map(function($optionId) use ($location) {
+                return [
+                    'location_id' => $location->id,
+                    'option_id' => $optionId,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }, $request->options);
+
+            // Suppression des options existantes
+            $location->options()->sync([]);
+            // Suppression des entrées existantes dans la table pivot
+            DB::table('location_option')->where('location_id', $location->id)->delete();
+
+            // Insertion en masse
+            DB::table('location_option')->insert($insertData);
+        }
 
         return response()->json([
             'message' => 'Location mise à jour avec succès',
             'data' => $location->load('car', 'client', 'guarantee', 'retrait', 'retour')
         ]);
+    }
+
+    public function optionsByLocationId($locationId){
+        $location = Location::with('options')->findOrFail($locationId);
+        if (!$location) {
+            return response()->json(['message' => 'Location non trouvée'], 404);
+        }
+
+        return response()->json($location->options);
     }
 
 }
