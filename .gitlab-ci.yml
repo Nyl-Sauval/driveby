@@ -1,0 +1,47 @@
+stages:
+  - lint
+
+eslint-angular:
+  stage: lint
+  image: node:20
+  script:
+    - cd client
+    - npm ci
+    - npx eslint . --ext .ts,.js
+  only:
+    - merge_requests
+    - branches
+
+eslint-ionic:
+  stage: lint
+  image: node:20
+  script:
+    - cd mobile
+    - npm ci
+    - npx eslint . --ext .ts,.js
+  only:
+    - merge_requests
+    - branches
+
+duster-laravel:
+  stage: lint
+  image: composer:latest
+  before_script:
+    - cd server
+    - composer install
+  script:
+    - ./vendor/bin/duster lint
+  only:
+    - merge_requests
+    - branches
+
+hadolint:
+  stage: lint
+  image:
+    name: hadolint/hadolint:latest
+    entrypoint: [""]
+  script:
+    - find . -type f -iname "Dockerfile*" -exec hadolint {} \;
+  only:
+    - merge_requests
+    - branches
