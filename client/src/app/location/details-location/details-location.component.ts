@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CarService} from '../../service/car.service';
 import {MatDivider, MatDividerModule} from '@angular/material/divider';
+import {GuaranteeService} from '../../service/guarantee.service';
 
 @Component({
   selector: 'app-details-location',
@@ -16,7 +17,9 @@ export class DetailsLocationComponent implements OnInit {
   allLocations: any[] = [];
   location: any = null;
 
-  constructor(private route: ActivatedRoute, private carService: CarService) {}
+  constructor(private route: ActivatedRoute,
+              private carService: CarService,
+              private garantieService: GuaranteeService) {}
 
   ngOnInit() {
     const id: string | null = this.route.snapshot.paramMap.get('id');

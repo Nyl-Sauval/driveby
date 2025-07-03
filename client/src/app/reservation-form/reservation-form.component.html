@@ -227,8 +227,8 @@
     </div>
 
     <div class="recap-pricing">
-      <h3><strong>Prix / jour :</strong> {{ getRoundedPrice(getDailyTotal()/100) | currency:'EUR':'symbol':'1.2-2' }}</h3>
-      <h3><strong>Prix pour {{ reservationDays }} jour(s) :</strong> {{ getRoundedPrice(getTotalReservation()/100) | currency:'EUR':'symbol':'1.2-2' }}</h3>
+      <h3><strong>Prix / jour :</strong> {{ getRoundedPrice(getDailyTotal()) | currency:'EUR':'symbol':'1.2-2' }}</h3>
+      <h3><strong>Prix pour {{ reservationDays }} jour(s) :</strong> {{ getRoundedPrice(getTotalReservation()) | currency:'EUR':'symbol':'1.2-2' }}</h3>
     </div>
 
     <div class="step-actions">

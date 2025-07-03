@@ -17,21 +17,24 @@ class SendInvoiceEmail implements ShouldQueue
 
     protected $location;
     protected $agency;
+    protected $garantie;
 
-    public function __construct($location, $agency)
+    public function __construct($location, $agency, $garantie)
     {
         $this->location = $location;
         $this->agency = $agency;
+        $this->garantie = $garantie;
     }
 
     public function handle()
     {
         $pdf = Pdf::loadView('invoices.facture', [
             'location' => $this->location,
-            'agency' => $this->agency
+            'agency' => $this->agency,
+            'garantie' => $this->garantie,
         ]);
 
         Mail::to($this->location->client->client_email)
-            ->send(new ReservationCreated($this->location, $this->agency, $pdf->output()));
+            ->send(new ReservationCreated($this->location, $this->agency, $this->garantie, $pdf->output()));
     }
 }

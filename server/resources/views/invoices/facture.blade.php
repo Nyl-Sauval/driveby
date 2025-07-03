@@ -107,6 +107,18 @@
     @endif
 </div>
 
+<div class="garantie-options">
+    <h2>Détails Garantie et Options</h2>
+    <table>
+        <tr>
+            <td><strong>Garantie :</strong></td>
+            <td>{{ $garantie->guarantee_name }}</td>
+            <td><strong>Prix :</strong></td>
+            <td>{{ number_format($garantie->guarantee_price, 2, ',', ' ') }} €/jour</td>
+        </tr>
+    </table>
+</div>
+
 <div class="section">
     <h2>Détails de la Location</h2>
     <table>
@@ -132,7 +144,7 @@
     $start = new DateTime(optional($location->retrait)->withdrawal_date);
     $end = new DateTime(optional($location->retour)->return_date);
     $days = $start->diff($end)->days + 1;
-    $total = $days * $location->car->car_price/100;
+    $total = $days * (($location->car->car_price/100)+$garantie->guarantee_price);
 @endphp
 
 <div class="total">
