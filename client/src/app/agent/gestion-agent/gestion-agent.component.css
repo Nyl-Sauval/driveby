@@ -1,5 +1,9 @@
 :host {
-  width: 80%;
+  display: inline-block;
+  width: 100vw;
+  text-align: center;
+  height: 80vh;
+  align-content: center;
 }
 
 .locations-list {
@@ -44,4 +48,42 @@
     }
 
   }
+}
+
+mat-form-field {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 8px;
+}
+
+mat-label {
+  font-weight: 600;
+  color: #333;
+}
+
+mat-select {
+  font-size: 16px;
+  padding: 4px 0;
+}
+
+mat-option {
+  font-size: 15px;
+  padding: 10px 16px;
+}
+
+::ng-deep .mat-select-panel {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .mat-option {
+  transition: background 0.2s ease;
+}
+
+::ng-deep .mat-option:hover {
+  background-color: #e0f7fa;
 }

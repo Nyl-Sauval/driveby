@@ -31,13 +31,13 @@
             <p class="agency-address">
               {{ car.agency.address }}, {{ car.agency.postal_code }} {{ car.agency.city }}
             </p>
-            <p class="agency-schedule">
+            <p class="agency-schedule ligne-info">
               <mat-icon>schedule</mat-icon>
               {{ car.agency.schedule }}
-            <p class="agency-email">
+            <p class="agency-email ligne-info">
               <mat-icon>alternate_email</mat-icon> {{ car.agency.email }}
             </p>
-            <p class="agency-phone">
+            <p class="agency-phone ligne-info">
               <mat-icon>call</mat-icon> {{ car.agency.phone }}
             </p>
             <p *ngIf="car.agency.website" class="agency_website">
