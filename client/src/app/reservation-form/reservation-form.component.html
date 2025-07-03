@@ -191,44 +191,45 @@
   <mat-step>
     <ng-template matStepLabel>Récapitulatif</ng-template>
 
-    <p><strong>Début :</strong> {{ reservationValues.startDate }}</p>
-    <p><strong>Fin :</strong> {{ reservationValues.endDate }}</p>
+    <div class="recap-container">
+      <h2>Récapitulatif</h2>
+      <div class="recap-grid">
+        <p><strong>Début :</strong> {{ reservationValues.startDate }}</p>
+        <p><strong>Fin :</strong> {{ reservationValues.endDate }}</p>
 
-    <p><strong>Nom :</strong> {{ clientValues.name }}</p>
-    <p><strong>Prénom :</strong> {{ clientValues.firstname }}</p>
-    <p><strong>Email :</strong> {{ clientValues.email }}</p>
-    <p><strong>Téléphone :</strong> {{ clientValues.phone }}</p>
-    <p><strong>Date de naissance :</strong> {{ clientValues.birth }}</p>
-    <p><strong>Adresse :</strong> {{ addressValues.address }}</p>
-    <p><strong>Code postal :</strong> {{ addressValues.postal_code }}</p>
-    <p><strong>Ville :</strong> {{ addressValues.city }}</p>
-    <p><strong>Pays :</strong> {{ addressValues.country }}</p>
-    <p><strong>Numéro de permis :</strong> {{ licenseValues.license_number }}</p>
-    <p><strong>Date de délivrance :</strong> {{ licenseValues.license_issue_date }}</p>
-    <p><strong>Date d'expiration du permis :</strong> {{ licenseValues.license_expiry_date }}</p>
+        <p><strong>Nom :</strong> {{ clientValues.name }}</p>
+        <p><strong>Prénom :</strong> {{ clientValues.firstname }}</p>
+        <p><strong>Email :</strong> {{ clientValues.email }}</p>
+        <p><strong>Téléphone :</strong> {{ clientValues.phone }}</p>
+        <p><strong>Date de naissance :</strong> {{ clientValues.birth }}</p>
+        <p><strong>Adresse :</strong> {{ addressValues.address }}</p>
+        <p><strong>Code postal :</strong> {{ addressValues.postal_code }}</p>
+        <p><strong>Ville :</strong> {{ addressValues.city }}</p>
+        <p><strong>Pays :</strong> {{ addressValues.country }}</p>
+        <p><strong>Numéro de permis :</strong> {{ licenseValues.license_number }}</p>
+        <p><strong>Date de délivrance :</strong> {{ licenseValues.license_issue_date }}</p>
+        <p><strong>Date d'expiration du permis :</strong> {{ licenseValues.license_expiry_date }}</p>
 
-    <p *ngIf="getSelectedGuarantee() as g">
-      <strong>Garantie choisie :</strong>
-      {{ g.guarantee_name }} ({{ g.guarantee_price | currency:'EUR':'symbol':'1.2-2' }})
-    </p>
+        <p *ngIf="getSelectedGuarantee() as g">
+          <strong>Garantie choisie :</strong>
+          {{ g.guarantee_name }} ({{ g.guarantee_price | currency:'EUR':'symbol':'1.2-2' }})
+        </p>
 
-    <div *ngIf="getSelectedOptions().length > 0">
-      <p><strong>Options sélectionnées :</strong></p>
-      <ul>
-        <li *ngFor="let opt of getSelectedOptions()">
-          {{ opt.option_name }} : Oui
-        </li>
-      </ul>
+        <div *ngIf="getSelectedOptions().length > 0">
+          <p><strong>Options sélectionnées :</strong></p>
+          <ul>
+            <li *ngFor="let opt of getSelectedOptions()">
+              {{ opt.option_name }} : Oui
+            </li>
+          </ul>
+        </div>
+        </div>
     </div>
 
-
-    <p><strong>Total / jour :</strong> {{ getDailyTotal() | currency:'EUR':'symbol':'1.2-2' }}</p>
-    <p><strong>Total pour {{ reservationDays }} jour(s) :</strong> {{ getTotalReservation() | currency:'EUR':'symbol':'1.2-2' }}</p>
-
-    <h3>Prix voiture : {{ carPriceLocation() | currency:'EUR':'symbol':'1.2-2' }}</h3>
-    <h3>Prix garantie : {{ guaranteePriceLocation() | currency:'EUR':'symbol':'1.2-2' }}</h3>
-    <h3>Prix options : {{ optionPriceLocation() | currency:'EUR':'symbol':'1.2-2' }}</h3>
-    <h2>Prix total : {{ totalPriceLocation() | currency:'EUR':'symbol':'1.2-2' }}</h2>
+    <div class="recap-pricing">
+      <h3><strong>Prix / jour :</strong> {{ getRoundedPrice(getDailyTotal()/100) | currency:'EUR':'symbol':'1.2-2' }}</h3>
+      <h3><strong>Prix pour {{ reservationDays }} jour(s) :</strong> {{ getRoundedPrice(getTotalReservation()/100) | currency:'EUR':'symbol':'1.2-2' }}</h3>
+    </div>
 
     <div class="step-actions">
       <button mat-button matStepperPrevious>Retour</button>

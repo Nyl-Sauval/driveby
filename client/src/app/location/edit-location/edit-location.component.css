@@ -1,0 +1,181 @@
+/* Conteneur général */
+mat-horizontal-stepper {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Champs de formulaire */
+mat-form-field.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+/* Actions de navigation */
+.step-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+/* Message d'erreur */
+.error {
+  color: #d32f2f;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+/* Styles des cartes garanties */
+.garantie-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.garantie-card {
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.garantie-card.selected {
+  border-color: #1976d2;
+  background-color: #e3f2fd;
+}
+
+.garantie-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.garantie-header h3 {
+  margin: 0;
+}
+
+.garantie-details ul {
+  padding-left: 16px;
+  margin: 8px 0 0;
+}
+
+.inclusion {
+  color: #2e7d32;
+}
+
+.exclusion {
+  color: #c62828;
+}
+
+/* Styles des options */
+.option-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option-card {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.option-card p {
+  margin: 4px 0;
+}
+
+/* Titre centré */
+.titre-centre {
+  text-align: center;
+}
+
+/* Responsive */
+@media (min-width: 600px) {
+  .garantie-container, .option-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .garantie-card,
+  .option-card {
+    flex: 1 1 calc(50% - 12px);
+    box-sizing: border-box;
+  }
+}
+
+/* Section récapitulatif */
+.recap-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 24px;
+  background-color: #fafafa;
+  margin-top: 16px;
+}
+
+.recap-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.recap-grid p,
+.recap-grid li {
+  margin: 0;
+  padding: 4px 0;
+}
+
+.recap-grid strong {
+  color: #424242;
+}
+
+.recap-grid ul {
+  margin: 4px 0 0 16px;
+  padding: 0;
+}
+
+/* Totaux */
+.recap-pricing {
+  margin-top: 24px;
+  border-top: 1px solid #ccc;
+  padding-top: 16px;
+}
+
+.recap-pricing h2,
+.recap-pricing h3 {
+  margin: 8px 0;
+  font-weight: 500;
+}
+
+/* Responsive : 2 colonnes à partir de 768px */
+@media (min-width: 768px) {
+  .recap-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Style noir pour les boutons Angular Material */
+.mat-mdc-button:not(:disabled),
+.mat-mdc-button.mat-primary {
+  color: #000000;
+}
+
+/* Enlever le fond bleu au focus */
+.mat-mdc-button.mat-primary:focus,
+.mat-mdc-button.mat-primary:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Pour les boutons de stepper (étapes en haut) */
+.mat-step-header .mat-step-label {
+  color: #000000 !important;
+}
+
+.mat-step-header.mat-step-header-selected .mat-step-label {
+  font-weight: bold;
+  color: #000000 !important;
+}
+

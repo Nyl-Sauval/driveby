@@ -13,7 +13,7 @@ export interface Option {
   providedIn: 'root'
 })
 export class OptionService {
-  private apiUrl = 'http://localhost:8000/api/options'; // Adapte selon ton backend
+  private apiUrl = 'http://localhost:8000/api'; // Adapte selon ton backend
 
   constructor(private http: HttpClient) {}
 
@@ -21,13 +21,17 @@ export class OptionService {
    * Récupère toutes les options disponibles depuis l'API.
    */
   getOptions(): Observable<Option[]> {
-    return this.http.get<Option[]>(this.apiUrl);
+    return this.http.get<Option[]>(`${this.apiUrl}/options`);
   }
 
   /**
    * (Facultatif) Récupère une option précise.
    */
   getOptionById(id: number): Observable<Option> {
-    return this.http.get<Option>(`${this.apiUrl}/${id}`);
+    return this.http.get<Option>(`${this.apiUrl}/options/${id}`);
+  }
+
+  getOptionsByLocationId(locationId: string | null): Observable<Option[]> {
+    return this.http.get<Option[]>(`${this.apiUrl}/location/${locationId}/options`);
   }
 }

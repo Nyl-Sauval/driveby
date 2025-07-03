@@ -60,3 +60,4 @@ Route::put('location/{location}', [LocationController::class, 'update']);
 
 Route::get('/options', [OptionController::class, 'index']);
 Route::get("/garanties", [GuaranteeController::class, 'index'])->name('guarantee.index');
+Route::get('/location/{id}/options', [LocationController::class, 'optionsByLocationId'])->name('location.getOptions');
