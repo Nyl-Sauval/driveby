@@ -1,7 +1,7 @@
 # Site de location de voiture - DriveBy
 ## Membres du groupe
 - Nyl SAUVAL
-- Beni TUKALAYENGE MIANTUILA
+- Beni TUKALAYENGE
 - Emma GRAVE
 
 ## Description
@@ -46,7 +46,7 @@ password : password
 
 ## Système d'information
 ### MCD
-![Texte alternatif](./MCD.jpg)
+![MCD du projet](./MCD.jpg)
 ### MLD
-![Texte alternatif](./MLD.jpg)
+![MLD du projet](./MLD.jpg)
 
