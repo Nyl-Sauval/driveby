@@ -28,17 +28,11 @@
       display: flex;
       flex-direction: column;
       gap: 5px;
+      width: 270px;
     }
 
-    .agence-info {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-
-      .address {
-        font-size: 14px;
-        font-style: italic;
-      }
+    .client-info {
+      width: 270px;
     }
 
     .buttons {
