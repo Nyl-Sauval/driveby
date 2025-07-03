@@ -218,8 +218,11 @@ export class EditLocationComponent {
   }
 
   getSelectedGuarantee() {
-    const guaranteeId = this.reservationForm.get('guarantee.guarantee_id')?.value;
-    return this.garanties.find(g => g.guarantee_id === guaranteeId) || null;
+    if (this.selectedGuarantee) {
+      console.log('Selected guarantee:', this.selectedGuarantee);
+      return this.selectedGuarantee;
+    }
+    return null;
   }
 
   select(i: number): void {
