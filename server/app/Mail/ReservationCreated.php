@@ -12,11 +12,15 @@ class ReservationCreated extends Mailable
     use Queueable, SerializesModels;
 
     public $location;
+    public $agency;
+    public $garantie;
+    public $pdfContent;
 
-    public function __construct(Location $location, $agency, $pdfContent)
+    public function __construct(Location $location, $agency, $garantie, $pdfContent)
     {
         $this->location = $location;
         $this->agency = $agency;
+        $this->garantie = $garantie;
         $this->pdfContent = $pdfContent;
     }
 

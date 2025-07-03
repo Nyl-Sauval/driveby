@@ -13,7 +13,7 @@ class Guarantee extends Model
     use HasFactory;
 
     protected $table = 'garanties';
-    protected $primaryKey = 'guarantee_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'guarantee_name',

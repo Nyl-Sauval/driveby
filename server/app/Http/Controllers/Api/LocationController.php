@@ -8,6 +8,7 @@ use App\Models\Agency;
 use App\Models\Avenant;
 use App\Models\Car;
 use App\Models\Client;
+use App\Models\Guarantee;
 use App\Models\Location;
 use App\Models\Retour;
 use App\Models\Retrait;
@@ -144,7 +145,10 @@ class LocationController extends BaseController
             DB::table('location_option')->insert($insertData);
         }
 
-        SendInvoiceEmail::dispatch($location, $car->agency);
+        $garantie_id = $location->guarantee_id;
+        $garantie = Guarantee::find($garantie_id);
+
+        SendInvoiceEmail::dispatch($location, $car->agency, $garantie);
 
         return response()->json([
             'location' => new LocationResource($location),
@@ -164,10 +168,11 @@ class LocationController extends BaseController
     {
         $location = Location::with(['client', 'car', 'retrait', 'retour', 'avenant'])->findOrFail($id);
         $agency = Agency::findOrFail($location->car->agency_id);
+        $garantie = Guarantee::find($location->guarantee_id);
 
-        SendInvoiceEmail::dispatch($location, $agency);
+        SendInvoiceEmail::dispatch($location, $agency, $garantie);
 
-        $pdf = Pdf::loadView('invoices.facture', compact('location', 'agency'));
+        $pdf = Pdf::loadView('invoices.facture', compact('location', 'agency', 'garantie'));
 
         return $pdf->output();
     }

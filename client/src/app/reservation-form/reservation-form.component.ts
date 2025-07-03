@@ -207,7 +207,7 @@ export class ReservationFormComponent implements OnInit {
     const start = new Date(this.reservationValues.startDate);
     const end = new Date(this.reservationValues.endDate);
     const timeDiff = end.getTime() - start.getTime();
-    return Math.max(Math.ceil(timeDiff / (1000 * 3600 * 24)), 1);
+    return Math.ceil(timeDiff / (1000 * 3600 * 24))+1;
   }
 
   getDailyTotal(): number {
