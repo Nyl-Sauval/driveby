@@ -18,7 +18,7 @@
         </p>
         <p class="profil-birth ligne-info">
           <mat-icon>cake</mat-icon>
-          {{birth}}
+          {{formatDate(birth)}}
         </p>
       </div>
       <div class="address_content info">
@@ -40,11 +40,11 @@
         </p>
         <p class="issue_date ligne-info" *ngIf="license_issue_date">
           <mat-icon>event</mat-icon>
-          {{license_issue_date}}
+          {{formatDate(license_issue_date)}}
         </p>
         <p class="expiry_date ligne-info" *ngIf="license_expiry_date">
           <mat-icon>event</mat-icon>
-          {{license_expiry_date}}
+          {{formatDate(license_expiry_date)}}
         </p>
         <p class="license_country ligne-info" *ngIf="license_country">
           <mat-icon>flag</mat-icon>
