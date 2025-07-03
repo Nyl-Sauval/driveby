@@ -253,8 +253,11 @@ export class ReservationFormComponent implements OnInit {
   }
 
   getSelectedGuarantee() {
-    const guaranteeId = this.reservationForm.get('guarantee.guarantee_id')?.value;
-    return this.garanties.find(g => g.guarantee_id === guaranteeId) || null;
+    if (this.selectedGuarantee) {
+      console.log('Selected guarantee:', this.selectedGuarantee);
+      return this.selectedGuarantee;
+    }
+    return null;
   }
 
   select(i: number): void {
@@ -264,7 +267,7 @@ export class ReservationFormComponent implements OnInit {
   }
 
   isSelected(i: number): boolean {
-    return this.selectedIndex === i;
+    return this.selectedIndex == i;
   }
 
   get reservationGroup(): FormGroup {
