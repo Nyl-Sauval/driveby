@@ -14,13 +14,15 @@ class ReservationCreated extends Mailable
     public $location;
     public $agency;
     public $garantie;
+    public $options;
     public $pdfContent;
 
-    public function __construct(Location $location, $agency, $garantie, $pdfContent)
+    public function __construct(Location $location, $agency, $garantie, $options, $pdfContent)
     {
         $this->location = $location;
         $this->agency = $agency;
         $this->garantie = $garantie;
+        $this->options = $options;
         $this->pdfContent = $pdfContent;
     }
 

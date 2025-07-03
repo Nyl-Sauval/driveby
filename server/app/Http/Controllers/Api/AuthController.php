@@ -23,13 +23,27 @@ class AuthController extends BaseController
             'password' => 'required|string|min:8',
         ]);
 
-        $client = Client::create([
-            'client_name' => $validateData['name'],
-            'client_firstname' => $validateData['firstname'],
-            'client_email' => $validateData['email'],
-            'client_phone' => $validateData['phone'],
-            'client_birth' => $validateData['dob'],
-        ]);
+        if (Client::where('client_email', $validateData['email'])->exists()) {
+            //update
+            $client = Client::where('client_email', $validateData['email'])->first();
+            $client->update([
+                'client_name' => $validateData['name'],
+                'client_firstname' => $validateData['firstname'],
+                'client_phone' => $validateData['phone'],
+                'client_birth' => $validateData['dob'],
+            ]);
+        } else {
+            $client = Client::create([
+                'client_name' => $validateData['name'],
+                'client_firstname' => $validateData['firstname'],
+                'client_email' => $validateData['email'],
+                'client_phone' => $validateData['phone'],
+                'client_birth' => $validateData['dob'],
+            ]);
+        }
+
+
+
 
         $user = User::create([
             'email' => $validateData['email'],

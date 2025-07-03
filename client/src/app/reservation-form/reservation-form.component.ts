@@ -231,27 +231,6 @@ export class ReservationFormComponent implements OnInit {
     return this.getDailyTotal() * this.reservationDays;
   }
 
-  carPriceLocation(): number {
-    return (this.car?.price || 0) * this.reservationDays;
-  }
-
-  guaranteePriceLocation(): number {
-    const g = this.getSelectedGuarantee();
-    return g ? g.guarantee_price * this.reservationDays : 0;
-  }
-
-  optionPriceLocation(): number {
-    const totalPerDay = this.options
-      .filter(opt => this.selectedOptionIds.includes(opt.id))
-      .reduce((sum, opt) => sum + opt.option_price, 0);
-
-    return totalPerDay * this.reservationDays;
-  }
-
-  totalPriceLocation(): number {
-    return this.carPriceLocation() + this.guaranteePriceLocation() + this.optionPriceLocation();
-  }
-
   getSelectedGuarantee() {
     if (this.selectedGuarantee) {
       console.log('Selected guarantee:', this.selectedGuarantee);
