@@ -20,7 +20,7 @@
       </div>
       <mat-card-content>
         <div class="car-attributes">
-          <mat-chip><mat-icon>payments</mat-icon> {{ car.price }} €/jour</mat-chip>
+          <mat-chip><mat-icon>payments</mat-icon> {{ car.price/100 }} €/jour</mat-chip>
           <div class="agency-container">
             <p class="agency-name">
               {{ car.agency.name }}

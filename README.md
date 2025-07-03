@@ -27,6 +27,23 @@ cd ../client && ng serve
 cd ../mobile && ionic serve
 ```
 
+## Connexion à l'application
+Nous avons créé un client, agent et administratetur grâce aux seeders pour pouvoir tester l'application:
+1. Client :  
+emaiil : client@example.com  
+password : password
+
+
+2. Agent :  
+email : agent@example.com  
+password : password
+
+
+3. Administrateur :  
+email : test@example.com  
+password : password
+
+
 ## Système d'information
 ### MCD
 ![Texte alternatif](./MCD.jpg)
