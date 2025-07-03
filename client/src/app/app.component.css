@@ -79,6 +79,7 @@ footer {
 .right-part{
   display: flex;
   gap: 15px;
+  align-items: center;
 }
 
 .mat-mdc-button:not(:disabled) {
