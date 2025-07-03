@@ -18,12 +18,14 @@ class SendInvoiceEmail implements ShouldQueue
     protected $location;
     protected $agency;
     protected $garantie;
+    protected $options;
 
-    public function __construct($location, $agency, $garantie)
+    public function __construct($location, $agency, $garantie, $options)
     {
         $this->location = $location;
         $this->agency = $agency;
         $this->garantie = $garantie;
+        $this->options = $options;
     }
 
     public function handle()
@@ -32,9 +34,10 @@ class SendInvoiceEmail implements ShouldQueue
             'location' => $this->location,
             'agency' => $this->agency,
             'garantie' => $this->garantie,
+            'options' => $this->options,
         ]);
 
         Mail::to($this->location->client->client_email)
-            ->send(new ReservationCreated($this->location, $this->agency, $this->garantie, $pdf->output()));
+            ->send(new ReservationCreated($this->location, $this->agency, $this->garantie, $this->options,$pdf->output()));
     }
 }

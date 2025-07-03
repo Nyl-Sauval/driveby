@@ -148,7 +148,10 @@ class LocationController extends BaseController
         $garantie_id = $location->guarantee_id;
         $garantie = Guarantee::find($garantie_id);
 
-        SendInvoiceEmail::dispatch($location, $car->agency, $garantie);
+        //recup options
+        $options = $location->options()->get();
+
+        SendInvoiceEmail::dispatch($location, $car->agency, $garantie, $options);
 
         return response()->json([
             'location' => new LocationResource($location),
@@ -170,9 +173,11 @@ class LocationController extends BaseController
         $agency = Agency::findOrFail($location->car->agency_id);
         $garantie = Guarantee::find($location->guarantee_id);
 
-        SendInvoiceEmail::dispatch($location, $agency, $garantie);
+        $options = $location->options()->get();
 
-        $pdf = Pdf::loadView('invoices.facture', compact('location', 'agency', 'garantie'));
+        SendInvoiceEmail::dispatch($location, $agency, $garantie, $options);
+
+        $pdf = Pdf::loadView('invoices.facture', compact('location', 'agency', 'garantie', 'options'));
 
         return $pdf->output();
     }

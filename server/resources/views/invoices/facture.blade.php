@@ -116,6 +116,21 @@
             <td><strong>Prix :</strong></td>
             <td>{{ number_format($garantie->guarantee_price, 2, ',', ' ') }} €/jour</td>
         </tr>
+
+        <tr>
+            <td><strong>Options :</strong></td>
+            <td colspan="3">
+                @if($options->isNotEmpty())
+                    <ul style="margin: 0; padding-left: 1em;">
+                        @foreach($options as $option)
+                            <li>{{ $option->option_name }} - {{ number_format($option->option_price, 2, ',', ' ') }} €</li>
+                        @endforeach
+                    </ul>
+                @else
+                    Aucune option sélectionnée.
+                @endif
+            </td>
+        </tr>
     </table>
 </div>
 
@@ -144,7 +159,14 @@
     $start = new DateTime(optional($location->retrait)->withdrawal_date);
     $end = new DateTime(optional($location->retour)->return_date);
     $days = $start->diff($end)->days + 1;
-    $total = $days * (($location->car->car_price/100)+$garantie->guarantee_price);
+     // Prix de base par jour (voiture + garantie)
+    $dailyBase = ($location->car->car_price / 100) + $garantie->guarantee_price;
+
+    // Total des options par jour (si options est une collection avec option_price)
+    $optionsTotalPerDay = $options->sum('option_price');
+
+    // Prix total = nombre de jours * (prix de base + options)
+    $total = $days * ($dailyBase + $optionsTotalPerDay);
 @endphp
 
 <div class="total">
