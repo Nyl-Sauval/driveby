@@ -9,6 +9,8 @@ return [
     'allowed_origins' => [
         'http://localhost:4200',
         'http://localhost:8100',
+        'https://driveby.innocorp.fr',
+        'http://driveby.innocorp.fr',
     ],
 
     'allowed_origins_patterns' => [],
