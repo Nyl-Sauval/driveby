@@ -30,6 +30,9 @@ COPY composer.json composer.lock ./
 # Copier le reste du code
 COPY . .
 
+# Créer le fichier .env temporaire pour le build
+RUN cp .env.example .env
+
 RUN composer install --optimize-autoloader --no-dev --no-interaction
 
 # Créer la base de données SQLite et lui attribuer les droits
