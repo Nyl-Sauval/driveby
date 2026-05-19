@@ -1,48 +1,124 @@
 :host {
-  width: 80%;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .locations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-  .location-item {
-    background-color: #f6f5f5;
-    border-radius: 10px;
-    padding: 20px 50px;
-    height: 80px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 10px;
-    margin-bottom: 10px;
+.locations-list h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 8px;
+  text-align: left;
+}
 
-    img {
-      width: 200px;
-    }
+.locations-list hr {
+  border: none;
+  height: 2px;
+  background-color: var(--primary);
+  width: 60px;
+  margin: 0 0 24px 0;
+  border-radius: 2px;
+}
 
-    .location-info {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
-    .agence-info {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      width: 270px;
+.location-item {
+  background-color: white;
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: var(--transition);
+  gap: 24px;
+}
 
-      .address {
-        font-size: 14px;
-        font-style: italic;
-      }
-    }
+.location-item:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
 
-    .buttons {
-      width: 160px;
-      display: flex;
-      justify-content: end;
-    }
+.img-car {
+  width: 160px;
+  height: 100px;
+  object-fit: contain; /* Keeps the entire car visible without cropping */
+  border-radius: 8px;
+}
 
-  }
+.location-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.location-info strong {
+  font-size: 18px;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+
+.location-info span {
+  font-size: 14px;
+  color: var(--gray);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.agence-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 250px;
+}
+
+.agence-info strong {
+  font-size: 14px;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.agence-info > span {
+  font-weight: 500;
+  color: var(--dark);
+}
+
+.address {
+  font-size: 13px;
+  color: var(--gray);
+  display: flex;
+  flex-direction: column;
+  line-height: 1.4;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.buttons button {
+  color: var(--gray);
+  transition: var(--transition);
+}
+
+.buttons button:hover {
+  color: var(--primary);
+  background-color: rgba(37, 99, 235, 0.1);
 }

@@ -1,31 +1,243 @@
 /* Conteneur général */
-mat-horizontal-stepper {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
+.reservation-page-container {
+  min-height: calc(100vh - 63px - 85px);
+  background-color: var(--light);
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Champs de formulaire */
-mat-form-field.full-width {
+.reservation-form-card {
   width: 100%;
+  max-width: 850px;
+  background: white;
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .reservation-form-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+}
+
+.reservation-header {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.reservation-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.reservation-header p {
+  color: var(--gray);
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Stepper Customization */
+mat-horizontal-stepper {
+  background: transparent !important;
+}
+
+::ng-deep .mat-horizontal-stepper-header-container {
+  margin-bottom: 32px !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 8px;
+}
+
+/* Base stepper header styles */
+::ng-deep .mat-step-header {
+  padding: 12px 16px !important;
+  border-radius: 12px;
+  transition: background-color 0.2s ease;
+}
+
+::ng-deep .mat-step-header:hover {
+  background-color: rgba(37, 99, 235, 0.03) !important;
+}
+
+/* Horizontal line between steps */
+::ng-deep .mat-stepper-horizontal-line {
+  border-top-color: rgba(0, 0, 0, 0.08) !important;
+  margin: 0 -4px !important;
+}
+
+/* Step Label Text */
+::ng-deep .mat-step-label {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--gray) !important;
+  transition: all 0.2s ease;
+}
+
+::ng-deep .mat-step-label-selected {
+  font-weight: 700 !important;
+  color: var(--primary) !important;
+}
+
+/* Step Icons Container */
+::ng-deep .mat-step-icon {
+  background-color: #e2e8f0 !important; /* Slate 200 */
+  color: #64748b !important; /* Slate 500 */
+  width: 28px !important;
+  height: 28px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  border-radius: 50% !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Selected Step Icon */
+::ng-deep .mat-step-icon-selected {
+  background-color: var(--primary) !important;
+  color: white !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15), 0 4px 8px rgba(37, 99, 235, 0.2) !important;
+  transform: scale(1.05);
+}
+
+/* Completed Step Icon */
+::ng-deep .mat-step-icon-state-done,
+::ng-deep .mat-step-icon-state-edit {
+  background-color: #10b981 !important; /* Emerald 500 */
+  color: white !important;
+}
+
+/* Responsive adjustment for mobile screen */
+@media (max-width: 768px) {
+  ::ng-deep .mat-horizontal-stepper-header-container {
+    gap: 0 !important;
+  }
+  
+  ::ng-deep .mat-step-header {
+    padding: 8px 4px !important;
+  }
+  
+  /* Hide text labels on mobile screen to prevent layout breakage, showing only icons */
+  ::ng-deep .mat-step-label {
+    display: none !important;
+  }
+  
+  ::ng-deep .mat-stepper-horizontal-line {
+    display: block !important;
+  }
+}
+
+/* Step Form */
+.step-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 8px 4px;
+}
+
+.step-intro {
   margin-bottom: 16px;
 }
 
-/* Actions de navigation */
+.step-intro h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--dark);
+  margin: 0 0 6px 0;
+}
+
+.step-intro p {
+  font-size: 14px;
+  color: var(--gray);
+  margin: 0;
+}
+
+/* Grids for standard fields */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+.full-width-field {
+  grid-column: span 2;
+}
+
+@media (max-width: 600px) {
+  .full-width-field {
+    grid-column: span 1;
+  }
+}
+
+/* Custom Error Banner */
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+  padding: 16px;
+  color: #991b1b;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 16px;
+}
+
+.error-banner mat-icon {
+  color: #dc2626;
+}
+
+/* Step Actions Button Section */
 .step-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 24px;
+  align-items: center;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* Message d'erreur */
-.error {
-  color: #d32f2f;
-  font-size: 14px;
-  margin: 8px 0;
+.step-actions button {
+  border-radius: 9999px !important;
+  font-weight: 600 !important;
+  padding: 10px 28px !important;
+  height: auto !important;
+  line-height: 1.5 !important;
 }
 
-/* Styles des cartes garanties */
+.btn-primary {
+  background-color: var(--primary) !important;
+  color: white !important;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
+}
+
+.btn-primary:disabled {
+  box-shadow: none !important;
+}
+
+.btn-secondary {
+  background-color: transparent !important;
+  color: var(--gray) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Garantie Cards Styling */
 .garantie-container {
   display: flex;
   flex-direction: column;
@@ -33,150 +245,315 @@ mat-form-field.full-width {
 }
 
 .garantie-card {
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 16px;
+  border: 2px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  padding: 24px;
   cursor: pointer;
-  transition: border-color 0.3s, background-color 0.3s;
+  background-color: white;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.garantie-card:hover {
+  border-color: rgba(37, 99, 235, 0.3);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .garantie-card.selected {
-  border-color: #1976d2;
-  background-color: #e3f2fd;
+  border-color: var(--primary);
+  background-color: rgba(37, 99, 235, 0.02);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.1);
 }
 
 .garantie-header {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.garantie-info {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.selected-indicator {
+  color: var(--primary);
+  display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+.selected-indicator mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 .garantie-header h3 {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.garantie-desc {
   margin: 0;
+  font-size: 14px;
+  color: var(--gray);
+}
+
+.prix {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+.garantie-details {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.08);
 }
 
 .garantie-details ul {
-  padding-left: 16px;
-  margin: 8px 0 0;
-}
-
-.inclusion {
-  color: #2e7d32;
-}
-
-.exclusion {
-  color: #c62828;
-}
-
-/* Styles des options */
-.option-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.option-card {
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-}
-
-.option-card p {
-  margin: 4px 0;
-}
-
-/* Titre centré */
-.titre-centre {
-  text-align: center;
-}
-
-/* Responsive */
-@media (min-width: 600px) {
-  .garantie-container, .option-container {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .garantie-card,
-  .option-card {
-    flex: 1 1 calc(50% - 12px);
-    box-sizing: border-box;
-  }
-}
-
-/* Section récapitulatif */
-.recap-container {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 24px;
-  background-color: #fafafa;
-  margin-top: 16px;
-}
-
-.recap-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  font-size: 14px;
-}
-
-.recap-grid p,
-.recap-grid li {
-  margin: 0;
-  padding: 4px 0;
-}
-
-.recap-grid strong {
-  color: #424242;
-}
-
-.recap-grid ul {
-  margin: 4px 0 0 16px;
+  list-style: none;
   padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
-/* Totaux */
-.recap-pricing {
-  margin-top: 24px;
-  border-top: 1px solid #ccc;
-  padding-top: 16px;
-}
-
-.recap-pricing h2,
-.recap-pricing h3 {
-  margin: 8px 0;
+.garantie-details li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
   font-weight: 500;
 }
 
-/* Responsive : 2 colonnes à partir de 768px */
-@media (min-width: 768px) {
-  .recap-grid {
-    grid-template-columns: repeat(2, 1fr);
+.garantie-details li mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.inclusion {
+  color: #16a34a;
+}
+
+.exclusion {
+  color: #9ca3af;
+}
+
+/* Option Cards Styling */
+.option-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .option-container {
+    grid-template-columns: 1fr;
   }
 }
 
-/* Style noir pour les boutons Angular Material */
-.mat-mdc-button:not(:disabled),
-.mat-mdc-button.mat-primary {
-  color: #000000;
+.option-card {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+  background-color: white;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-/* Enlever le fond bleu au focus */
-.mat-mdc-button.mat-primary:focus,
-.mat-mdc-button.mat-primary:hover {
-  background-color: rgba(0, 0, 0, 0.08);
+.option-card:hover {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-sm);
 }
 
-/* Pour les boutons de stepper (étapes en haut) */
-.mat-step-header .mat-step-label {
-  color: #000000 !important;
+.option-card.checked {
+  border-color: var(--primary);
+  background-color: rgba(37, 99, 235, 0.01);
 }
 
-.mat-step-header.mat-step-header-selected .mat-step-label {
-  font-weight: bold;
-  color: #000000 !important;
+.option-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+.option-title {
+  font-weight: 700;
+  color: var(--dark);
+  font-size: 15px;
+}
 
+.option-price {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 14px;
+}
+
+.option-desc {
+  margin: 0;
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.4;
+}
+
+/* Recap step layout */
+.recap-sections {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 650px) {
+  .recap-sections {
+    grid-template-columns: 1fr;
+  }
+}
+
+.recap-section-card {
+  background-color: #f8fafc;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.recap-section-card h4 {
+  margin: 0 0 12px 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 8px;
+}
+
+.recap-section-card h4 mat-icon {
+  color: var(--primary);
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.recap-section-card p {
+  margin: 6px 0;
+  font-size: 13px;
+  color: #334155;
+  line-height: 1.4;
+}
+
+.recap-section-card strong {
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Addons summary card */
+.recap-addons {
+  margin-bottom: 24px;
+}
+
+.addon-summary-card {
+  background-color: #f8fafc;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.addon-summary-card h4 {
+  margin: 0 0 12px 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 8px;
+}
+
+.addon-summary-card h4 mat-icon {
+  color: var(--primary);
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.addon-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 6px 0;
+  color: #334155;
+}
+
+.addon-row:not(:last-child) {
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.04);
+}
+
+/* Pricing summary card */
+.recap-pricing-summary {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-radius: 16px;
+  padding: 24px;
+  color: white;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+}
+
+.pricing-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #94a3b8;
+  padding: 6px 0;
+}
+
+.pricing-row .price-value {
+  font-weight: 700;
+  color: white;
+}
+
+.pricing-row.total {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 12px;
+  padding-top: 16px;
+  font-size: 18px;
+  font-weight: 800;
+  color: white;
+}
+
+.pricing-row.total .price-value {
+  font-size: 24px;
+  color: #60a5fa;
+}
+
+.btn-confirm {
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4) !important;
+}
+
+/* Custom styles for checkboxes in Material */
+::ng-deep .mdc-checkbox .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
+::ng-deep .mat-mdc-checkbox.mat-primary {
+  --mdc-checkbox-selected-focus-icon-color: var(--primary);
+  --mdc-checkbox-selected-hover-icon-color: var(--primary);
+  --mdc-checkbox-selected-icon-color: var(--primary);
+}

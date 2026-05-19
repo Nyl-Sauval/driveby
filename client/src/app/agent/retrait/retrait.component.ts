@@ -15,6 +15,7 @@ import {MatDialogRef} from '@angular/material/dialog';
 import {LocationService} from '../../service/locationService';
 import {createFakeRetrait, Retrait} from '../../models/retrait.model';
 import {MatButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-retrait',
@@ -31,7 +32,8 @@ import {MatButton} from '@angular/material/button';
     MatSelect,
     MatOption,
     MatCheckbox,
-    MatButton
+    MatButton,
+    MatIcon
   ],
   templateUrl: './retrait.component.html',
   styleUrl: './retrait.component.css'

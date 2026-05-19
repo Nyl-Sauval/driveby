@@ -115,7 +115,12 @@ export class GestionAgentComponent {
       }
     });
 
-    return dialogRef.afterClosed();
+    dialogRef.afterClosed().subscribe(result => {
+      // Refresh list if action completed
+      if (result) {
+        this.onAgencyChanged(this.selectedAgency);
+      }
+    });
   }
 
   getRetraitId(location: any) {
@@ -136,9 +141,9 @@ export class GestionAgentComponent {
 
     console.log('Date sélectionnée :', selectedDate);
 
-    // Exemple : filtrer par date de retrait
     this.locations = this.originalLocations.filter(loc => {
-      const retrait = new Date(loc.retrait?.withdrawal_date);
+      if (!loc.retrait?.withdrawal_date) return false;
+      const retrait = new Date(loc.retrait.withdrawal_date);
       return retrait.toDateString() === selectedDate.toDateString();
     });
   }
@@ -152,28 +157,35 @@ export class GestionAgentComponent {
   }
 
   resetFilters() {
-    this.locations = this.originalLocations; // Réinitialiser les locations à l'original
-    //reset les filtres
+    this.locations = this.originalLocations;
     this.clientFilter = '';
     this.departureDate = null;
   }
 
   haveWithdrawalAndReturn(location:any): boolean {
-    if (location.retrait === null && location.retour === null) {
-      return false;
-    }
-    return true;
+    return !!(location.retrait || location.retour);
   }
 
   download(locationId:any) {
-    this.locationService.downloadInvoice(locationId).subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `facture-location-${locationId}.pdf`;
-      a.click();
-      URL.revokeObjectURL(url);
+    this.locationService.downloadInvoice(locationId).subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `facture-location-${locationId}.pdf`;
+        a.click();
+        URL.revokeObjectURL(url);
+      },
+      error: (err) => console.error('Erreur téléchargement facture:', err)
     });
+  }
+
+  getActiveLocationsCount(): number {
+    return this.locations.filter(loc => !loc.retour?.return_done).length;
+  }
+
+  getCompletedLocationsCount(): number {
+    return this.locations.filter(loc => loc.retour?.return_done).length;
   }
 }
 

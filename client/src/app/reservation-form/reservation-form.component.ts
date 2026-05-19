@@ -16,11 +16,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from '../service/locationService';
 import { Car } from '../models/car.model';
 import { Client } from '../models/client.model';
-import { CurrencyPipe, NgIf, NgForOf } from '@angular/common';
+import { CurrencyPipe, NgIf, NgForOf, DatePipe } from '@angular/common';
 import {GarantieComponent} from '../garantie/garantie.component';
 import {Guarantee, GuaranteeService} from '../service/guarantee.service';
 import {Option, OptionService} from '../service/option.service';
 import {MatCheckbox} from '@angular/material/checkbox';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-reservation-form',
@@ -40,7 +41,9 @@ import {MatCheckbox} from '@angular/material/checkbox';
     NgIf,
     NgForOf,
     CurrencyPipe,
-    MatCheckbox
+    DatePipe,
+    MatCheckbox,
+    MatIcon
   ]
 })
 export class ReservationFormComponent implements OnInit {

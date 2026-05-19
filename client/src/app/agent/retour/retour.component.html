@@ -1,86 +1,125 @@
-<form [formGroup]="retourForm" (ngSubmit)="onSubmit()" class="retour-form">
+<div class="agent-form-page">
+  <div class="agent-form-card">
+    <div class="form-header">
+      <div class="header-icon-wrapper retour">
+        <mat-icon>logout</mat-icon>
+      </div>
+      <h1>Enregistrer le Retour du Véhicule</h1>
+      <p>Inspectez le véhicule retourné et enregistrez les informations ci-dessous.</p>
+    </div>
 
-  <h1>État de la voiture lors du retour</h1>
+    <form [formGroup]="retourForm" (ngSubmit)="onSubmit()" class="form-content">
+      
+      <div class="form-grid-2">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Date de retour</mat-label>
+          <input matInput formControlName="dateRetour" required type="date"/>
+          <mat-error *ngIf="retourForm.get('dateRetour')?.invalid && retourForm.get('dateRetour')?.touched">
+            Date de retour requise
+          </mat-error>
+        </mat-form-field>
 
-  <mat-form-field appearance="fill" class="form-width">
-    <mat-label>Date de retour</mat-label>
-    <input matInput formControlName="dateRetour" required type="date"/>
-    <mat-error *ngIf="retourForm.get('dateRetour')?.invalid && retourForm.get('dateRetour')?.touched">
-      Date de retrait requise
-    </mat-error>
-  </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Kilométrage au retour (km)</mat-label>
+          <input matInput type="number" formControlName="mileage" placeholder="Ex. 45200" required />
+          <mat-error *ngIf="retourForm.get('mileage')?.invalid && retourForm.get('mileage')?.touched">
+            Kilométrage requis
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-  <mat-form-field appearance="fill" class="form-width">
-    <mat-label>Kilométrage</mat-label>
-    <input matInput formControlName="mileage" required />
-    <mat-error *ngIf="retourForm.get('mileage')?.invalid && retourForm.get('mileage')?.touched">
-      Kilométrage requis
-    </mat-error>
-  </mat-form-field>
+      <div class="form-grid-2">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Niveau de carburant (%)</mat-label>
+          <input matInput type="number" formControlName="fuel" placeholder="Ex. 100" min="0" max="100" required />
+          <mat-error *ngIf="retourForm.get('fuel')?.invalid && retourForm.get('fuel')?.touched">
+            Niveau de carburant requis (0 à 100)
+          </mat-error>
+        </mat-form-field>
 
-  <mat-form-field appearance="fill" class="form-width">
-    <mat-label>Niveau d'essence (%)</mat-label>
-    <input matInput formControlName="fuel" required />
-    <mat-error *ngIf="retourForm.get('fuel')?.invalid && retourForm.get('fuel')?.touched">
-      Kilométrage requis
-    </mat-error>
-  </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Statut / Disponibilité du véhicule</mat-label>
+          <mat-select formControlName="disponibility" required>
+            <mat-option value="Disponible">Disponible</mat-option>
+            <mat-option value="En réparation">En réparation</mat-option>
+            <mat-option value="En maintenance">En maintenance</mat-option>
+            <mat-option value="Indisponible">Indisponible</mat-option>
+          </mat-select>
+          <mat-error *ngIf="retourForm.get('disponibility')?.invalid && retourForm.get('disponibility')?.touched">
+            Disponibilité requise
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-  <mat-form-field appearance="fill" class="form-width">
-    <mat-label>Disponibilité</mat-label>
-    <mat-select formControlName="disponibility" required>
-      <mat-option value="Disponible">Disponible</mat-option>
-      <mat-option value="En réparation">En réparation</mat-option>
-      <mat-option value="En maintenance">En maintenance</mat-option>
-      <mat-option value="Indisponible">Indisponible</mat-option>
-    </mat-select>
-    <mat-error *ngIf="retourForm.get('disponibility')?.invalid && retourForm.get('disponibility')?.touched">
-      État requis
-    </mat-error>
-  </mat-form-field>
+      <div class="form-grid-2">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>État extérieur du véhicule</mat-label>
+          <mat-select formControlName="exteriorStatus" required>
+            <mat-option value="tres-bon">Très bon</mat-option>
+            <mat-option value="bon">Bon</mat-option>
+            <mat-option value="moyen">Moyen</mat-option>
+            <mat-option value="mauvais">Mauvais</mat-option>
+          </mat-select>
+          <mat-error *ngIf="retourForm.get('exteriorStatus')?.invalid && retourForm.get('exteriorStatus')?.touched">
+            État extérieur requis
+          </mat-error>
+        </mat-form-field>
 
-  <mat-form-field appearance="fill" class="form-width">
-    <mat-label>État extérieur de la voiture</mat-label>
-    <mat-select formControlName="exteriorStatus" required>
-      <mat-option value="tres-bon">Très bon</mat-option>
-      <mat-option value="bon">Bon</mat-option>
-      <mat-option value="moyen">Moyen</mat-option>
-      <mat-option value="mauvais">Mauvais</mat-option>
-    </mat-select>
-    <mat-error *ngIf="retourForm.get('exteriorStatus')?.invalid && retourForm.get('exteriorStatus')?.touched">
-      État extérieur de la voiture requis
-    </mat-error>
-  </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>État intérieur du véhicule</mat-label>
+          <mat-select formControlName="interiorStatus" required>
+            <mat-option value="tres-bon">Très bon</mat-option>
+            <mat-option value="bon">Bon</mat-option>
+            <mat-option value="moyen">Moyen</mat-option>
+            <mat-option value="mauvais">Mauvais</mat-option>
+          </mat-select>
+          <mat-error *ngIf="retourForm.get('interiorStatus')?.invalid && retourForm.get('interiorStatus')?.touched">
+            État intérieur requis
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-  <mat-form-field appearance="fill" class="form-width">
-    <mat-label>État intérieur de la voiture</mat-label>
-    <mat-select formControlName="interiorStatus" required>
-      <mat-option value="tres-bon">Très bon</mat-option>
-      <mat-option value="bon">Bon</mat-option>
-      <mat-option value="moyen">Moyen</mat-option>
-      <mat-option value="mauvais">Mauvais</mat-option>
-    </mat-select>
-    <mat-error *ngIf="retourForm.get('interiorStatus')?.invalid && retourForm.get('interiorStatus')?.touched">
-      État intérieur de la voiture requis
-    </mat-error>
-  </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width-field">
+        <mat-label>Défauts constatés / Observations de retour</mat-label>
+        <textarea matInput formControlName="default" placeholder="Saisissez les défauts constatés au retour (rayures supplémentaires, saleté...)" rows="4"></textarea>
+      </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Défaut de la voiture</mat-label>
-    <textarea matInput formControlName="default" rows="5"></textarea>
-  </mat-form-field>
+      <!-- Avenant notification/button panel -->
+      <div class="avenant-trigger-panel">
+        <div class="avenant-info" *ngIf="!avenantData">
+          <mat-icon>add_alert</mat-icon>
+          <div>
+            <h4>Avenant de facturation</h4>
+            <p>Des frais supplémentaires sont nécessaires (carburant manquant, dommages...) ? Créez un avenant.</p>
+          </div>
+        </div>
+        <div class="avenant-info success" *ngIf="avenantData">
+          <mat-icon>check_circle</mat-icon>
+          <div>
+            <h4>Avenant créé avec succès</h4>
+            <p><strong>Frais :</strong> {{ avenantData.prix | currency:'EUR':'symbol':'1.2-2' }} ({{ avenantData.details }})</p>
+          </div>
+        </div>
+        <button mat-stroked-button type="button" class="btn-avenant" (click)="ouvrirFormulaireAvenant()">
+          <mat-icon>post_add</mat-icon>
+          {{ avenantData ? 'Modifier l\'avenant' : 'Créer un avenant' }}
+        </button>
+      </div>
 
-  <mat-checkbox formControlName="done" required class="done-form">
-    Retour fait
-  </mat-checkbox>
-  <mat-error *ngIf="retourForm.get('done')?.invalid && retourForm.get('done')?.touched">
-    Ce champ est requis
-  </mat-error>
+      <div class="checkbox-container">
+        <mat-checkbox formControlName="done" required color="primary" class="done-checkbox">
+          Je certifie avoir effectué l'état des lieux de retour et valider le dossier
+        </mat-checkbox>
+        <mat-error *ngIf="retourForm.get('done')?.invalid && retourForm.get('done')?.touched" class="checkbox-error">
+          Vous devez certifier la réalisation du retour pour enregistrer.
+        </mat-error>
+      </div>
 
-  <button mat-raised-button color="primary" (click)="ouvrirFormulaireAvenant()">
-    Créer un avenant
-  </button>
+      <div class="form-actions">
+        <a mat-button href="/agent" class="btn-cancel">Retour</a>
+        <button mat-flat-button type="submit" class="btn-submit btn-retour">Enregistrer le Retour</button>
+      </div>
 
-  <button mat-button color="primary">ENREGISTRER</button>
-
-</form>
+    </form>
+  </div>
+</div>

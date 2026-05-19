@@ -2,12 +2,12 @@ import {Component, Optional} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious} from "@angular/material/stepper";
-import {CurrencyPipe, NgForOf, NgIf} from "@angular/common";
+import {CurrencyPipe, NgForOf, NgIf, DatePipe} from "@angular/common";
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Car} from '../../models/car.model';
 import {Client} from '../../models/client.model';
 import {CarService} from '../../service/car.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LocationService} from '../../service/locationService';
 import {Location, createFakeLocation} from '../../models/location.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -15,6 +15,7 @@ import {MatDialogRef} from '@angular/material/dialog';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {Guarantee, GuaranteeService} from '../../service/guarantee.service';
 import {Option, OptionService} from '../../service/option.service';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-edit-location',
@@ -33,7 +34,9 @@ import {Option, OptionService} from '../../service/option.service';
     MatFormField,
     MatCheckbox,
     CurrencyPipe,
-    NgForOf
+    NgForOf,
+    DatePipe,
+    MatIcon
   ],
   templateUrl: './edit-location.component.html',
   styleUrl: './edit-location.component.css'
@@ -60,6 +63,7 @@ export class EditLocationComponent {
               private snackBar: MatSnackBar,
               private garantieService: GuaranteeService,
               private optionService: OptionService,
+              private router: Router,
               @Optional() private signinDialogRef?: MatDialogRef<EditLocationComponent>
   ) {}
 
@@ -140,15 +144,16 @@ export class EditLocationComponent {
       };
       this.locationService.updateLocation(this.locationId!, formData).subscribe({
         next: (response: any) => {
-          this.snackBar.open('Location effectuée', 'Fermer', {
+          this.snackBar.open('Location mise à jour avec succès', 'Fermer', {
             duration: 5000,
             panelClass: ['snackbar-success']
           });
+          this.router.navigate(['/profil']);
         },
         error: (error) => {
           console.error('Erreur lors de la réservation', error);
           //Notification erreur
-          alert('Erreur lors de la réservation. Veuillez réessayer plus tard. ' +
+          alert('Erreur lors de la modification de la réservation. Veuillez réessayer plus tard. ' +
             (error?.error?.message || error?.message || 'Erreur inconnue'));
         }
       });
@@ -344,8 +349,13 @@ export class EditLocationComponent {
         if (carId) {
           this.carService.getCarById(carId).subscribe({
             next: (car) => {
-              this.car = car;
-              this.pricePerDay = car.car_price;
+              if (car) {
+                this.car = {
+                  ...car,
+                  price: car.price / 100
+                };
+                this.pricePerDay = this.car?.price?.toFixed(2);
+              }
             },
             error: (err) => {
               console.error('Erreur chargement voiture liée :', err);

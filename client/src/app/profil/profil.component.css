@@ -1,66 +1,134 @@
 .profil-content {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 40px 20px;
+  gap: 40px;
+  min-height: calc(100vh - 63px - 85px);
+  background-color: var(--light);
+}
 
-  .profil-details {
-    background-color: #cfcdca;
-    border: 2px solid #3e3e3a;
-    border-radius: 20px;
-    box-shadow: 10px 5px 5px #1e1e1e;
-    width: 800px;
-    padding: 50px;
-    align-content: center;
-    text-align: center;
-    margin: 20px;
+.profil-content > h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-top: 16px;
+  margin-bottom: 32px;
+  letter-spacing: -0.025em;
+  text-align: center;
+}
 
-    .mat-icon-profil {
-      font-size: 60px;
-      width: 100px;
-      height: 60px;
-    }
+.profil-details {
+  background-color: white;
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 800px;
+  padding: 48px;
+  margin: 0;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
 
-    .profil-email {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-    }
+.mat-icon-profil {
+  font-size: 80px;
+  width: 80px;
+  height: 80px;
+  color: var(--primary);
+  margin-bottom: 16px;
+  align-self: center;
+}
 
-    .profil-phone {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-    }
+.profil-details h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-top: 0;
+  margin-bottom: 8px;
+  text-align: center;
+}
 
-    .profil-birth {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-    }
+.profil-header {
+  text-align: center;
+}
 
-    .client_informations{
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-evenly;
-    }
+.profil-header h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
 
-    .info{
-      text-align: start;
+.profil-header h3 {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--gray);
+  margin: 0;
+}
 
-      h2{
-        text-align: center;
-      }
-    }
-  }
+.client_informations {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+  margin-top: 24px;
+}
+
+.info {
+  background-color: var(--light);
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.info h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 16px;
+  text-align: left;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 8px;
+  display: inline-block;
 }
 
 .ligne-info {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 15px;
+  color: var(--dark);
+}
+
+.ligne-info:last-child {
+  margin-bottom: 0;
+}
+
+.ligne-info mat-icon {
+  color: var(--primary);
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  opacity: 0.8;
+}
+
+/* Specific elements if they exist */
+.profil-email, .profil-phone, .profil-birth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: var(--gray);
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.profil-email mat-icon, .profil-phone mat-icon, .profil-birth mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
 }

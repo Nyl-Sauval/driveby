@@ -1,246 +1,329 @@
-<mat-horizontal-stepper [linear]="true" #stepper>
-  <!-- Étape 1 : Réservation -->
-  <mat-step [stepControl]="reservationGroup">
-    <form [formGroup]="reservationGroup">
-      <ng-template matStepLabel>Infos réservation</ng-template>
+<div class="reservation-page-container">
+  <div class="reservation-form-card">
+    <div class="reservation-header">
+      <h1>Modifier votre réservation</h1>
+      <p>Ajustez les informations de votre location ci-dessous.</p>
+    </div>
 
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Date de début</mat-label>
-        <input matInput type="date" formControlName="startDate">
-      </mat-form-field>
+    <mat-horizontal-stepper [linear]="true" #stepper>
+      <!-- Étape 1 : Réservation -->
+      <mat-step [stepControl]="reservationGroup">
+        <form [formGroup]="reservationGroup" class="step-form">
+          <ng-template matStepLabel>Dates</ng-template>
 
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Date de fin</mat-label>
-        <input matInput type="date" formControlName="endDate">
-      </mat-form-field>
-
-      <div *ngIf="reservationGroup.errors?.['carUnavailable'] && reservationGroup.dirty" class="error">
-        Cette voiture est déjà réservée aux dates sélectionnées.
-      </div>
-
-      <div class="step-actions">
-        <button mat-button matStepperNext>Suivant</button>
-      </div>
-    </form>
-  </mat-step>
-
-  <!-- Étape 2 : Client -->
-  <mat-step [stepControl]="clientGroup">
-    <form [formGroup]="clientGroup">
-      <ng-template matStepLabel>Infos client</ng-template>
-
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Nom</mat-label>
-        <input matInput formControlName="name">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Prénom</mat-label>
-        <input matInput formControlName="firstname">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Téléphone</mat-label>
-        <input matInput formControlName="phone">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Date de naissance</mat-label>
-        <input matInput type='date' formControlName="birth">
-      </mat-form-field>
-
-      <div class="step-actions">
-        <button mat-button matStepperPrevious>Retour</button>
-        <button mat-button matStepperNext>Suivant</button>
-      </div>
-    </form>
-  </mat-step>
-
-  <!-- Étape 2.1 : Adresse -->
-  <mat-step>
-    <form [formGroup]="addressGroup">
-      <ng-template matStepLabel>Adresse</ng-template>
-
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Adresse</mat-label>
-        <input matInput formControlName="address">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Code postal</mat-label>
-        <input matInput formControlName="postal_code">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Ville</mat-label>
-        <input matInput formControlName="city">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Pays</mat-label>
-        <input matInput formControlName="country">
-      </mat-form-field>
-
-      <div class="step-actions">
-        <button mat-button matStepperPrevious>Retour</button>
-        <button mat-button matStepperNext>Suivant</button>
-      </div>
-    </form>
-  </mat-step>
-
-  <!-- Étape 2.2 : Permis -->
-  <mat-step>
-    <form [formGroup]="licenseGroup">
-      <ng-template matStepLabel>Permis</ng-template>
-
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Numéro de permis</mat-label>
-        <input matInput formControlName="license_number">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Date de délivrance</mat-label>
-        <input matInput type="date" formControlName="license_issue_date">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Date d'expiration</mat-label>
-        <input matInput type="date" formControlName="license_expiry_date">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Pays de délivrance</mat-label>
-        <input matInput formControlName="license_country">
-      </mat-form-field>
-
-      <div *ngIf="reservationGroup.hasError('carUnavailable') && reservationGroup.invalid && reservationGroup.dirty" class="error">
-        Cette voiture est déjà réservée aux dates sélectionnées.
-      </div>
-
-      <div class="step-actions">
-        <button mat-button matStepperPrevious>Retour</button>
-        <button mat-button matStepperNext>Suivant</button>
-      </div>
-    </form>
-  </mat-step>
-
-
-  <!-- Étape 5 : Garantie -->
-  <mat-step>
-    <ng-template matStepLabel>Garantie</ng-template>
-
-    <h2 class="titre-centre">Sélectionnez la protection souhaitée</h2>
-    <div class="garantie-container">
-      <div
-        class="garantie-card"
-        *ngFor="let garantie of garanties; let i = index"
-        [class.selected]="isSelected(i)"
-        (click)="select(i)"
-      >
-        <div class="garantie-header">
-          <div>
-            <h3>{{ garantie.guarantee_name }}</h3>
-            <p>{{ garantie.guarantee_description }}</p>
+          <div class="step-intro">
+            <h3>Dates de location</h3>
+            <p>Ajustez la période de début et de fin de location.</p>
           </div>
-          <div class="prix">{{ garantie.guarantee_price | currency:'EUR':'symbol':'1.2-2' }}</div>
+
+          <div class="form-grid">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Date de début</mat-label>
+              <input matInput type="date" formControlName="startDate">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Date de fin</mat-label>
+              <input matInput type="date" formControlName="endDate">
+            </mat-form-field>
+          </div>
+
+          <div *ngIf="reservationGroup.errors?.['carUnavailable'] && reservationGroup.dirty" class="error-banner">
+            <mat-icon>error</mat-icon>
+            <span>Ce véhicule n'est pas disponible pour les dates sélectionnées.</span>
+          </div>
+
+          <div class="step-actions">
+            <div></div> <!-- Spacer -->
+            <button mat-flat-button color="primary" class="btn-primary" matStepperNext>Suivant</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Étape 2 : Client -->
+      <mat-step [stepControl]="clientGroup">
+        <form [formGroup]="clientGroup" class="step-form">
+          <ng-template matStepLabel>Identité</ng-template>
+
+          <div class="step-intro">
+            <h3>Informations personnelles</h3>
+            <p>Veuillez modifier si nécessaire les coordonnées du conducteur.</p>
+          </div>
+
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Nom</mat-label>
+              <input matInput formControlName="name" placeholder="Dupont">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Prénom</mat-label>
+              <input matInput formControlName="firstname" placeholder="Jean">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width-field">
+              <mat-label>Adresse email</mat-label>
+              <input matInput formControlName="email" type="email" placeholder="jean.dupont@gmail.com">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Téléphone</mat-label>
+              <input matInput formControlName="phone" placeholder="0612345678">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Date de naissance</mat-label>
+              <input matInput type='date' formControlName="birth">
+            </mat-form-field>
+          </div>
+
+          <div class="step-actions">
+            <button mat-button class="btn-secondary" matStepperPrevious>Retour</button>
+            <button mat-flat-button color="primary" class="btn-primary" matStepperNext>Suivant</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Étape 3 : Adresse -->
+      <mat-step>
+        <form [formGroup]="addressGroup" class="step-form">
+          <ng-template matStepLabel>Adresse</ng-template>
+
+          <div class="step-intro">
+            <h3>Adresse du conducteur</h3>
+            <p>Renseignez votre adresse de facturation.</p>
+          </div>
+
+          <div class="form-grid">
+            <mat-form-field appearance="outline" class="full-width-field">
+              <mat-label>Adresse</mat-label>
+              <input matInput formControlName="address" placeholder="12 rue de la Paix">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Code postal</mat-label>
+              <input matInput formControlName="postal_code" placeholder="75000">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Ville</mat-label>
+              <input matInput formControlName="city" placeholder="Paris">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width-field">
+              <mat-label>Pays</mat-label>
+              <input matInput formControlName="country" placeholder="France">
+            </mat-form-field>
+          </div>
+
+          <div class="step-actions">
+            <button mat-button class="btn-secondary" matStepperPrevious>Retour</button>
+            <button mat-flat-button color="primary" class="btn-primary" matStepperNext>Suivant</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Étape 4 : Permis -->
+      <mat-step>
+        <form [formGroup]="licenseGroup" class="step-form">
+          <ng-template matStepLabel>Permis</ng-template>
+
+          <div class="step-intro">
+            <h3>Permis de conduire</h3>
+            <p>Les informations du permis de conduire sont obligatoires pour valider le contrat.</p>
+          </div>
+
+          <div class="form-grid">
+            <mat-form-field appearance="outline" class="full-width-field">
+              <mat-label>Numéro de permis</mat-label>
+              <input matInput formControlName="license_number" placeholder="Ex. 12AA34567">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Date de délivrance</mat-label>
+              <input matInput type="date" formControlName="license_issue_date">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Date d'expiration</mat-label>
+              <input matInput type="date" formControlName="license_expiry_date">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width-field">
+              <mat-label>Pays de délivrance</mat-label>
+              <input matInput formControlName="license_country" placeholder="France">
+            </mat-form-field>
+          </div>
+
+          <div class="step-actions">
+            <button mat-button class="btn-secondary" matStepperPrevious>Retour</button>
+            <button mat-flat-button color="primary" class="btn-primary" matStepperNext>Suivant</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Étape 5 : Garantie -->
+      <mat-step>
+        <div class="step-form">
+          <ng-template matStepLabel>Garantie</ng-template>
+
+          <div class="step-intro">
+            <h3>Protection et Garanties</h3>
+            <p>Sélectionnez le niveau de protection souhaité pour votre voyage.</p>
+          </div>
+
+          <div class="garantie-container">
+            <div
+              class="garantie-card"
+              *ngFor="let garantie of garanties; let i = index"
+              [class.selected]="isSelected(i)"
+              (click)="select(i)"
+            >
+              <div class="garantie-header">
+                <div class="garantie-info">
+                  <div class="selected-indicator" *ngIf="isSelected(i)">
+                    <mat-icon>check_circle</mat-icon>
+                  </div>
+                  <div>
+                    <h3>{{ garantie.guarantee_name }}</h3>
+                    <p class="garantie-desc">{{ garantie.guarantee_description }}</p>
+                  </div>
+                </div>
+                <div class="prix">
+                  <span class="price-val">{{ garantie.guarantee_price | currency:'EUR':'symbol':'1.2-2' }}</span>
+                </div>
+              </div>
+
+              <div class="garantie-details">
+                <ul>
+                  <li class="inclusion"><mat-icon>check</mat-icon> Assurance au tiers</li>
+                  <li class="inclusion"><mat-icon>check</mat-icon> Assistance dépannage 24/7</li>
+                  <li [class.exclusion]="!isSelected(i)" [class.inclusion]="isSelected(i)">
+                    <mat-icon>{{ isSelected(i) ? 'check' : 'remove_circle_outline' }}</mat-icon> 
+                    Franchise réduite
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button mat-button class="btn-secondary" matStepperPrevious>Retour</button>
+            <button mat-flat-button color="primary" class="btn-primary" matStepperNext>Suivant</button>
+          </div>
         </div>
+      </mat-step>
 
-        <div *ngIf="isSelected(i)" class="garantie-details">
-          <ul>
-            <li class="inclusion">Assurance au tiers</li>
-            <li class="inclusion">Assistance dépannage 24/7</li>
-            <li class="exclusion">Franchise à vérifier</li>
-          </ul>
+      <!-- Étape 6 : Options -->
+      <mat-step>
+        <div class="step-form">
+          <ng-template matStepLabel>Options</ng-template>
+
+          <div class="step-intro">
+            <h3>Équipements & Options</h3>
+            <p>Personnalisez votre location avec des services supplémentaires.</p>
+          </div>
+
+          <div class="option-container">
+            <div
+              *ngFor="let option of options"
+              class="option-card"
+              [class.checked]="isOptionSelected(option)"
+            >
+              <div class="option-card-header">
+                <mat-checkbox
+                  [checked]="isOptionSelected(option)"
+                  (change)="toggleOption(option)"
+                  color="primary"
+                >
+                  <span class="option-title">{{ option.option_name }}</span>
+                </mat-checkbox>
+                <span class="option-price">+{{ option.option_price | currency:'EUR':'symbol':'1.2-2' }}/jour</span>
+              </div>
+              <p class="option-desc">{{ option.option_description }}</p>
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button mat-button class="btn-secondary" matStepperPrevious>Retour</button>
+            <button mat-flat-button color="primary" class="btn-primary" matStepperNext>Suivant</button>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="step-actions">
-      <button mat-button matStepperPrevious>Retour</button>
-      <button mat-button matStepperNext>Suivant</button>
-    </div>
-  </mat-step>
+      </mat-step>
 
-  <!-- Étape 6 : Options -->
-  <mat-step>
-    <ng-template matStepLabel>Options</ng-template>
+      <!-- Étape 7 : Récapitulatif -->
+      <mat-step>
+        <div class="step-form">
+          <ng-template matStepLabel>Récapitulatif</ng-template>
 
-    <h2>Options disponibles</h2>
-    <div class="option-container">
-      <div
-        *ngFor="let option of options"
-        class="option-card"
-      >
-        <mat-checkbox
-          [checked]="isOptionSelected(option)"
-          (change)="toggleOption(option)"
-        >
-          <strong>{{ option.option_name }}</strong>
-        </mat-checkbox>
+          <div class="step-intro">
+            <h3>Vérifiez vos informations</h3>
+            <p>Veuillez relire le résumé de votre réservation avant d'enregistrer les modifications.</p>
+          </div>
 
-        <p>{{ option.option_description }}</p>
-        <span>+{{ option.option_price | currency:'EUR' }}/jour</span>
-      </div>
-    </div>
+          <div class="recap-sections">
+            <div class="recap-section-card">
+              <h4><mat-icon>calendar_today</mat-icon> Période de location</h4>
+              <p><strong>Début :</strong> {{ reservationValues.startDate | date:'dd/MM/yyyy' }}</p>
+              <p><strong>Fin :</strong> {{ reservationValues.endDate | date:'dd/MM/yyyy' }}</p>
+              <p><strong>Durée :</strong> {{ reservationDays }} jour(s)</p>
+            </div>
 
-    <div class="step-actions">
-      <button mat-button matStepperPrevious>Retour</button>
-      <button mat-button matStepperNext>Suivant</button>
-    </div>
-  </mat-step>
+            <div class="recap-section-card">
+              <h4><mat-icon>person</mat-icon> Conducteur</h4>
+              <p><strong>Nom complet :</strong> {{ clientValues.firstname }} {{ clientValues.name }}</p>
+              <p><strong>Email :</strong> {{ clientValues.email }}</p>
+              <p><strong>Téléphone :</strong> {{ clientValues.phone }}</p>
+              <p><strong>Date de naissance :</strong> {{ clientValues.birth | date:'dd/MM/yyyy' }}</p>
+            </div>
 
-  <!-- Étape 3 : Récap -->
-  <mat-step>
-    <ng-template matStepLabel>Récapitulatif</ng-template>
+            <div class="recap-section-card">
+              <h4><mat-icon>place</mat-icon> Adresse</h4>
+              <p>{{ addressValues.address }}</p>
+              <p>{{ addressValues.postal_code }} {{ addressValues.city }}</p>
+              <p>{{ addressValues.country }}</p>
+            </div>
 
-    <div class="recap-container">
-      <h2>Récapitulatif</h2>
-      <div class="recap-grid">
-      <p><strong>Début :</strong> {{ reservationValues.startDate }}</p>
-      <p><strong>Fin :</strong> {{ reservationValues.endDate }}</p>
-      <p><strong>Agence :</strong> {{ reservationValues.agency }}</p>
+            <div class="recap-section-card">
+              <h4><mat-icon>badge</mat-icon> Permis de conduire</h4>
+              <p><strong>Numéro :</strong> {{ licenseValues.license_number }}</p>
+              <p><strong>Délivré le :</strong> {{ licenseValues.license_issue_date | date:'dd/MM/yyyy' }}</p>
+              <p><strong>Expire le :</strong> {{ licenseValues.license_expiry_date | date:'dd/MM/yyyy' }}</p>
+            </div>
+          </div>
 
-      <p><strong>Nom :</strong> {{ clientValues.name }}</p>
-      <p><strong>Prénom :</strong> {{ clientValues.firstname }}</p>
-      <p><strong>Email :</strong> {{ clientValues.email }}</p>
-      <p><strong>Téléphone :</strong> {{ clientValues.phone }}</p>
-      <p><strong>Date de naissance :</strong> {{ clientValues.birth }}</p>
-      <p><strong>Adresse :</strong> {{ addressValues.address }}</p>
-      <p><strong>Code postal :</strong> {{ addressValues.postal_code }}</p>
-      <p><strong>Ville :</strong> {{ addressValues.city }}</p>
-      <p><strong>Pays :</strong> {{ addressValues.country }}</p>
-      <p><strong>Numéro de permis :</strong> {{ licenseValues.license_number }}</p>
-      <p><strong>Date de délivrance :</strong> {{ licenseValues.license_issue_date }}</p>
-      <p><strong>Date d'expiration du permis :</strong> {{ licenseValues.license_expiry_date }}</p>
+          <!-- Selected Protect/Options summary -->
+          <div class="recap-addons" *ngIf="getSelectedGuarantee() || getSelectedOptions().length > 0">
+            <div class="addon-summary-card">
+              <h4><mat-icon>shield</mat-icon> Protection & Options sélectionnées</h4>
+              <div class="addon-row" *ngIf="getSelectedGuarantee() as g">
+                <span>{{ g.guarantee_name }}</span>
+                <span class="addon-price">{{ g.guarantee_price | currency:'EUR':'symbol':'1.2-2' }}/jour</span>
+              </div>
+              <div class="addon-row" *ngFor="let opt of getSelectedOptions()">
+                <span>{{ opt.option_name }}</span>
+                <span class="addon-price">{{ opt.option_price | currency:'EUR':'symbol':'1.2-2' }}/jour</span>
+              </div>
+            </div>
+          </div>
 
-      <p *ngIf="getSelectedGuarantee() as g">
-        <strong>Garantie choisie :</strong>
-        {{ g.guarantee_name }} ({{ g.guarantee_price | currency:'EUR':'symbol':'1.2-2' }})
-      </p>
+          <div class="recap-pricing-summary">
+            <div class="pricing-row">
+              <span>Tarif journalier total :</span>
+              <span class="price-value">{{ getRoundedPrice(getDailyTotal()) | currency:'EUR':'symbol':'1.2-2' }}</span>
+            </div>
+            <div class="pricing-row total">
+              <span>Montant total de la réservation :</span>
+              <span class="price-value">{{ getRoundedPrice(getTotalReservation()) | currency:'EUR':'symbol':'1.2-2' }}</span>
+            </div>
+          </div>
 
-      <div *ngIf="getSelectedOptions().length > 0">
-        <p><strong>Options sélectionnées :</strong></p>
-        <ul>
-          <li *ngFor="let opt of getSelectedOptions()">
-            {{ opt.option_name }} : Oui
-          </li>
-        </ul>
-      </div>
-      </div>
-    </div>
-
-    <div class="recap-pricing">
-      <h3><strong>Prix / jour :</strong> {{ getRoundedPrice(getDailyTotal()/100) | currency:'EUR':'symbol':'1.2-2' }}</h3>
-      <h3><strong>Prix pour {{ reservationDays }} jour(s) :</strong> {{ getRoundedPrice(getTotalReservation()/100) | currency:'EUR':'symbol':'1.2-2' }}</h3>
-    </div>
-
-    <div class="step-actions">
-      <button mat-button matStepperPrevious>Retour</button>
-      <button mat-button color="primary" (click)="onSubmit()">Confirmer la réservation</button>
-    </div>
-  </mat-step>
-</mat-horizontal-stepper>
+          <div class="step-actions">
+            <button mat-button class="btn-secondary" matStepperPrevious>Retour</button>
+            <button mat-flat-button color="primary" class="btn-primary btn-confirm" (click)="onSubmit()">Valider les modifications</button>
+          </div>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+</div>

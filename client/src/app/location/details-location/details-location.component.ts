@@ -1,14 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CarService} from '../../service/car.service';
-import {MatDivider, MatDividerModule} from '@angular/material/divider';
 import {GuaranteeService} from '../../service/guarantee.service';
+import {NgIf, CurrencyPipe} from '@angular/common';
+import {MatIcon} from '@angular/material/icon';
+import {MatButton} from '@angular/material/button';
+import {LocationService} from '../../service/locationService';
 
 @Component({
   selector: 'app-details-location',
   imports: [
-    MatDivider,
-    MatDividerModule
+    NgIf,
+    CurrencyPipe,
+    MatIcon,
+    MatButton
   ],
   templateUrl: './details-location.component.html',
   styleUrl: './details-location.component.css'
@@ -19,7 +24,8 @@ export class DetailsLocationComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private carService: CarService,
-              private garantieService: GuaranteeService) {}
+              private garantieService: GuaranteeService,
+              private locationService: LocationService) {}
 
   ngOnInit() {
     const id: string | null = this.route.snapshot.paramMap.get('id');
@@ -69,5 +75,22 @@ export class DetailsLocationComponent implements OnInit {
     const total = diffDays * (location.car?.car_price || 0) / 100;
 
     return total;
+  }
+
+  downloadInvoice(): void {
+    if (!this.location) return;
+    this.locationService.downloadInvoice(this.location.id).subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `facture-location-${this.location.id}.pdf`;
+        a.click();
+        URL.revokeObjectURL(url);
+      },
+      error: (err) => {
+        console.error('Erreur lors du téléchargement de la facture :', err);
+      }
+    });
   }
 }

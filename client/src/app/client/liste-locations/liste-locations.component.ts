@@ -100,7 +100,7 @@ export class ListeLocationsComponent implements OnChanges {
   openModalDownload(location: any) {
     console.log(location);
     const dialogRef = this.dialog.open(DownloadDocumentsComponent, {
-      width: '300px',
+      width: '480px',
       data: {
         message: 'Documents disponibles',
         locationId: location.id,

@@ -11,18 +11,21 @@ import { MatDialogRef } from '@angular/material/dialog';
 import {EnregistrementComponent} from '../enregistrement/enregistrement.component';
 
 
+import {MatIcon} from '@angular/material/icon';
+import {RouterLink} from '@angular/router';
+
 @Component({
   selector: 'app-login',
   imports: [
     NgIf,
     ReactiveFormsModule,
     MatFormField,
-    MatFormField,
     MatInput,
     MatButton,
-    MatFormField,
     MatError,
-    MatLabel
+    MatLabel,
+    MatIcon,
+    RouterLink
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'

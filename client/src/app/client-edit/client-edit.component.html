@@ -1,103 +1,116 @@
-<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-  <mat-horizontal-stepper linear #stepper>
-    <!-- Étape 1 : Identité -->
-    <mat-step [stepControl]="identityForm">
-      <form [formGroup]="identityForm">
-        <ng-template matStepLabel>Identité</ng-template>
+<div class="edit-client-container">
+  <div class="edit-client-header">
+    <h1>Modifier le profil client</h1>
+    <p>Mettez à jour vos informations personnelles, votre adresse et votre permis de conduire.</p>
+  </div>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Nom</mat-label>
-          <input matInput formControlName="client_name" required />
-        </mat-form-field>
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <mat-horizontal-stepper linear #stepper>
+      <!-- Étape 1 : Identité -->
+      <mat-step [stepControl]="identityForm">
+        <form [formGroup]="identityForm">
+          <ng-template matStepLabel>Identité</ng-template>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Prénom</mat-label>
-          <input matInput formControlName="client_firstname" required />
-        </mat-form-field>
+          <div class="step-form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Nom</mat-label>
+              <input matInput formControlName="client_name" required placeholder="Dupont" />
+            </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="client_email" type="email" required />
-        </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Prénom</mat-label>
+              <input matInput formControlName="client_firstname" required placeholder="Jean" />
+            </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Téléphone</mat-label>
-          <input matInput formControlName="client_phone" />
-        </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width-field">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="client_email" type="email" required placeholder="jean.dupont@gmail.com" />
+            </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Date de naissance</mat-label>
-          <input matInput formControlName="client_birth" type="date" />
-        </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Téléphone</mat-label>
+              <input matInput formControlName="client_phone" placeholder="0612345678" />
+            </mat-form-field>
 
-        <div>
-          <button mat-button matStepperNext>SUIVANT</button>
-        </div>
-      </form>
-    </mat-step>
+            <mat-form-field appearance="outline">
+              <mat-label>Date de naissance</mat-label>
+              <input matInput formControlName="client_birth" type="date" />
+            </mat-form-field>
+          </div>
 
-    <!-- Étape 2 : Adresse -->
-    <mat-step [stepControl]="addressForm">
-      <form [formGroup]="addressForm">
-        <ng-template matStepLabel>Adresse</ng-template>
+          <div class="step-actions">
+            <button mat-flat-button color="primary" class="btn-primary" matStepperNext>Suivant</button>
+          </div>
+        </form>
+      </mat-step>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Adresse</mat-label>
-          <input matInput formControlName="client_address" />
-        </mat-form-field>
+      <!-- Étape 2 : Adresse -->
+      <mat-step [stepControl]="addressForm">
+        <form [formGroup]="addressForm">
+          <ng-template matStepLabel>Adresse</ng-template>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Code postal</mat-label>
-          <input matInput formControlName="client_postal_code" />
-        </mat-form-field>
+          <div class="step-form-grid">
+            <mat-form-field appearance="outline" class="full-width-field">
+              <mat-label>Adresse</mat-label>
+              <input matInput formControlName="client_address" placeholder="12 rue de la Paix" />
+            </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Ville</mat-label>
-          <input matInput formControlName="client_city" />
-        </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Code postal</mat-label>
+              <input matInput formControlName="client_postal_code" placeholder="75000" />
+            </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Pays</mat-label>
-          <input matInput formControlName="client_country" />
-        </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Ville</mat-label>
+              <input matInput formControlName="client_city" placeholder="Paris" />
+            </mat-form-field>
 
-        <div>
-          <button mat-button matStepperPrevious>PRÉCÉDENT</button>
-          <button mat-button matStepperNext>SUIVANT</button>
-        </div>
-      </form>
-    </mat-step>
+            <mat-form-field appearance="outline" class="full-width-field">
+              <mat-label>Pays</mat-label>
+              <input matInput formControlName="client_country" placeholder="France" />
+            </mat-form-field>
+          </div>
 
-    <!-- Étape 3 : Permis -->
-    <mat-step [stepControl]="licenseForm">
-      <form [formGroup]="licenseForm">
-        <ng-template matStepLabel>Permis de conduire</ng-template>
+          <div class="step-actions">
+            <button mat-button class="btn-secondary" matStepperPrevious>Précédent</button>
+            <button mat-flat-button color="primary" class="btn-primary" matStepperNext>Suivant</button>
+          </div>
+        </form>
+      </mat-step>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Numéro de permis</mat-label>
-          <input matInput formControlName="client_license_number" />
-        </mat-form-field>
+      <!-- Étape 3 : Permis -->
+      <mat-step [stepControl]="licenseForm">
+        <form [formGroup]="licenseForm">
+          <ng-template matStepLabel>Permis de conduire</ng-template>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Date de délivrance</mat-label>
-          <input matInput formControlName="client_license_issue_date" type="date" />
-        </mat-form-field>
+          <div class="step-form-grid">
+            <mat-form-field appearance="outline" class="full-width-field">
+              <mat-label>Numéro de permis</mat-label>
+              <input matInput formControlName="client_license_number" placeholder="Ex. 12AA34567" />
+            </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Date d’expiration</mat-label>
-          <input matInput formControlName="client_license_expiry_date" type="date" />
-        </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Date de délivrance</mat-label>
+              <input matInput formControlName="client_license_issue_date" type="date" />
+            </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Pays du permis</mat-label>
-          <input matInput formControlName="client_license_country" />
-        </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Date d’expiration</mat-label>
+              <input matInput formControlName="client_license_expiry_date" type="date" />
+            </mat-form-field>
 
-        <div>
-          <button mat-button matStepperPrevious>PRÉCÉDENT</button>
-          <button mat-button (click)="onSubmit()" color="primary">ENREGISTRER</button>
-        </div>
-      </form>
-    </mat-step>
-  </mat-horizontal-stepper>
-</form>
+            <mat-form-field appearance="outline" class="full-width-field">
+              <mat-label>Pays du permis</mat-label>
+              <input matInput formControlName="client_license_country" placeholder="France" />
+            </mat-form-field>
+          </div>
+
+          <div class="step-actions">
+            <button mat-button class="btn-secondary" matStepperPrevious>Précédent</button>
+            <button mat-flat-button color="primary" class="btn-primary" (click)="onSubmit()">Enregistrer</button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </form>
+</div>

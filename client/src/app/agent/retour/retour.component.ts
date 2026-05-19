@@ -10,9 +10,10 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MatButton} from '@angular/material/button';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {NgIf} from '@angular/common';
+import {NgIf, CurrencyPipe} from '@angular/common';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {AvenantFormComponent} from '../avenant-form/avenant-form.component';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-retour',
@@ -29,7 +30,9 @@ import {AvenantFormComponent} from '../avenant-form/avenant-form.component';
     NgIf,
     ReactiveFormsModule,
     MatFormField,
-    MatError
+    MatError,
+    MatIcon,
+    CurrencyPipe
   ],
   templateUrl: './retour.component.html',
   styleUrl: './retour.component.css'

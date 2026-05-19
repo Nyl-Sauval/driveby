@@ -1,9 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatFormField, MatInput } from '@angular/material/input';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { MatFormField, MatInput, MatError } from '@angular/material/input';
 import { MatLabel } from '@angular/material/form-field';
 import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-avenant-form',
@@ -12,8 +14,14 @@ import { MatButton } from '@angular/material/button';
     MatFormField,
     MatLabel,
     MatInput,
+    MatError,
     ReactiveFormsModule,
-    MatButton
+    MatButton,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatIcon,
+    NgIf
   ],
   templateUrl: './avenant-form.component.html',
   styleUrl: './avenant-form.component.css'

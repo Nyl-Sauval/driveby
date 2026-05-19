@@ -11,20 +11,21 @@ import {MatDialogRef} from '@angular/material/dialog';
 
 
 
+import {MatIcon} from '@angular/material/icon';
+import {RouterLink} from '@angular/router';
+
 @Component({
   selector: 'app-enregistrement',
   imports: [
     NgIf,
     ReactiveFormsModule,
     MatFormField,
-    MatFormField,
-    MatFormField,
-    MatFormField,
     MatInput,
     MatButton,
-    MatFormField,
     MatLabel,
-    MatError
+    MatError,
+    MatIcon,
+    RouterLink
   ],
   templateUrl: './enregistrement.component.html',
   styleUrl: './enregistrement.component.css'

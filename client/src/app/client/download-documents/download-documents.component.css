@@ -1,0 +1,148 @@
+.download-dialog-container {
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+  padding: 20px 24px 8px;
+  width: 100%;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.header-icon {
+  color: var(--primary);
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+h2[mat-dialog-title] {
+  margin: 0 !important;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--dark);
+  padding: 0 !important;
+}
+
+.dialog-body {
+  padding: 12px 0 20px 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0 !important;
+}
+
+.dialog-intro {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.5;
+  margin: 0 0 8px 0;
+}
+
+.document-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Document Button Styling */
+.doc-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 14px 16px;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  gap: 16px;
+}
+
+.doc-btn:hover {
+  background: #f8fafc;
+  border-color: rgba(37, 99, 235, 0.2);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.doc-btn:active {
+  transform: translateY(0);
+}
+
+.doc-btn-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.doc-btn-icon mat-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+.doc-btn-icon.invoice {
+  background-color: rgba(37, 99, 235, 0.1);
+  color: var(--primary);
+}
+
+.doc-btn-icon.addendum {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.doc-btn-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.doc-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--dark);
+  margin-bottom: 2px;
+}
+
+.doc-desc {
+  font-size: 11px;
+  color: var(--gray);
+}
+
+.arrow-icon {
+  color: #94a3b8;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+.doc-btn:hover .arrow-icon {
+  transform: translateY(2px);
+  color: var(--dark);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 12px !important;
+}
+
+.btn-close {
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  color: #64748b !important;
+  padding: 8px 16px !important;
+}

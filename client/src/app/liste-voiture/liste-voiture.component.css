@@ -1,34 +1,54 @@
-h2{
+h2 {
   text-align: center;
-  font-size: 48px;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-top: 32px;
+  margin-bottom: 16px;
+  letter-spacing: -0.025em;
 }
 
-/*BARRE DES FILTRES*/
+/* BARRE DES FILTRES */
 .filtres {
   display: flex;
   width: 100%;
-  border: 1px solid black;
-  padding: 30px;
-  margin-top: 40px;
+  background-color: white;
+  padding: 20px 40px;
+  margin-top: 20px;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
   gap: 20px;
-
-  .toggle-button-filters {
-    margin: 10px;
-
-    .filter-text {
-      border: 1px solid #878683;
-      border-radius: 10px;
-      padding: 10px 20px;
-      background-color: #bdbcb8;
-      box-shadow: 10px 5px 5px #62605b;
-    }
-  }
+  box-shadow: var(--shadow-sm);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/*SIDEBAR*/
+.toggle-button-filters {
+  margin: 10px;
+}
+
+.filter-text {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 9999px;
+  padding: 12px 24px;
+  background-color: white;
+  color: var(--dark);
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-text:hover {
+  background-color: var(--light);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* SIDEBAR */
 .sidebarFilters {
   display: flex;
   flex-direction: column;
@@ -36,23 +56,26 @@ h2{
   width: 400px;
   position: fixed;
   top: 0;
-  background-color: #e4e3e1;
-  padding: 60px 20px;
-  transition: right 0.3s ease;
-  z-index: 10;
+  background-color: white;
+  padding: 40px 30px;
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1050;
   box-sizing: border-box;
-  left: -400px;
+  right: -420px; /* Slide from right instead of left for a more modern drawer feel */
+  left: auto;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
 }
-
 
 .overlayFilters {
   position: fixed;
   top: 0;
-  left: 400px;
+  left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,.3);
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease;
@@ -61,7 +84,7 @@ h2{
 
 /* Sidebar visible */
 .sidebarFilters.active {
-  left: 0;
+  right: 0;
 }
 
 /* Overlay visible */
@@ -72,7 +95,7 @@ h2{
 
 /* Quand le checkbox est coché, afficher sidebar + overlay */
 #toggleSidebar:checked ~ #sidebarFilters {
-  left: 0;
+  right: 0;
 }
 
 #toggleSidebar:checked ~ .overlayFilters {
@@ -80,20 +103,19 @@ h2{
   visibility: visible;
 }
 
-.voiture-container{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-  height: 100%;
-  background-color: #f0f0f0;
-  overflow: hidden;
-  padding: 20px;
+.voiture-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 32px;
+  padding: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: transparent;
 }
 
 :host {
-  height: auto;
-  display: inline-block;
-  width: 100vw;
+  display: block;
+  width: 100%;
+  min-height: calc(100vh - 63px - 85px); /* min height minus header and footer */
+  background-color: var(--light);
 }

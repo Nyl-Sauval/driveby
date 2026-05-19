@@ -12,8 +12,10 @@ import {
 } from '@angular/material/card';
 import {MatChip} from '@angular/material/chips';
 import {MatIcon} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
 import {AsyncPipe, NgFor, NgIf} from '@angular/common';
 import {BehaviorSubject} from 'rxjs';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-detail-voiture',
@@ -24,6 +26,8 @@ import {BehaviorSubject} from 'rxjs';
     MatCardContent,
     MatChip,
     MatIcon,
+    MatButtonModule,
+    RouterLink,
     NgIf,
     NgFor,
     MatCardSubtitle,

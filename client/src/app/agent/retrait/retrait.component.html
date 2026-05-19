@@ -1,69 +1,92 @@
-<form [formGroup]="retraitForm" (ngSubmit)="onSubmit()" class="retrait-form">
+<div class="agent-form-page">
+  <div class="agent-form-card">
+    <div class="form-header">
+      <div class="header-icon-wrapper retrait">
+        <mat-icon>login</mat-icon>
+      </div>
+      <h1>Enregistrer le Retrait du Véhicule</h1>
+      <p>Vérifiez l'état de la voiture avec le client et renseignez les informations ci-dessous.</p>
+    </div>
 
-  <h1>État de la voiture lors du retrait</h1>
+    <form [formGroup]="retraitForm" (ngSubmit)="onSubmit()" class="form-content">
+      
+      <div class="form-grid-2">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Date de retrait</mat-label>
+          <input matInput formControlName="dateRetrait" required type="date"/>
+          <mat-error *ngIf="retraitForm.get('dateRetrait')?.invalid && retraitForm.get('dateRetrait')?.touched">
+            Date de retrait requise
+          </mat-error>
+        </mat-form-field>
 
-  <mat-form-field appearance="fill" class="form-width">
-    <mat-label>Date de retrait</mat-label>
-    <input matInput formControlName="dateRetrait" required type="date"/>
-    <mat-error *ngIf="retraitForm.get('dateRetrait')?.invalid && retraitForm.get('dateRetrait')?.touched">
-      Date de retrait requise
-    </mat-error>
-  </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Kilométrage (km)</mat-label>
+          <input matInput type="number" formControlName="mileage" placeholder="Ex. 45000" required />
+          <mat-error *ngIf="retraitForm.get('mileage')?.invalid && retraitForm.get('mileage')?.touched">
+            Kilométrage requis
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-  <mat-form-field appearance="fill" class="form-width">
-    <mat-label>Kilométrage</mat-label>
-    <input matInput formControlName="mileage" required />
-    <mat-error *ngIf="retraitForm.get('mileage')?.invalid && retraitForm.get('mileage')?.touched">
-      Kilométrage requis
-    </mat-error>
-  </mat-form-field>
+      <div class="form-grid-2">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Niveau de carburant (%)</mat-label>
+          <input matInput type="number" formControlName="fuel" placeholder="Ex. 100" min="0" max="100" required />
+          <mat-error *ngIf="retraitForm.get('fuel')?.invalid && retraitForm.get('fuel')?.touched">
+            Niveau de carburant requis (0 à 100)
+          </mat-error>
+        </mat-form-field>
 
-  <mat-form-field appearance="fill" class="form-width">
-    <mat-label>Niveau d'essence (%)</mat-label>
-    <input matInput formControlName="fuel" required />
-    <mat-error *ngIf="retraitForm.get('fuel')?.invalid && retraitForm.get('fuel')?.touched">
-      Kilométrage requis
-    </mat-error>
-  </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>État extérieur du véhicule</mat-label>
+          <mat-select formControlName="exteriorStatus" required>
+            <mat-option value="tres-bon">Très bon</mat-option>
+            <mat-option value="bon">Bon</mat-option>
+            <mat-option value="moyen">Moyen</mat-option>
+            <mat-option value="mauvais">Mauvais</mat-option>
+          </mat-select>
+          <mat-error *ngIf="retraitForm.get('exteriorStatus')?.invalid && retraitForm.get('exteriorStatus')?.touched">
+            État extérieur requis
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-  <mat-form-field appearance="fill" class="form-width">
-    <mat-label>État extérieur de la voiture</mat-label>
-    <mat-select formControlName="exteriorStatus" required>
-      <mat-option value="tres-bon">Très bon</mat-option>
-      <mat-option value="bon">Bon</mat-option>
-      <mat-option value="moyen">Moyen</mat-option>
-      <mat-option value="mauvais">Mauvais</mat-option>
-    </mat-select>
-    <mat-error *ngIf="retraitForm.get('exteriorStatus')?.invalid && retraitForm.get('exteriorStatus')?.touched">
-      État extérieur de la voiture requis
-    </mat-error>
-  </mat-form-field>
+      <div class="form-grid-2">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>État intérieur du véhicule</mat-label>
+          <mat-select formControlName="interiorStatus" required>
+            <mat-option value="tres-bon">Très bon</mat-option>
+            <mat-option value="bon">Bon</mat-option>
+            <mat-option value="moyen">Moyen</mat-option>
+            <mat-option value="mauvais">Mauvais</mat-option>
+          </mat-select>
+          <mat-error *ngIf="retraitForm.get('interiorStatus')?.invalid && retraitForm.get('interiorStatus')?.touched">
+            État intérieur requis
+          </mat-error>
+        </mat-form-field>
 
-  <mat-form-field appearance="fill" class="form-width">
-    <mat-label>État intérieur de la voiture</mat-label>
-    <mat-select formControlName="interiorStatus" required>
-      <mat-option value="tres-bon">Très bon</mat-option>
-      <mat-option value="bon">Bon</mat-option>
-      <mat-option value="moyen">Moyen</mat-option>
-      <mat-option value="mauvais">Mauvais</mat-option>
-    </mat-select>
-    <mat-error *ngIf="retraitForm.get('interiorStatus')?.invalid && retraitForm.get('interiorStatus')?.touched">
-      État intérieur de la voiture requis
-    </mat-error>
-  </mat-form-field>
+        <div></div> <!-- Spacer -->
+      </div>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Défaut de la voiture</mat-label>
-    <textarea matInput formControlName="default" rows="5"></textarea>
-  </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width-field">
+        <mat-label>Défauts signalés / Observations additionnelles</mat-label>
+        <textarea matInput formControlName="default" placeholder="Saisissez d'éventuels défauts constatés (rayures, impacts...)" rows="4"></textarea>
+      </mat-form-field>
 
-  <mat-checkbox formControlName="done" required class="done-form">
-    Retrait fait
-  </mat-checkbox>
-  <mat-error *ngIf="retraitForm.get('done')?.invalid && retraitForm.get('done')?.touched">
-    Ce champ est requis
-  </mat-error>
+      <div class="checkbox-container">
+        <mat-checkbox formControlName="done" required color="primary" class="done-checkbox">
+          Je certifie avoir effectué l'état des lieux de retrait avec le client
+        </mat-checkbox>
+        <mat-error *ngIf="retraitForm.get('done')?.invalid && retraitForm.get('done')?.touched" class="checkbox-error">
+          Vous devez certifier la réalisation du retrait pour enregistrer.
+        </mat-error>
+      </div>
 
-  <button mat-button color="primary">ENREGISTRER</button>
+      <div class="form-actions">
+        <a mat-button href="/agent" class="btn-cancel">Retour</a>
+        <button mat-flat-button color="primary" type="submit" class="btn-submit">Valider le Retrait</button>
+      </div>
 
-</form>
+    </form>
+  </div>
+</div>

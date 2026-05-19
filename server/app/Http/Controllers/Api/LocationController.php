@@ -78,23 +78,8 @@ class LocationController extends BaseController
             //Vérifie si un client existe avec cet email
             $client = Client::where('client_email', $request->email)->first();
         }
-        if($client) {
-            $client->update([
-                'client_name' => $request->name,
-                'client_firstname' => $request->firstname,
-                'client_email' => $request->email,
-                'client_phone' => $request->phone,
-                'client_birth' => $request->birth,
-                'client_address' => $request->address,
-                'client_postal_code' => $request->postal_code,
-                'client_city' => $request->city,
-                'client_country' => $request->country,
-                'client_license_number' => $request->license_number,
-                'client_license_issue_date' => $request->license_issue_date,
-                'client_license_expiry_date' => $request->license_expiry_date,
-                'client_license_country' => $request->license_country
-            ]);
-        }else{
+        
+        if(!$client) {
             $client = Client::create([
                 'client_name' => $request->name,
                 'client_firstname' => $request->firstname,
@@ -132,17 +117,7 @@ class LocationController extends BaseController
 
         // Gestion options (location_options)
         if ($request->has('options') && is_array($request->options)) {
-            $insertData = array_map(function($optionId) use ($location) {
-                return [
-                    'location_id' => $location->id,
-                    'option_id' => $optionId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
-            }, $request->options);
-
-            // Insertion en masse
-            DB::table('location_option')->insert($insertData);
+            $location->options()->sync($request->options);
         }
 
         $garantie_id = $location->guarantee_id;
@@ -175,7 +150,6 @@ class LocationController extends BaseController
 
         $options = $location->options()->get();
 
-        SendInvoiceEmail::dispatch($location, $agency, $garantie, $options);
 
         $pdf = Pdf::loadView('invoices.facture', compact('location', 'agency', 'garantie', 'options'));
 
@@ -275,22 +249,7 @@ class LocationController extends BaseController
 
         // Mise à jour options (many-to-many)
         if ($request->has('options') && is_array($request->options)) {
-            $insertData = array_map(function($optionId) use ($location) {
-                return [
-                    'location_id' => $location->id,
-                    'option_id' => $optionId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
-            }, $request->options);
-
-            // Suppression des options existantes
-            $location->options()->sync([]);
-            // Suppression des entrées existantes dans la table pivot
-            DB::table('location_option')->where('location_id', $location->id)->delete();
-
-            // Insertion en masse
-            DB::table('location_option')->insert($insertData);
+            $location->options()->sync($request->options);
         }
 
         return response()->json([

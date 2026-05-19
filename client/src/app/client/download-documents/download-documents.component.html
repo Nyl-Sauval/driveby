@@ -1,1 +1,40 @@
-<p>download-documents works!</p>
+<div class="download-dialog-container">
+  <div class="dialog-header">
+    <mat-icon class="header-icon">folder_zip</mat-icon>
+    <h2 mat-dialog-title>Téléchargement des Documents</h2>
+  </div>
+
+  <mat-dialog-content class="dialog-body">
+    <p class="dialog-intro">Sélectionnez le document que vous souhaitez récupérer au format PDF.</p>
+
+    <div class="document-buttons">
+      <!-- Facture card -->
+      <button class="doc-btn" (click)="downloadFacture(data.locationId)">
+        <div class="doc-btn-icon invoice">
+          <mat-icon>receipt</mat-icon>
+        </div>
+        <div class="doc-btn-content">
+          <span class="doc-title">Facture de location</span>
+          <span class="doc-desc">Détails de la transaction et de la réservation</span>
+        </div>
+        <mat-icon class="arrow-icon">download</mat-icon>
+      </button>
+
+      <!-- Avenant card -->
+      <button class="doc-btn" (click)="downloadAvenant(data.locationId)" *ngIf="data.avenant">
+        <div class="doc-btn-icon addendum">
+          <mat-icon>post_add</mat-icon>
+        </div>
+        <div class="doc-btn-content">
+          <span class="doc-title">Avenant de contrat</span>
+          <span class="doc-desc">Frais supplémentaires et avenants de facturation</span>
+        </div>
+        <mat-icon class="arrow-icon">download</mat-icon>
+      </button>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    <button mat-button class="btn-close" [mat-dialog-close]="null">Fermer</button>
+  </mat-dialog-actions>
+</div>
