@@ -18,13 +18,15 @@ import {RetourComponent} from './app/agent/retour/retour.component';
 import {AuthGuard} from './app/guards/auth.guard';
 import {AgentGuard} from './app/guards/agent.guard';
 import {EditLocationComponent} from './app/location/edit-location/edit-location.component';
-import { GarantieComponent } from './app/garantie/garantie.component'; // ✅ ajout
+import { GarantieComponent } from './app/garantie/garantie.component';
+import {MentionsLegalesComponent} from './app/mentions-legales/mentions-legales.component'; // ✅ ajout
 
 
 const routes: Routes = [
   { path: '', component: HomepageComponent, pathMatch: 'full', data: { breadcrumb: 'Accueil' } },
   { path: 'enregistrement', component: EnregistrementComponent},
   { path: 'login', component: LoginComponent},
+  { path: 'mentions', component: MentionsLegalesComponent, data: { breadcrumb: 'Mentions légales' } },
   { path: 'profil', component: ProfilComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Profil' } },
   { path: 'agent', component: GestionAgentComponent, canActivate: [AgentGuard], data: { breadcrumb: 'Profil agent' } },
   { path: 'client/:id/edit', component: ClientEditComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Modifier client' } },

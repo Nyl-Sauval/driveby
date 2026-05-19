@@ -20,18 +20,11 @@ import {RouterLink} from '@angular/router';
 @Component({
   selector: 'app-detail-voiture',
   imports: [
-    MatCard,
-    MatCardHeader,
-    MatCardImage,
-    MatCardContent,
-    MatChip,
     MatIcon,
     MatButtonModule,
     RouterLink,
     NgIf,
     NgFor,
-    MatCardSubtitle,
-    MatCardTitle,
     AsyncPipe
   ],
   templateUrl: './detail-voiture.component.html',

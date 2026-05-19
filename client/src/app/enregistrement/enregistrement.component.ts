@@ -24,8 +24,7 @@ import {RouterLink} from '@angular/router';
     MatButton,
     MatLabel,
     MatError,
-    MatIcon,
-    RouterLink
+    MatIcon
   ],
   templateUrl: './enregistrement.component.html',
   styleUrl: './enregistrement.component.css'

@@ -18,7 +18,6 @@ import {RouterLink} from '@angular/router';
     MatIconModule,
     MatButtonModule,
     NgIf,
-    MatChip,
     MatChipsModule, RouterLink],
   templateUrl: './card-voiture.component.html',
   styleUrls: ['./card-voiture.component.css'],

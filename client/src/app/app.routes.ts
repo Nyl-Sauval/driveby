@@ -1,25 +1,27 @@
 import { Routes } from '@angular/router';
-import {EnregistrementComponent} from './enregistrement/enregistrement.component';
-import {HomepageComponent} from './homepage/homepage.component';
-import {LoginComponent} from './login/login.component';
-import {ProfilComponent} from './profil/profil.component';
-import {ListeVoitureComponent} from './liste-voiture/liste-voiture.component';
-import {ClientEditComponent} from './client-edit/client-edit.component';
-import {DetailVoitureComponent} from './detail-voiture/detail-voiture.component';
-import {ReservationFormComponent} from './reservation-form/reservation-form.component';
-import {GestionAgentComponent} from './agent/gestion-agent/gestion-agent.component';
-import {DetailsLocationComponent} from './location/details-location/details-location.component';
-import {RetraitComponent} from './agent/retrait/retrait.component';
-import {RetourComponent} from './agent/retour/retour.component';
-import {AuthGuard} from './guards/auth.guard';
-import {AgentGuard} from './guards/agent.guard';
-import {EditLocationComponent} from './location/edit-location/edit-location.component';
+import { EnregistrementComponent } from './enregistrement/enregistrement.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import { LoginComponent } from './login/login.component';
+import { ProfilComponent } from './profil/profil.component';
+import { ListeVoitureComponent } from './liste-voiture/liste-voiture.component';
+import { ClientEditComponent } from './client-edit/client-edit.component';
+import { DetailVoitureComponent } from './detail-voiture/detail-voiture.component';
+import { ReservationFormComponent } from './reservation-form/reservation-form.component';
+import { GestionAgentComponent } from './agent/gestion-agent/gestion-agent.component';
+import { DetailsLocationComponent } from './location/details-location/details-location.component';
+import { RetraitComponent } from './agent/retrait/retrait.component';
+import { RetourComponent } from './agent/retour/retour.component';
+import { AuthGuard } from './guards/auth.guard';
+import { AgentGuard } from './guards/agent.guard';
+import { EditLocationComponent } from './location/edit-location/edit-location.component';
 import { GarantieComponent } from './garantie/garantie.component';
+import { MentionsLegalesComponent } from './mentions-legales/mentions-legales.component';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent, pathMatch: 'full', data: { breadcrumb: 'Accueil' } },
-  { path: 'enregistrement', component: EnregistrementComponent},
-  { path: 'login', component: LoginComponent},
+  { path: 'enregistrement', component: EnregistrementComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'mentions', component: MentionsLegalesComponent, data: { breadcrumb: 'Mentions légales' } },
   { path: 'profil', component: ProfilComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Profil' } },
   { path: 'agent', component: GestionAgentComponent, canActivate: [AgentGuard], data: { breadcrumb: 'Profil agent' } },
   { path: 'client/:id/edit', component: ClientEditComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Modifier client' } },

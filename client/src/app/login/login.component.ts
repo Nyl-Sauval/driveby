@@ -8,11 +8,9 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatError, MatLabel} from '@angular/material/form-field';
 import {NgIf} from '@angular/common';
 import { MatDialogRef } from '@angular/material/dialog';
-import {EnregistrementComponent} from '../enregistrement/enregistrement.component';
 
 
 import {MatIcon} from '@angular/material/icon';
-import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -24,10 +22,10 @@ import {RouterLink} from '@angular/router';
     MatButton,
     MatError,
     MatLabel,
-    MatIcon,
-    RouterLink
+    MatIcon
   ],
   templateUrl: './login.component.html',
+  standalone: true,
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
