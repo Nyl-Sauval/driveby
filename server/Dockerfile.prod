@@ -35,16 +35,16 @@ RUN cp .env.example .env
 
 RUN composer install --optimize-autoloader --no-dev --no-interaction
 
-# Créer la base de données SQLite et lui attribuer les droits
-RUN touch database/database.sqlite \
+# Créer le fichier SQLite AVANT toute commande artisan
+RUN mkdir -p database \
+    && touch database/database.sqlite \
     && chown -R www-data:www-data storage bootstrap/cache database \
-    && chmod -R 777 database database/database.sqlite \
-    && chmod -R 775 storage bootstrap/cache
+    && chmod -R 777 storage bootstrap/cache database
 
 # Générer la clé Laravel
-RUN php artisan key:generate
+RUN php artisan key:generate --force
 
-# Lancer les migrations et charger les données initiales (seeds) dans l'image
+# Lancer les migrations et les seeds
 RUN php artisan migrate --force --seed
 
 # Optimiser config, routes, vues
